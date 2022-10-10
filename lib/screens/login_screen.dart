@@ -10,6 +10,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   String _email = '';
   String _password = '';
+  bool _isObscure = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
