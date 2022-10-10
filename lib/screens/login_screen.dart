@@ -11,6 +11,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String _email = '';
   String _password = '';
   bool _isObscure = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +19,9 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+          _showemailText(),
           _showemail(),
+          _showPasswordText(),
           _showPassword(),
         ],
       )),
@@ -32,11 +35,19 @@ class _LoginScreenState extends State<LoginScreen> {
         autofocus: true,
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
-          hintText: 'Email...',
-          labelText: 'Email',
-          suffixIcon: Icon(Icons.email),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-        ),
+            hintText: 'Ingrese el correo electrónico...',
+            labelText: 'Correo electrónico',
+            labelStyle: TextStyle(fontSize: 23, color: Color(0xffff0474)),
+            suffixIcon: Icon(
+              Icons.email,
+              color: Color(0xffff0474),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xffff0474)))),
+        style: TextStyle(fontSize: 23),
         onChanged: (value) {
           _email = value;
         },
@@ -50,19 +61,50 @@ class _LoginScreenState extends State<LoginScreen> {
       child: TextField(
         autofocus: true,
         keyboardType: TextInputType.text,
-        obscureText: true,
+        obscureText: _isObscure,
         enableSuggestions: false,
         autocorrect: false,
         decoration: InputDecoration(
-          hintText: 'Password...',
-          labelText: 'Password',
-          suffixIcon: Icon(Icons.password),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-        ),
+            hintText: 'Ingrese la contraseña...',
+            labelText: 'Contraseña',
+            labelStyle: TextStyle(fontSize: 23, color: Color(0xffff0474)),
+            suffixIcon: IconButton(
+                icon:
+                    Icon(_isObscure ? Icons.visibility : Icons.visibility_off),
+                color: Color(0xffff0474),
+                onPressed: () {
+                  setState(() {
+                    _isObscure = !_isObscure;
+                  });
+                }),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xffff0474)))),
+        style: TextStyle(fontSize: 23),
         onChanged: (value) {
           _password = value;
         },
       ),
     );
+  }
+
+  Widget _showemailText() {
+    return Container(
+        padding: EdgeInsets.all(10),
+        child: Text(
+          'Correo electrónico',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ));
+  }
+
+  Widget _showPasswordText() {
+    return Container(
+        padding: EdgeInsets.all(10),
+        child: Text(
+          'Contraseña',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ));
   }
 }
