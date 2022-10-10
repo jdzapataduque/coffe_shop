@@ -9,6 +9,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   String _email = '';
+  String _password = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,6 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           _showemail(),
+          _showPassword(),
         ],
       )),
     );
@@ -36,6 +38,28 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         onChanged: (value) {
           _email = value;
+        },
+      ),
+    );
+  }
+
+  Widget _showPassword() {
+    return Container(
+      padding: EdgeInsets.all(10),
+      child: TextField(
+        autofocus: true,
+        keyboardType: TextInputType.text,
+        obscureText: true,
+        enableSuggestions: false,
+        autocorrect: false,
+        decoration: InputDecoration(
+          hintText: 'Password...',
+          labelText: 'Password',
+          suffixIcon: Icon(Icons.password),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        ),
+        onChanged: (value) {
+          _password = value;
         },
       ),
     );
