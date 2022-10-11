@@ -25,7 +25,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-          child: Column(
+          child: SingleChildScrollView(
+              child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           _showemail(),
@@ -36,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
           _showButton_create_account(),
           _show_password_recovery()
         ],
-      )),
+      ))),
     );
   }
 
