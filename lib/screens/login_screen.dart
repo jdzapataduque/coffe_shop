@@ -28,7 +28,6 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          //_showemailText(),
           _showemail(),
           //_showPasswordText(),
           _showPassword(),
