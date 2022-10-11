@@ -38,18 +38,22 @@ class _SignupScreen extends State<SignupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          _showname(),
-          _showlastname(),
-          _showemail(),
-          _showPassword(),
-          _showButtonSignup(),
-          _show_account_login_message(),
-          _showButtonLogin(),
-        ],
-      )),
+        child: Center(
+          child: SingleChildScrollView(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              _showname(),
+              _showlastname(),
+              _showemail(),
+              _showPassword(),
+              _showButtonSignup(),
+              _show_account_login_message(),
+              _showButtonLogin(),
+            ],
+          )),
+        ),
+      ),
     );
   }
 
