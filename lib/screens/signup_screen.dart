@@ -68,6 +68,10 @@ class _SignupScreen extends State<SignupScreen> {
             labelText: 'Nombre',
             errorText: _name_show_error ? _name_error : null,
             labelStyle: TextStyle(fontSize: 22, color: Color(0xffff0474)),
+            prefixIcon: Icon(
+              Icons.badge_outlined,
+              color: Color(0xffff0474),
+            ),
             suffixIcon: Icon(
               Icons.person,
               color: Color(0xffff0474),
@@ -96,6 +100,10 @@ class _SignupScreen extends State<SignupScreen> {
             labelText: 'Apellido',
             errorText: _lastname_show_error ? _lastname_error : null,
             labelStyle: TextStyle(fontSize: 22, color: Color(0xffff0474)),
+            prefixIcon: Icon(
+              Icons.badge_outlined,
+              color: Color(0xffff0474),
+            ),
             suffixIcon: Icon(
               Icons.person,
               color: Color(0xffff0474),
@@ -124,6 +132,10 @@ class _SignupScreen extends State<SignupScreen> {
             labelText: 'Correo electrónico',
             errorText: _email_show_error ? _email_error : null,
             labelStyle: TextStyle(fontSize: 22, color: Color(0xffff0474)),
+            prefixIcon: Icon(
+              Icons.alternate_email,
+              color: Color(0xffff0474),
+            ),
             suffixIcon: Icon(
               Icons.email,
               color: Color(0xffff0474),
@@ -154,6 +166,10 @@ class _SignupScreen extends State<SignupScreen> {
             labelText: 'Contraseña',
             errorText: _password_show_error ? _password_error : null,
             labelStyle: TextStyle(fontSize: 22, color: Color(0xffff0474)),
+            prefixIcon: Icon(
+              Icons.lock,
+              color: Color(0xffff0474),
+            ),
             suffixIcon: IconButton(
                 icon:
                     Icon(_isObscure ? Icons.visibility : Icons.visibility_off),
