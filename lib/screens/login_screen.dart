@@ -19,9 +19,9 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          _showemailText(),
+          //_showemailText(),
           _showemail(),
-          _showPasswordText(),
+          //_showPasswordText(),
           _showPassword(),
           _shoButtonLogin()
         ],
@@ -59,6 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _showPassword() {
     return Container(
       padding: EdgeInsets.all(10),
+      //margin: EdgeInsets.only(top: 50),
       child: TextField(
         keyboardType: TextInputType.text,
         obscureText: _isObscure,
@@ -129,10 +130,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18))),
+                              borderRadius: BorderRadius.circular(100))),
                       backgroundColor: MaterialStateProperty.resolveWith(
                           (states) => const Color(0xffff0474))),
-                  onPressed: () {},
+                  onPressed: () => _login(),
                 ),
               ),
             ),
@@ -141,4 +142,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
+  void _login() {}
 }
