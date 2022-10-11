@@ -1,21 +1,34 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:coffe_shop/error_messages.dart';
-import 'package:coffe_shop/screens/signup_screen.dart';
+import 'package:coffe_shop/screens/login_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignupScreen> createState() => _SignupScreen();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreen extends State<SignupScreen> {
+  //Variables del nombre
+  String _name = '';
+  String _name_error = '';
+  bool _name_show_error = false;
+
+  //Variables del apellido
+  String _lastname = '';
+  String _lastname_error = '';
+  bool _lastname_show_error = false;
+
+  //Variables del email
   String _email = '';
-  String _password = '';
   String _email_error = '';
-  String _password_error = '';
   bool _email_show_error = false;
+
+  //Variables de la contraseña
+  String _password = '';
+  String _password_error = '';
   bool _password_show_error = false;
   bool _isObscure = true;
 
@@ -28,16 +41,71 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          //_showemailText(),
+          _showname(),
+          _showlastname(),
           _showemail(),
-          //_showPasswordText(),
           _showPassword(),
+          _showButtonSignup(),
+          _show_account_login_message(),
           _showButtonLogin(),
-          _show_account_register_message(),
-          _showButton_create_account(),
-          _show_password_recovery()
         ],
       )),
+    );
+  }
+
+  Widget _showname() {
+    return Container(
+      padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
+      child: TextField(
+        autofocus: true,
+        keyboardType: TextInputType.name,
+        decoration: InputDecoration(
+            hintText: 'Ingrese el nombre...',
+            labelText: 'Nombre',
+            errorText: _name_show_error ? _name_error : null,
+            labelStyle: TextStyle(fontSize: 22, color: Color(0xffff0474)),
+            suffixIcon: Icon(
+              Icons.person,
+              color: Color(0xffff0474),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xffff0474)))),
+        style: TextStyle(fontSize: 23),
+        onChanged: (value) {
+          _name = value;
+        },
+      ),
+    );
+  }
+
+  Widget _showlastname() {
+    return Container(
+      padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
+      child: TextField(
+        autofocus: true,
+        keyboardType: TextInputType.name,
+        decoration: InputDecoration(
+            hintText: 'Ingrese el apellido...',
+            labelText: 'Apellido',
+            errorText: _lastname_show_error ? _lastname_error : null,
+            labelStyle: TextStyle(fontSize: 22, color: Color(0xffff0474)),
+            suffixIcon: Icon(
+              Icons.person,
+              color: Color(0xffff0474),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xffff0474)))),
+        style: TextStyle(fontSize: 23),
+        onChanged: (value) {
+          _lastname = value;
+        },
+      ),
     );
   }
 
@@ -72,7 +140,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _showPassword() {
     return Container(
       padding: EdgeInsets.all(5),
-      //margin: EdgeInsets.only(top: 50),
       child: TextField(
         keyboardType: TextInputType.text,
         obscureText: _isObscure,
@@ -103,27 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _showemailText() {
-    return Container(
-        padding: EdgeInsets.all(10),
-        child: Text(
-          'Correo electrónico',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ));
-  }
-
-  Widget _showPasswordText() {
-    return Container(
-        padding: EdgeInsets.all(10),
-        child: Text(
-          'Contraseña',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ));
-  }
-
-  Widget _showButtonLogin() {
+  Widget _showButtonSignup() {
     return Container(
       padding: EdgeInsets.only(top: 35),
       width: 200,
@@ -138,7 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: 200,
                 child: ElevatedButton(
                   child: Text(
-                    'INGRESAR',
+                    'CREAR CUENTA',
                     style: TextStyle(fontSize: 22),
                   ),
                   style: ButtonStyle(
@@ -147,7 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderRadius: BorderRadius.circular(100))),
                       backgroundColor: MaterialStateProperty.resolveWith(
                           (states) => const Color(0xffff0474))),
-                  onPressed: () => _login(),
+                  onPressed: () => _signup(),
                 ),
               ),
             ),
@@ -157,17 +204,17 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _show_account_register_message() {
+  Widget _show_account_login_message() {
     return Container(
-        padding: EdgeInsets.all(5),
+        padding: EdgeInsets.all(10),
         child: Text(
-          '¿No tienes una cuenta aún?',
+          '¿Ya tienes una cuenta?',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 20),
         ));
   }
 
-  Widget _showButton_create_account() {
+  Widget _showButtonLogin() {
     return Container(
       padding: EdgeInsets.only(top: 10),
       width: 300,
@@ -182,7 +229,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: 300,
                 child: ElevatedButton(
                   child: Text(
-                    'CREAR CUENTA',
+                    'INGRESAR',
                     style: TextStyle(fontSize: 22, color: Color(0xffff0474)),
                   ),
                   style: ButtonStyle(
@@ -192,7 +239,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       backgroundColor: MaterialStateProperty.resolveWith(
                           (states) => Colors.transparent)),
                   onPressed: () => Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => SignupScreen())),
+                      MaterialPageRoute(builder: (context) => LoginScreen())),
                 ),
               ),
             ),
@@ -202,21 +249,15 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _show_password_recovery() {
-    return Container(
-      child: TextButton(
-        child: Text(
-          'He olvidado mi contraseña',
-          style: TextStyle(fontSize: 20, color: Color(0xffff0474)),
-        ),
-        onPressed: () {
-          print("ir donde mauro");
-        },
-      ),
-    );
-  }
+  void _signup() {
+    if (!_validate_name()) {
+      return;
+    }
 
-  void _login() {
+    if (!_validate_lastname()) {
+      return;
+    }
+
     if (!_validate_email()) {
       return;
     }
@@ -224,6 +265,34 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!_validate_password()) {
       return;
     }
+  }
+
+  bool _validate_name() {
+    _name_show_error = false;
+    _name_error = '';
+
+    if (_name.isEmpty) {
+      _name_show_error = true;
+      _name_error = errorHandling.getError('TCF0004');
+      setState(() {});
+      return false;
+    }
+    setState(() {});
+    return true;
+  }
+
+  bool _validate_lastname() {
+    _lastname_show_error = false;
+    _lastname_error = '';
+
+    if (_lastname.isEmpty) {
+      _lastname_show_error = true;
+      _lastname_error = errorHandling.getError('TCF0005');
+      setState(() {});
+      return false;
+    }
+    setState(() {});
+    return true;
   }
 
   bool _validate_email() {
