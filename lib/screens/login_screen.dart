@@ -38,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
         decoration: InputDecoration(
             hintText: 'Ingrese el correo electrónico...',
             labelText: 'Correo electrónico',
-            labelStyle: TextStyle(fontSize: 23, color: Color(0xffff0474)),
+            labelStyle: TextStyle(fontSize: 22, color: Color(0xffff0474)),
             suffixIcon: Icon(
               Icons.email,
               color: Color(0xffff0474),
@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
         decoration: InputDecoration(
             hintText: 'Ingrese la contraseña...',
             labelText: 'Contraseña',
-            labelStyle: TextStyle(fontSize: 23, color: Color(0xffff0474)),
+            labelStyle: TextStyle(fontSize: 22, color: Color(0xffff0474)),
             suffixIcon: IconButton(
                 icon:
                     Icon(_isObscure ? Icons.visibility : Icons.visibility_off),
@@ -111,25 +111,29 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _shoButtonLogin() {
     return Container(
       padding: EdgeInsets.only(top: 40),
-      width: 500,
+      width: 1000,
       margin: EdgeInsets.only(left: 50, right: 50),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          Expanded(
-            child: SizedBox(
-              height: 50,
-              width: 50,
-              child: ElevatedButton(
-                child: Text('INGRESAR'),
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18))),
-                  backgroundColor: MaterialStateProperty.resolveWith(
-                      (states) => Color(0xffff0474)),
+          SizedBox(
+            child: Expanded(
+              child: SizedBox(
+                height: 50,
+                width: 200,
+                child: ElevatedButton(
+                  child: Text(
+                    'INGRESAR',
+                    style: TextStyle(fontSize: 22),
+                  ),
+                  style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18))),
+                      backgroundColor: MaterialStateProperty.resolveWith(
+                          (states) => const Color(0xffff0474))),
+                  onPressed: () {},
                 ),
-                onPressed: () {},
               ),
             ),
           )
