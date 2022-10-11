@@ -23,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
           _showemail(),
           _showPasswordText(),
           _showPassword(),
+          _shoButtonLogin()
         ],
       )),
     );
@@ -59,7 +60,6 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
       padding: EdgeInsets.all(10),
       child: TextField(
-        autofocus: true,
         keyboardType: TextInputType.text,
         obscureText: _isObscure,
         enableSuggestions: false,
@@ -106,5 +106,35 @@ class _LoginScreenState extends State<LoginScreen> {
           textAlign: TextAlign.center,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ));
+  }
+
+  Widget _shoButtonLogin() {
+    return Container(
+      padding: EdgeInsets.only(top: 40),
+      width: 500,
+      margin: EdgeInsets.only(left: 50, right: 50),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          Expanded(
+            child: SizedBox(
+              height: 50,
+              width: 50,
+              child: ElevatedButton(
+                child: Text('INGRESAR'),
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18))),
+                  backgroundColor: MaterialStateProperty.resolveWith(
+                      (states) => Color(0xffff0474)),
+                ),
+                onPressed: () {},
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
