@@ -1,8 +1,8 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:coffe_shop/error_messages.dart';
+import 'package:coffe_shop/utils/error_messages.dart';
 import 'package:coffe_shop/screens/login_screen.dart';
-
+import 'app_bar.dart';
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
 
@@ -37,6 +37,7 @@ class _SignupScreen extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: header(context,isAppTitle: true),
       body: Center(
         child: Center(
           child: SingleChildScrollView(
@@ -67,7 +68,7 @@ class _SignupScreen extends State<SignupScreen> {
             hintText: 'Ingrese el nombre...',
             labelText: 'Nombre',
             errorText: _name_show_error ? _name_error : null,
-            labelStyle: TextStyle(fontSize: 22, color: Color(0xffff0474)),
+            labelStyle: TextStyle(fontSize: 22, color: Color(0xffff0474),fontFamily: 'PoppinsBold'),
             prefixIcon: Icon(
               Icons.badge_outlined,
               color: Color(0xffff0474),
@@ -81,7 +82,7 @@ class _SignupScreen extends State<SignupScreen> {
             ),
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Color(0xffff0474)))),
-        style: TextStyle(fontSize: 23),
+        style: TextStyle(fontSize: 23,fontFamily: 'Poppins'),
         onChanged: (value) {
           _name = value;
         },
@@ -99,7 +100,7 @@ class _SignupScreen extends State<SignupScreen> {
             hintText: 'Ingrese el apellido...',
             labelText: 'Apellido',
             errorText: _lastname_show_error ? _lastname_error : null,
-            labelStyle: TextStyle(fontSize: 22, color: Color(0xffff0474)),
+            labelStyle: TextStyle(fontSize: 22, color: Color(0xffff0474),fontFamily: 'PoppinsBold',),
             prefixIcon: Icon(
               Icons.badge_outlined,
               color: Color(0xffff0474),
@@ -113,7 +114,7 @@ class _SignupScreen extends State<SignupScreen> {
             ),
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Color(0xffff0474)))),
-        style: TextStyle(fontSize: 23),
+        style: TextStyle(fontSize: 23,fontFamily: 'Poppins'),
         onChanged: (value) {
           _lastname = value;
         },
@@ -131,7 +132,7 @@ class _SignupScreen extends State<SignupScreen> {
             hintText: 'Ingrese el correo electrónico...',
             labelText: 'Correo electrónico',
             errorText: _email_show_error ? _email_error : null,
-            labelStyle: TextStyle(fontSize: 22, color: Color(0xffff0474)),
+            labelStyle: TextStyle(fontSize: 22, color: Color(0xffff0474),fontFamily: 'PoppinsBold',),
             prefixIcon: Icon(
               Icons.alternate_email,
               color: Color(0xffff0474),
@@ -145,7 +146,7 @@ class _SignupScreen extends State<SignupScreen> {
             ),
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Color(0xffff0474)))),
-        style: TextStyle(fontSize: 23),
+        style: TextStyle(fontSize: 23,fontFamily: 'Poppins',),
         onChanged: (value) {
           _email = value;
         },
@@ -165,7 +166,7 @@ class _SignupScreen extends State<SignupScreen> {
             hintText: 'Ingrese la contraseña...',
             labelText: 'Contraseña',
             errorText: _password_show_error ? _password_error : null,
-            labelStyle: TextStyle(fontSize: 22, color: Color(0xffff0474)),
+            labelStyle: TextStyle(fontSize: 22, color: Color(0xffff0474),fontFamily: 'PoppinsBold'),
             prefixIcon: Icon(
               Icons.lock,
               color: Color(0xffff0474),
@@ -182,7 +183,7 @@ class _SignupScreen extends State<SignupScreen> {
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Color(0xffff0474)))),
-        style: TextStyle(fontSize: 23),
+        style: TextStyle(fontSize: 23,fontFamily: 'Poppins',),
         onChanged: (value) {
           _password = value;
         },
@@ -206,7 +207,7 @@ class _SignupScreen extends State<SignupScreen> {
                 child: ElevatedButton(
                   child: Text(
                     'CREAR CUENTA',
-                    style: TextStyle(fontSize: 22),
+                    style: TextStyle(fontSize: 20,fontFamily: 'PoppinsBold',),
                   ),
                   style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -230,7 +231,7 @@ class _SignupScreen extends State<SignupScreen> {
         child: Text(
           '¿Ya tienes una cuenta?',
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 20,fontFamily: 'Poppins',),
         ));
   }
 
@@ -250,7 +251,7 @@ class _SignupScreen extends State<SignupScreen> {
                 child: ElevatedButton(
                   child: Text(
                     'INGRESAR',
-                    style: TextStyle(fontSize: 22, color: Color(0xffff0474)),
+                    style: TextStyle(fontSize: 20, color: Color(0xffff0474),fontFamily: 'PoppinsBold',),
                   ),
                   style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
