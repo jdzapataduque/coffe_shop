@@ -1,3 +1,4 @@
+import 'package:coffe_shop/screens/recovey_screen.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:coffe_shop/error_messages.dart';
@@ -217,9 +218,8 @@ class _LoginScreenState extends State<LoginScreen> {
           'He olvidado mi contraseña',
           style: TextStyle(fontSize: 20, color: Color(0xffff0474)),
         ),
-        onPressed: () {
-          print("ir donde mauro");
-        },
+        onPressed: () => Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => RecoveryScreen())),
       ),
     );
   }
