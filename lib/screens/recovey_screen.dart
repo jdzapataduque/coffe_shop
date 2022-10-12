@@ -1,4 +1,6 @@
+import 'package:coffe_shop/error_messages.dart';
 import 'package:coffe_shop/screens/login_screen.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,9 @@ class _RecoveryScreenState extends State<RecoveryScreen> {
   String _email = '';
   String _email_error = '';
   bool _email_show_error = false;
+
+  ErrorMessages errorHandling = ErrorMessages();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,22 +136,82 @@ class _RecoveryScreenState extends State<RecoveryScreen> {
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(100)))),
-          onPressed: () {
-            final snackBar = SnackBar(
-              content: const Text('Paso a paso de recuperación enviado'),
-              action: SnackBarAction(
-                label: 'Undo',
-                onPressed: () {
-                  // Some code to undo the change.
-                },
-              ),
-            );
-            // Find the ScaffoldMessenger in the widget tree
-            // and use it to show a SnackBar.
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          },
+          onPressed: () => _send_recovey_password(),
         ),
       ),
+    );
+  }
+
+  void _send_recovey_password() {
+    if (!_validate_email()) {
+      return;
+    }
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(
+          "Hemos enviado un correo electrónico con un enlace para actualizar su contraseña."),
+    ));
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => LoginScreen()));
+  }
+
+  bool _validate_email() {
+    _email_show_error = false;
+    _email_error = '';
+
+    if (_email.isEmpty) {
+      _email_show_error = true;
+      _email_error = errorHandling.getError('TCF0001');
+      setState(() {});
+      return false;
+    }
+
+    if (!EmailValidator.validate(_email)) {
+      _email_show_error = true;
+      _email_error = errorHandling.getError('TCF0002');
+      setState(() {});
+      return false;
+    }
+
+    setState(() {});
+    return true;
+  }
+
+  Widget _show_alert_dialog() {
+    return AlertDialog(
+      title: const Text('AlertDialog Title'),
+      content: SingleChildScrollView(
+        child: ListBody(
+          children: const <Widget>[
+            Text('This is a demo alert dialog.'),
+            Text('Would you like to approve of this message?'),
+          ],
+        ),
+      ),
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: Text("OK"),
+      onPressed: () {},
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("My title"),
+      content: Text("This is my message."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }
