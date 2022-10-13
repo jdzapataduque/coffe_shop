@@ -1,8 +1,9 @@
+import 'package:coffe_shop/screens/recovey_screen.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:coffe_shop/error_messages.dart';
+import 'package:coffe_shop/utils/error_messages.dart';
 import 'package:coffe_shop/screens/signup_screen.dart';
-
+import 'app_bar.dart';
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -24,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: header(context,isAppTitle: true),
       body: Center(
           child: SingleChildScrollView(
               child: Column(
@@ -43,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _showemail() {
     return Container(
-      padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
+      padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
       child: TextField(
         autofocus: true,
         keyboardType: TextInputType.emailAddress,
@@ -51,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
             hintText: 'Ingrese el correo electrónico...',
             labelText: 'Correo electrónico',
             errorText: _email_show_error ? _email_error : null,
-            labelStyle: TextStyle(fontSize: 22, color: Color(0xffff0474)),
+            labelStyle: TextStyle(fontSize: 22, color: Color(0xffff0474), fontFamily: 'PoppinsBold',),
             prefixIcon: Icon(
               Icons.alternate_email,
               color: Color(0xffff0474),
@@ -65,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Color(0xffff0474)))),
-        style: TextStyle(fontSize: 23),
+        style: TextStyle(fontSize: 23,fontFamily: 'Poppins'),
         onChanged: (value) {
           _email = value;
         },
@@ -75,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _showPassword() {
     return Container(
-      padding: EdgeInsets.all(5),
+      padding: EdgeInsets.all(10),
       //margin: EdgeInsets.only(top: 50),
       child: TextField(
         keyboardType: TextInputType.text,
@@ -86,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
             hintText: 'Ingrese la contraseña...',
             labelText: 'Contraseña',
             errorText: _password_show_error ? _password_error : null,
-            labelStyle: TextStyle(fontSize: 22, color: Color(0xffff0474)),
+            labelStyle: TextStyle(fontSize: 22, color: Color(0xffff0474),fontFamily: 'PoppinsBold'),
             prefixIcon: Icon(
               Icons.lock,
               color: Color(0xffff0474),
@@ -103,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Color(0xffff0474)))),
-        style: TextStyle(fontSize: 23),
+        style: TextStyle(fontSize: 23,fontFamily: 'Poppins'),
         onChanged: (value) {
           _password = value;
         },
@@ -111,13 +113,13 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _showemailText() {
+Widget _showemailText() {
     return Container(
         padding: EdgeInsets.all(10),
         child: Text(
           'Correo electrónico',
           textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,fontFamily: "Poppins"),
         ));
   }
 
@@ -127,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Text(
           'Contraseña',
           textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,fontFamily: "Poppins"),
         ));
   }
 
@@ -147,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: ElevatedButton(
                   child: Text(
                     'INGRESAR',
-                    style: TextStyle(fontSize: 22),
+                    style: TextStyle(fontSize: 22,fontFamily: 'PoppinsBold'),
                   ),
                   style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -171,7 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Text(
           '¿No tienes una cuenta aún?',
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 20,fontFamily: 'Poppins'),
         ));
   }
 
@@ -191,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: ElevatedButton(
                   child: Text(
                     'CREAR CUENTA',
-                    style: TextStyle(fontSize: 22, color: Color(0xffff0474)),
+                    style: TextStyle(fontSize: 22, color: Color(0xffff0474),fontFamily: 'PoppinsBold'),
                   ),
                   style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -215,11 +217,10 @@ class _LoginScreenState extends State<LoginScreen> {
       child: TextButton(
         child: Text(
           'He olvidado mi contraseña',
-          style: TextStyle(fontSize: 20, color: Color(0xffff0474)),
+          style: TextStyle(fontSize: 20, color: Color(0xffff0474),fontFamily: 'Poppins'),
         ),
-        onPressed: () {
-          print("ir donde mauro");
-        },
+        onPressed: () => Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => RecoveryScreen())),
       ),
     );
   }
