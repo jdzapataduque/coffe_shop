@@ -14,7 +14,7 @@ AppBar header(context,
       children: [
         Image.asset(
           'assets/img/logo.PNG',
-          scale: 2.63,
+          scale: 2.631,
         ),
         const SizedBox(
           width: 20,
