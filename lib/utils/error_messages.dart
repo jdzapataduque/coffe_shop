@@ -17,6 +17,9 @@ class ErrorMessages {
       case 'TCF0005':
         _msg_error = 'Debes ingresar tu apellido';
         break;
+      case 'TCF0006':
+        _msg_error = 'Email o Contraseña no válidos';
+        break;
       default:
         _msg_error = 'Mensaje no definido para $_coderror';
     }
