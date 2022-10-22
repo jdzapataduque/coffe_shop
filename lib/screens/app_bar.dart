@@ -8,14 +8,13 @@ AppBar header(context,
     String strTitle = "",
     disableBackButton = false}) {
   return AppBar(
-    toolbarHeight: 85,
     centerTitle: true,
     title: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(
           'assets/img/logo.PNG',
-          scale: 2.5,
+          scale: 2.631,
         ),
         const SizedBox(
           width: 20,
@@ -50,7 +49,7 @@ AppBar header(context,
                 ),
                 body: const Center(
                   child: Text(
-                    'Carrito de compras',
+                    'This is the next page',
                     style: TextStyle(fontSize: 24),
                   ),
                 ),
