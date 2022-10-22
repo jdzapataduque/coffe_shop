@@ -213,38 +213,43 @@ class _SignupScreen extends State<SignupScreen> {
           fontSize: 23,
           fontFamily: 'Poppins',
         ),
-        onChanged: (value) async {
-          DateTime? newDate = await showDatePicker(
-            context: context,
-            initialDate: date,
-            firstDate: DateTime(1900),
-            lastDate: DateTime.now(),
-            initialEntryMode: DatePickerEntryMode.calendarOnly,
-            builder: (context, child) {
-              return Theme(
-                data: Theme.of(context).copyWith(
-                  colorScheme: ColorScheme.light(
-                    primary: Color(0xffff0474),
-                    onPrimary: Colors.white,
-                  ),
-                ),
-                child: child!,
-              );
-            },
-          );
-          if (newDate == null) {
-            _controller.text = '';
-            value = '';
-            _birthdate = value;
-            return;
-          }
-          formatedDate = DateFormat('dd/MM/yyyy').format(newDate);
-          _controller.text = formatedDate;
-          value = formatedDate;
-          _birthdate = value;
+        onChanged: (value) {
+          _showDatePicker();
         },
+        onTap: (() => _showDatePicker()),
       ),
     );
+  }
+
+  void _showDatePicker() async {
+    String fecha = '';
+    DateTime? newDate = await showDatePicker(
+      context: context,
+      initialDate: date,
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: Color(0xffff0474),
+              onPrimary: Colors.white,
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (newDate == null) {
+      _controller.text = '';
+      fecha = '';
+    } else {
+      formatedDate = DateFormat('dd/MM/yyyy').format(newDate);
+      _controller.text = formatedDate;
+      fecha = formatedDate;
+    }
+    _birthdate = fecha;
   }
 
   Widget _showPassword() {
@@ -461,13 +466,6 @@ class _SignupScreen extends State<SignupScreen> {
       setState(() {});
       return false;
     }
-
-    //if (!DateValidator.isValidDate(_birthdate)) {
-    //  _birthdate_show_error = true;
-    //  _birthdate_error = errorHandling.getError('TCF0008');
-    //  setState(() {});
-    //  return false;
-    //}
 
     setState(() {});
     return true;
