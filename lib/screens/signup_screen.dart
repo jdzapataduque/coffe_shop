@@ -4,7 +4,6 @@ import 'package:coffe_shop/utils/error_messages.dart';
 import 'package:coffe_shop/screens/login_screen.dart';
 import 'package:intl/intl.dart';
 import 'app_bar.dart';
-import 'package:intl/date_symbol_data_local.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -33,6 +32,7 @@ class _SignupScreen extends State<SignupScreen> {
   String _birthdate = '';
   String _birthdate_error = '';
   bool _birthdate_show_error = false;
+  TextEditingController _controller = TextEditingController();
 
   //Variables de la contraseña
   String _password = '';
@@ -41,7 +41,7 @@ class _SignupScreen extends State<SignupScreen> {
   bool _isObscure = true;
 
   DateTime date = DateTime.now();
-  late String formatedDate = DateFormat('dd/MM/yyyy').format(date);
+  String formatedDate = ''; //DateFormat('dd/MM/yyyy').format(date);
 
   ErrorMessages errorHandling = ErrorMessages();
 
@@ -181,8 +181,6 @@ class _SignupScreen extends State<SignupScreen> {
   }
 
   Widget _showBirthDate() {
-    TextEditingController _controller = new TextEditingController();
-    _controller.text = formatedDate;
     return Container(
       padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
       child: TextField(
@@ -215,10 +213,7 @@ class _SignupScreen extends State<SignupScreen> {
           fontSize: 23,
           fontFamily: 'Poppins',
         ),
-        onChanged: (value) {
-          _birthdate = value;
-        },
-        onTap: () async {
+        onChanged: (value) async {
           DateTime? newDate = await showDatePicker(
             context: context,
             initialDate: date,
@@ -237,9 +232,16 @@ class _SignupScreen extends State<SignupScreen> {
               );
             },
           );
-          if (newDate == null) return;
-          setState(
-              () => formatedDate = DateFormat('dd/MM/yyyy').format(newDate));
+          if (newDate == null) {
+            _controller.text = '';
+            value = '';
+            _birthdate = value;
+            return;
+          }
+          formatedDate = DateFormat('dd/MM/yyyy').format(newDate);
+          _controller.text = formatedDate;
+          value = formatedDate;
+          _birthdate = value;
         },
       ),
     );
@@ -390,6 +392,10 @@ class _SignupScreen extends State<SignupScreen> {
       return;
     }
 
+    if (!_validate_birthdate()) {
+      return;
+    }
+
     if (!_validate_password()) {
       return;
     }
@@ -440,6 +446,28 @@ class _SignupScreen extends State<SignupScreen> {
       setState(() {});
       return false;
     }
+
+    setState(() {});
+    return true;
+  }
+
+  bool _validate_birthdate() {
+    _birthdate_show_error = false;
+    _birthdate_error = '';
+
+    if (_birthdate.isEmpty) {
+      _birthdate_show_error = true;
+      _birthdate_error = errorHandling.getError('TCF0007');
+      setState(() {});
+      return false;
+    }
+
+    //if (!DateValidator.isValidDate(_birthdate)) {
+    //  _birthdate_show_error = true;
+    //  _birthdate_error = errorHandling.getError('TCF0008');
+    //  setState(() {});
+    //  return false;
+    //}
 
     setState(() {});
     return true;
