@@ -1,9 +1,7 @@
 import 'dart:convert';
 
 import 'package:coffe_shop/helpers/constants.dart';
-import 'package:coffe_shop/main.dart';
 import 'package:coffe_shop/models/token.dart';
-import 'package:coffe_shop/screens/drawer.dart';
 import 'package:coffe_shop/screens/recovey_screen.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:http/http.dart' as http;
@@ -33,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: header(context, isAppTitle: true),
+      appBar: customAppBar(),
       body: Center(
           child: SingleChildScrollView(
               child: Column(
@@ -297,8 +295,8 @@ class _LoginScreenState extends State<LoginScreen> {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("Ingreso al sistema exitoso"),
     ));
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => DrawerPage()));
+    //Navigator.pushReplacement(
+       // context, MaterialPageRoute(builder: (context) => DrawerPage()));
   }
 
   bool _validate_email() {
