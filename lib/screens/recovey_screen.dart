@@ -1,9 +1,11 @@
+import 'package:coffe_shop/helpers/constants.dart';
 import 'package:coffe_shop/utils/error_messages.dart';
 import 'package:coffe_shop/screens/login_screen.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class RecoveryScreen extends StatefulWidget {
   const RecoveryScreen({super.key});
@@ -21,13 +23,9 @@ class _RecoveryScreenState extends State<RecoveryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-          child: SingleChildScrollView(
-              child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[_showmsgText(), _showemail(), _showButtons()],
-      ))),
+    return WebView(
+      initialUrl: Constants.urlRecoveryPassword,
+      javascriptMode: JavascriptMode.unrestricted,
     );
   }
 
