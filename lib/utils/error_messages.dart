@@ -21,10 +21,10 @@ class ErrorMessages {
         _msg_error = 'Email o contraseña no válidos';
         break;
       case 'TCF0007':
-        _msg_error = 'Debes ingresar la fecha de nacimiento';
+        _msg_error = 'Debes seleccionar la fecha de nacimiento';
         break;
       case 'TCF0008':
-        _msg_error = 'Debes ingresar una fecha válida';
+        _msg_error = 'Debes seleccionar el género';
         break;
       default:
         _msg_error = 'Mensaje no definido para $_coderror';

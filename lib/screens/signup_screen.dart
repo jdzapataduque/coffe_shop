@@ -34,14 +34,16 @@ class _SignupScreen extends State<SignupScreen> {
   bool _birthdate_show_error = false;
   TextEditingController _controller = TextEditingController();
 
+  //Variables del género
+  String _gender = '';
+  String _gender_error = '';
+  bool _gender_show_error = false;
+
   //Variables de la contraseña
   String _password = '';
   String _password_error = '';
   bool _password_show_error = false;
   bool _isObscure = true;
-
-  DateTime date = DateTime.now();
-  String formatedDate = ''; //DateFormat('dd/MM/yyyy').format(date);
 
   ErrorMessages errorHandling = ErrorMessages();
 
@@ -59,6 +61,7 @@ class _SignupScreen extends State<SignupScreen> {
               _showlastname(),
               _showemail(),
               _showBirthDate(),
+              _showGender(),
               _showPassword(),
               _showButtonSignup(),
               _show_account_login_message(),
@@ -222,10 +225,11 @@ class _SignupScreen extends State<SignupScreen> {
   }
 
   void _showDatePicker() async {
-    String fecha = '';
+    String formatedDate = '';
+
     DateTime? newDate = await showDatePicker(
       context: context,
-      initialDate: date,
+      initialDate: DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
       initialEntryMode: DatePickerEntryMode.calendarOnly,
@@ -243,13 +247,60 @@ class _SignupScreen extends State<SignupScreen> {
     );
     if (newDate == null) {
       _controller.text = '';
-      fecha = '';
+      formatedDate = '';
     } else {
-      formatedDate = DateFormat('dd/MM/yyyy').format(newDate);
+      formatedDate = DateFormat('yyyy-MM-dd').format(newDate);
       _controller.text = formatedDate;
-      fecha = formatedDate;
     }
-    _birthdate = fecha;
+    _birthdate = formatedDate;
+  }
+
+  Widget _showGender() {
+    String? genero;
+    return Container(
+      padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
+      child: DropdownButtonFormField(
+        items: const [
+          DropdownMenuItem(value: 'Masculino', child: Text('Masculino')),
+          DropdownMenuItem(value: 'Femenino', child: Text('Femenino')),
+        ],
+        value: genero,
+        icon: (Icon(
+          Icons.arrow_drop_down,
+          color: Color(0xffff0474),
+        )),
+        onChanged: (option) {
+          genero = option;
+          _gender = genero ?? "";
+        },
+        decoration: InputDecoration(
+            hintText: 'Seleccione el género...',
+            labelText: 'Género',
+            errorText: _gender_show_error ? _gender_error : null,
+            labelStyle: TextStyle(
+              fontSize: 22,
+              color: Color(0xffff0474),
+              fontFamily: 'PoppinsBold',
+            ),
+            prefixIcon: Icon(
+              Icons.male,
+              color: Color(0xffff0474),
+            ),
+            suffixIcon: Icon(
+              Icons.female,
+              color: Color(0xffff0474),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xffff0474)))),
+        style: TextStyle(
+          fontSize: 23,
+          fontFamily: 'Poppins',
+        ),
+      ),
+    );
   }
 
   Widget _showPassword() {
@@ -401,6 +452,10 @@ class _SignupScreen extends State<SignupScreen> {
       return;
     }
 
+    if (!_validate_gender()) {
+      return;
+    }
+
     if (!_validate_password()) {
       return;
     }
@@ -463,6 +518,21 @@ class _SignupScreen extends State<SignupScreen> {
     if (_birthdate.isEmpty) {
       _birthdate_show_error = true;
       _birthdate_error = errorHandling.getError('TCF0007');
+      setState(() {});
+      return false;
+    }
+
+    setState(() {});
+    return true;
+  }
+
+  bool _validate_gender() {
+    _gender_show_error = false;
+    _gender_error = '';
+
+    if (_gender.isEmpty) {
+      _gender_show_error = true;
+      _gender_error = errorHandling.getError('TCF0008');
       setState(() {});
       return false;
     }
