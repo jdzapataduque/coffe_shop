@@ -238,8 +238,7 @@ class _LoginScreenState extends State<LoginScreen> {
           style: TextStyle(
               fontSize: 20, color: Color(0xffff0474), fontFamily: 'Poppins'),
         ),
-        onPressed: () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => RecoveryScreen())),
+        onPressed: () => _go_to_recovery_passsword_page(),
       ),
     );
   }
@@ -334,5 +333,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
     setState(() {});
     return true;
+  }
+
+  void _go_to_recovery_passsword_page() {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => RecoveryScreen()));
   }
 }

@@ -26,6 +26,10 @@ class ErrorMessages {
       case 'TCF0008':
         _msg_error = 'Debes seleccionar el género';
         break;
+      case 'TCF0009':
+        _msg_error = 'Debes presionar el botón de atrás para regresar'
+            'a la página principal de la app';
+        break;
       default:
         _msg_error = 'Mensaje no definido para $_coderror';
     }
