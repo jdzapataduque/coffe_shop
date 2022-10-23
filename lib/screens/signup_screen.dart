@@ -79,27 +79,8 @@ class _SignupScreen extends State<SignupScreen> {
       child: TextField(
         autofocus: true,
         keyboardType: TextInputType.name,
-        decoration: InputDecoration(
-            hintText: 'Ingrese el nombre...',
-            labelText: 'Nombre',
-            errorText: _name_show_error ? _name_error : null,
-            labelStyle: TextStyle(
-                fontSize: 22,
-                color: Color(0xffff0474),
-                fontFamily: 'PoppinsBold'),
-            prefixIcon: Icon(
-              Icons.badge_outlined,
-              color: Color(0xffff0474),
-            ),
-            suffixIcon: Icon(
-              Icons.person,
-              color: Color(0xffff0474),
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xffff0474)))),
+        decoration: estilizar('Ingrese el nombre...', 'Nombre',
+            _name_show_error, _name_error, Icons.badge_outlined, Icons.person),
         style: TextStyle(fontSize: 23, fontFamily: 'Poppins'),
         onChanged: (value) {
           _name = value;
@@ -114,28 +95,13 @@ class _SignupScreen extends State<SignupScreen> {
       child: TextField(
         autofocus: true,
         keyboardType: TextInputType.name,
-        decoration: InputDecoration(
-            hintText: 'Ingrese el apellido...',
-            labelText: 'Apellido',
-            errorText: _lastname_show_error ? _lastname_error : null,
-            labelStyle: TextStyle(
-              fontSize: 22,
-              color: Color(0xffff0474),
-              fontFamily: 'PoppinsBold',
-            ),
-            prefixIcon: Icon(
-              Icons.badge_outlined,
-              color: Color(0xffff0474),
-            ),
-            suffixIcon: Icon(
-              Icons.person,
-              color: Color(0xffff0474),
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xffff0474)))),
+        decoration: estilizar(
+            'Ingrese el apellido...',
+            'Apellido',
+            _lastname_show_error,
+            _lastname_error,
+            Icons.badge_outlined,
+            Icons.person),
         style: TextStyle(fontSize: 23, fontFamily: 'Poppins'),
         onChanged: (value) {
           _lastname = value;
@@ -150,28 +116,13 @@ class _SignupScreen extends State<SignupScreen> {
       child: TextField(
         autofocus: true,
         keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-            hintText: 'Ingrese el correo electrónico...',
-            labelText: 'Correo electrónico',
-            errorText: _email_show_error ? _email_error : null,
-            labelStyle: TextStyle(
-              fontSize: 22,
-              color: Color(0xffff0474),
-              fontFamily: 'PoppinsBold',
-            ),
-            prefixIcon: Icon(
-              Icons.alternate_email,
-              color: Color(0xffff0474),
-            ),
-            suffixIcon: Icon(
-              Icons.email,
-              color: Color(0xffff0474),
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xffff0474)))),
+        decoration: estilizar(
+            'Ingrese el correo electrónico...',
+            'Correo electrónico',
+            _email_show_error,
+            _email_error,
+            Icons.alternate_email,
+            Icons.email),
         style: TextStyle(
           fontSize: 23,
           fontFamily: 'Poppins',
@@ -190,28 +141,13 @@ class _SignupScreen extends State<SignupScreen> {
         controller: _controller,
         autofocus: true,
         keyboardType: TextInputType.datetime,
-        decoration: InputDecoration(
-            hintText: 'Ingrese la fecha de nacimiento...',
-            labelText: 'Fecha de nacimiento',
-            errorText: _birthdate_show_error ? _birthdate_error : null,
-            labelStyle: TextStyle(
-              fontSize: 22,
-              color: Color(0xffff0474),
-              fontFamily: 'PoppinsBold',
-            ),
-            prefixIcon: Icon(
-              Icons.date_range,
-              color: Color(0xffff0474),
-            ),
-            suffixIcon: Icon(
-              Icons.calendar_month,
-              color: Color(0xffff0474),
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xffff0474)))),
+        decoration: estilizar(
+            'Seleccione la fecha de nacimiento...',
+            'Fecha de nacimiento',
+            _birthdate_show_error,
+            _birthdate_error,
+            Icons.date_range,
+            Icons.calendar_month),
         style: TextStyle(
           fontSize: 23,
           fontFamily: 'Poppins',
@@ -273,28 +209,8 @@ class _SignupScreen extends State<SignupScreen> {
           genero = option;
           _gender = genero ?? "";
         },
-        decoration: InputDecoration(
-            hintText: 'Seleccione el género...',
-            labelText: 'Género',
-            errorText: _gender_show_error ? _gender_error : null,
-            labelStyle: TextStyle(
-              fontSize: 22,
-              color: Color(0xffff0474),
-              fontFamily: 'PoppinsBold',
-            ),
-            prefixIcon: Icon(
-              Icons.male,
-              color: Color(0xffff0474),
-            ),
-            suffixIcon: Icon(
-              Icons.female,
-              color: Color(0xffff0474),
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xffff0474)))),
+        decoration: estilizar('Seleccione el género...', 'Género',
+            _gender_show_error, _gender_error, Icons.male, Icons.female),
         style: TextStyle(
           fontSize: 23,
           fontFamily: 'Poppins',
@@ -348,7 +264,7 @@ class _SignupScreen extends State<SignupScreen> {
 
   Widget _showButtonSignup() {
     return Container(
-      padding: EdgeInsets.only(top: 35),
+      padding: EdgeInsets.only(top: 30),
       width: 200,
       margin: EdgeInsets.only(left: 50, right: 50),
       child: Row(
@@ -555,4 +471,30 @@ class _SignupScreen extends State<SignupScreen> {
     setState(() {});
     return true;
   }
+}
+
+InputDecoration estilizar(
+    String _hintText,
+    String _labelText,
+    bool _field_show_error,
+    String _field_error,
+    IconData _preIcon,
+    IconData _sufIcon) {
+  return InputDecoration(
+      hintText: _hintText,
+      labelText: _labelText,
+      errorText: _field_show_error ? _field_error : null,
+      labelStyle: const TextStyle(
+          fontSize: 22, color: Color(0xffff0474), fontFamily: 'PoppinsBold'),
+      prefixIcon: Icon(
+        _preIcon,
+        color: Color(0xffff0474),
+      ),
+      suffixIcon: Icon(
+        _sufIcon,
+        color: Color(0xffff0474),
+      ),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+      focusedBorder:
+          OutlineInputBorder(borderSide: BorderSide(color: Color(0xffff0474))));
 }
