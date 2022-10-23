@@ -81,7 +81,7 @@ class _SignupScreen extends State<SignupScreen> {
         keyboardType: TextInputType.name,
         decoration: estilizar('Ingrese el nombre...', 'Nombre',
             _name_show_error, _name_error, Icons.badge_outlined, Icons.person),
-        style: TextStyle(fontSize: 23, fontFamily: 'Poppins'),
+        style: TextStyle(fontSize: 15, fontFamily: 'Poppins'),
         onChanged: (value) {
           _name = value;
         },
@@ -102,7 +102,7 @@ class _SignupScreen extends State<SignupScreen> {
             _lastname_error,
             Icons.badge_outlined,
             Icons.person),
-        style: TextStyle(fontSize: 23, fontFamily: 'Poppins'),
+        style: TextStyle(fontSize: 15, fontFamily: 'Poppins'),
         onChanged: (value) {
           _lastname = value;
         },
@@ -124,7 +124,7 @@ class _SignupScreen extends State<SignupScreen> {
             Icons.alternate_email,
             Icons.email),
         style: TextStyle(
-          fontSize: 23,
+          fontSize: 15,
           fontFamily: 'Poppins',
         ),
         onChanged: (value) {
@@ -149,7 +149,7 @@ class _SignupScreen extends State<SignupScreen> {
             Icons.date_range,
             Icons.calendar_month),
         style: TextStyle(
-          fontSize: 23,
+          fontSize: 15,
           fontFamily: 'Poppins',
         ),
         onChanged: (value) {
@@ -212,7 +212,7 @@ class _SignupScreen extends State<SignupScreen> {
         decoration: estilizar('Seleccione el género...', 'Género',
             _gender_show_error, _gender_error, Icons.male, Icons.female),
         style: TextStyle(
-          fontSize: 23,
+          fontSize: 15,
           fontFamily: 'Poppins',
         ),
       ),
@@ -221,7 +221,7 @@ class _SignupScreen extends State<SignupScreen> {
 
   Widget _showPassword() {
     return Container(
-      padding: EdgeInsets.all(5),
+      padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
       child: TextField(
         keyboardType: TextInputType.text,
         obscureText: _isObscure,
@@ -232,7 +232,7 @@ class _SignupScreen extends State<SignupScreen> {
             labelText: 'Contraseña',
             errorText: _password_show_error ? _password_error : null,
             labelStyle: TextStyle(
-                fontSize: 22,
+                fontSize: 15,
                 color: Color(0xffff0474),
                 fontFamily: 'PoppinsBold'),
             prefixIcon: Icon(
@@ -252,7 +252,7 @@ class _SignupScreen extends State<SignupScreen> {
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Color(0xffff0474)))),
         style: TextStyle(
-          fontSize: 23,
+          fontSize: 15,
           fontFamily: 'Poppins',
         ),
         onChanged: (value) {
@@ -264,7 +264,7 @@ class _SignupScreen extends State<SignupScreen> {
 
   Widget _showButtonSignup() {
     return Container(
-      padding: EdgeInsets.only(top: 30),
+      padding: EdgeInsets.only(top: 20),
       width: 200,
       margin: EdgeInsets.only(left: 50, right: 50),
       child: Row(
@@ -485,7 +485,7 @@ InputDecoration estilizar(
       labelText: _labelText,
       errorText: _field_show_error ? _field_error : null,
       labelStyle: const TextStyle(
-          fontSize: 22, color: Color(0xffff0474), fontFamily: 'PoppinsBold'),
+          fontSize: 15, color: Color(0xffff0474), fontFamily: 'PoppinsBold'),
       prefixIcon: Icon(
         _preIcon,
         color: Color(0xffff0474),
