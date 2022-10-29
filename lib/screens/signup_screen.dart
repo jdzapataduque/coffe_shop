@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:coffe_shop/components/loader_component.dart';
 import 'package:coffe_shop/helpers/constants.dart';
+import 'package:coffe_shop/screens/drawer.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:coffe_shop/utils/error_messages.dart';
@@ -426,6 +427,12 @@ class _SignupScreen extends State<SignupScreen> {
     var decodedJson = jsonDecode(body);
     var code = Signup.fromJson(decodedJson).code;
     var verbose = Signup.fromJson(decodedJson).verbose;
+
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(verbose ?? 'Registro procesado...'),
+    ));
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => DrawerPage()));
   }
 
   bool _validate_name() {
