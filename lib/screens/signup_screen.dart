@@ -431,8 +431,16 @@ class _SignupScreen extends State<SignupScreen> {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(verbose ?? 'Registro procesado...'),
     ));
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => DrawerPage()));
+
+    if (code == 'OK11') {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => DrawerPage()));
+    } else {
+      if (code == 'TAKEN') {
+        _email = '';
+        _validate_email();
+      }
+    }
   }
 
   bool _validate_name() {
