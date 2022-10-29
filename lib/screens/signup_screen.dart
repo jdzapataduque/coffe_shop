@@ -60,24 +60,17 @@ class _SignupScreen extends State<SignupScreen> {
       body: Stack(
         children: <Widget>[
           Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Center(
-                child: SingleChildScrollView(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    _showname(),
-                    _showlastname(),
-                    _showemail(),
-                    _showBirthDate(),
-                    _showGender(),
-                    _showPassword(),
-                    _showButtonSignup(),
-                    _show_account_login_message(),
-                    _showButtonLogin(),
-                  ],
-                )),
-              ),
+              _showname(),
+              _showlastname(),
+              _showemail(),
+              _showBirthDate(),
+              _showGender(),
+              _showPassword(),
+              _showButtonSignup(),
+              _show_account_login_message(),
+              _showButtonLogin(),
             ],
           ),
           _showLoader
