@@ -1,9 +1,16 @@
+import 'dart:convert';
+import 'dart:html';
+import 'dart:io';
+import 'package:coffe_shop/components/loader_component.dart';
+import 'package:coffe_shop/helpers/constants.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:coffe_shop/utils/error_messages.dart';
 import 'package:coffe_shop/screens/login_screen.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 import 'app_bar.dart';
+import 'package:coffe_shop/models/signup.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -44,6 +51,7 @@ class _SignupScreen extends State<SignupScreen> {
   String _password_error = '';
   bool _password_show_error = false;
   bool _isObscure = true;
+  bool _showLoader = false;
 
   ErrorMessages errorHandling = ErrorMessages();
 
@@ -51,31 +59,42 @@ class _SignupScreen extends State<SignupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: header(context, isAppTitle: true),
-      body: Center(
-        child: Center(
-          child: SingleChildScrollView(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+      body: Stack(
+        children: <Widget>[
+          Column(
             children: <Widget>[
-              _showname(),
-              _showlastname(),
-              _showemail(),
-              _showBirthDate(),
-              _showGender(),
-              _showPassword(),
-              _showButtonSignup(),
-              _show_account_login_message(),
-              _showButtonLogin(),
+              Center(
+                child: SingleChildScrollView(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    _showname(),
+                    _showlastname(),
+                    _showemail(),
+                    _showBirthDate(),
+                    _showGender(),
+                    _showPassword(),
+                    _showButtonSignup(),
+                    _show_account_login_message(),
+                    _showButtonLogin(),
+                  ],
+                )),
+              ),
             ],
-          )),
-        ),
+          ),
+          _showLoader
+              ? LoaderComponent(
+                  text: 'Procesando registro...',
+                )
+              : Container(),
+        ],
       ),
     );
   }
 
   Widget _showname() {
     return Container(
-      padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
+      padding: EdgeInsets.only(left: 25, right: 25, bottom: 10, top: 10),
       child: TextField(
         autofocus: true,
         keyboardType: TextInputType.name,
@@ -91,7 +110,7 @@ class _SignupScreen extends State<SignupScreen> {
 
   Widget _showlastname() {
     return Container(
-      padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
+      padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
       child: TextField(
         autofocus: true,
         keyboardType: TextInputType.name,
@@ -112,7 +131,7 @@ class _SignupScreen extends State<SignupScreen> {
 
   Widget _showemail() {
     return Container(
-      padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
+      padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
       child: TextField(
         autofocus: true,
         keyboardType: TextInputType.emailAddress,
@@ -136,7 +155,7 @@ class _SignupScreen extends State<SignupScreen> {
 
   Widget _showBirthDate() {
     return Container(
-      padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
+      padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
       child: TextField(
         controller: _controller,
         autofocus: true,
@@ -194,7 +213,7 @@ class _SignupScreen extends State<SignupScreen> {
   Widget _showGender() {
     String? genero;
     return Container(
-      padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
+      padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
       child: DropdownButtonFormField(
         items: const [
           DropdownMenuItem(value: 'Masculino', child: Text('Masculino')),
@@ -214,6 +233,7 @@ class _SignupScreen extends State<SignupScreen> {
         style: TextStyle(
           fontSize: 15,
           fontFamily: 'Poppins',
+          color: Colors.black,
         ),
       ),
     );
@@ -221,7 +241,7 @@ class _SignupScreen extends State<SignupScreen> {
 
   Widget _showPassword() {
     return Container(
-      padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
+      padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
       child: TextField(
         keyboardType: TextInputType.text,
         obscureText: _isObscure,
@@ -273,7 +293,7 @@ class _SignupScreen extends State<SignupScreen> {
           SizedBox(
             child: Expanded(
               child: SizedBox(
-                height: 45,
+                height: 40,
                 width: 200,
                 child: ElevatedButton(
                   child: Text(
@@ -323,7 +343,7 @@ class _SignupScreen extends State<SignupScreen> {
           SizedBox(
             child: Expanded(
               child: SizedBox(
-                height: 45,
+                height: 40,
                 width: 300,
                 child: ElevatedButton(
                   child: Text(
@@ -351,7 +371,10 @@ class _SignupScreen extends State<SignupScreen> {
     );
   }
 
-  void _signup() {
+  void _signup() async {
+    setState(() {
+      _isObscure = true;
+    });
     if (!_validate_name()) {
       return;
     }
@@ -375,6 +398,43 @@ class _SignupScreen extends State<SignupScreen> {
     if (!_validate_password()) {
       return;
     }
+
+    setState(() {
+      _showLoader = true;
+    });
+
+    Map<String, dynamic> request = {
+      "first_name": _name,
+      "last_name": _lastname,
+      "useremail": _email,
+      "birthdate": _birthdate,
+      "usertype": "coffeelover",
+      "gender": _gender,
+      "password": _password
+    };
+
+    var url = Uri.parse('${Constants.apiUrlSignup}');
+    var response = await http.post(
+      url,
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json',
+      },
+      body: jsonEncode(request),
+    );
+
+    setState(() {
+      _showLoader = false;
+    });
+
+    if (response.statusCode >= 400) {
+      setState(() {});
+      return;
+    }
+    var body = response.body;
+    var decodedJson = jsonDecode(body);
+    var code = Signup.fromJson(decodedJson).code;
+    var verbose = Signup.fromJson(decodedJson).verbose;
   }
 
   bool _validate_name() {

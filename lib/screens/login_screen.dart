@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _showemail() {
     return Container(
-      padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+      padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
       child: TextField(
         autofocus: true,
         keyboardType: TextInputType.emailAddress,
@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
             labelText: 'Correo electrónico',
             errorText: _email_show_error ? _email_error : null,
             labelStyle: TextStyle(
-              fontSize: 22,
+              fontSize: 15,
               color: Color(0xffff0474),
               fontFamily: 'PoppinsBold',
             ),
@@ -79,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Color(0xffff0474)))),
-        style: TextStyle(fontSize: 23, fontFamily: 'Poppins'),
+        style: TextStyle(fontSize: 15, fontFamily: 'Poppins'),
         onChanged: (value) {
           _email = value;
         },
@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _showPassword() {
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
       //margin: EdgeInsets.only(top: 50),
       child: TextField(
         keyboardType: TextInputType.text,
@@ -101,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
             labelText: 'Contraseña',
             errorText: _password_show_error ? _password_error : null,
             labelStyle: TextStyle(
-                fontSize: 22,
+                fontSize: 15,
                 color: Color(0xffff0474),
                 fontFamily: 'PoppinsBold'),
             prefixIcon: Icon(
@@ -120,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Color(0xffff0474)))),
-        style: TextStyle(fontSize: 23, fontFamily: 'Poppins'),
+        style: TextStyle(fontSize: 15, fontFamily: 'Poppins'),
         onChanged: (value) {
           _password = value;
         },
@@ -166,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: ElevatedButton(
                   child: Text(
                     'INGRESAR',
-                    style: TextStyle(fontSize: 22, fontFamily: 'PoppinsBold'),
+                    style: TextStyle(fontSize: 20, fontFamily: 'PoppinsBold'),
                   ),
                   style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -211,7 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Text(
                     'CREAR CUENTA',
                     style: TextStyle(
-                        fontSize: 22,
+                        fontSize: 20,
                         color: Color(0xffff0474),
                         fontFamily: 'PoppinsBold'),
                   ),
