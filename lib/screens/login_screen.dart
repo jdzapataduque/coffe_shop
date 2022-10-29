@@ -110,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             suffixIcon: IconButton(
                 icon:
-                    Icon(_isObscure ? Icons.visibility : Icons.visibility_off),
+                    Icon(_isObscure ? Icons.visibility_off : Icons.visibility),
                 color: Color(0xffff0474),
                 onPressed: () {
                   setState(() {
