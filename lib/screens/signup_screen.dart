@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:html';
-import 'dart:io';
 import 'package:coffe_shop/components/loader_component.dart';
 import 'package:coffe_shop/helpers/constants.dart';
 import 'package:email_validator/email_validator.dart';
@@ -334,7 +332,6 @@ class _SignupScreen extends State<SignupScreen> {
 
   Widget _showButtonLogin() {
     return Container(
-      padding: EdgeInsets.only(top: 10),
       width: 300,
       margin: EdgeInsets.only(left: 50, right: 50),
       child: Row(
