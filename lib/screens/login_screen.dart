@@ -281,7 +281,7 @@ class _LoginScreenState extends State<LoginScreen> {
     // y el "authenticated" de la respuesta en el body
     if ((response.statusCode >= 400) || (!rest)) {
       setState(() {
-        _isObscure = false;
+        _isObscure = true;
         _password_show_error = true;
         _password_error = errorHandling.getError('TCF0006');
       });
