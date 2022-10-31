@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'app_bar.dart';
-
+import 'slider.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 class DrawerPage extends StatefulWidget  {
   static const appTitle = 'Tienda del café';
   @override
@@ -11,9 +12,17 @@ class _HomePageState extends State<DrawerPage>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:customAppBar() ,
-      body: const Center(
-        child: Text('La tienda del café!'),
-      ),
+     /*body: Container(
+              child: CarouselSlider(
+                options: CarouselOptions(
+                  autoPlay: true,
+                  aspectRatio: 2.0,
+                  enlargeCenterPage: true,
+                  enlargeStrategy: CenterPageEnlargeStrategy.height,
+                ),
+                items: imageSliders,
+              ),
+            ),*/
       drawer: Drawer(
         backgroundColor: Colors.transparent,
         // Add a ListView to the drawer. This ensures the user can scroll

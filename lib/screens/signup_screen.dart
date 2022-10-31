@@ -50,7 +50,7 @@ class _SignupScreen extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: header(context, isAppTitle: true),
+      appBar: customAppBar(),
       body: Center(
         child: Center(
           child: SingleChildScrollView(

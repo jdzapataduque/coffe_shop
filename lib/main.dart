@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
    return MaterialApp(
       home:
           Scaffold(
-            appBar: customAppBar() ,
+           appBar: customAppBar() ,
             drawer: DrawerPage(),
             body: Container(
               child: CarouselSlider(
