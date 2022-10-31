@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'package:coffe_shop/helpers/constants.dart';
-import 'package:coffe_shop/main.dart';
 import 'package:coffe_shop/models/token.dart';
-import 'package:coffe_shop/screens/drawer.dart';
 import 'package:coffe_shop/screens/recovey_screen.dart';
+import 'package:coffe_shop/screens/user_info_screen.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -17,6 +15,15 @@ class LoginScreen extends StatefulWidget {
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class LoginInfo {
+  final String f_customer_type;
+  final String f_name;
+  final String l_name;
+  final String f_email;
+
+  LoginInfo(this.f_customer_type, this.f_name, this.l_name, this.f_email);
 }
 
 class _LoginScreenState extends State<LoginScreen> {
@@ -58,8 +65,8 @@ class _LoginScreenState extends State<LoginScreen> {
         autofocus: true,
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
-            hintText: 'Ingrese el correo electrónico...',
-            labelText: 'Correo electrónico',
+            hintText: errorHandling.getMessage('MSG0001'),
+            labelText: errorHandling.getMessage('MSG0002'),
             errorText: _email_show_error ? _email_error : null,
             labelStyle: TextStyle(
               fontSize: 15,
@@ -97,8 +104,8 @@ class _LoginScreenState extends State<LoginScreen> {
         enableSuggestions: false,
         autocorrect: false,
         decoration: InputDecoration(
-            hintText: 'Ingrese la contraseña...',
-            labelText: 'Contraseña',
+            hintText: errorHandling.getMessage('MSG0003'),
+            labelText: errorHandling.getMessage('MSG0004'),
             errorText: _password_show_error ? _password_error : null,
             labelStyle: TextStyle(
                 fontSize: 15,
@@ -165,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: 200,
                 child: ElevatedButton(
                   child: Text(
-                    'INGRESAR',
+                    errorHandling.getMessage('MSG0005'),
                     style: TextStyle(fontSize: 20, fontFamily: 'PoppinsBold'),
                   ),
                   style: ButtonStyle(
@@ -188,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
         padding: EdgeInsets.all(5),
         child: Text(
-          '¿No tienes una cuenta aún?',
+          errorHandling.getMessage('MSG0006'),
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 20, fontFamily: 'Poppins'),
         ));
@@ -209,7 +216,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: 300,
                 child: ElevatedButton(
                   child: Text(
-                    'CREAR CUENTA',
+                    errorHandling.getMessage('MSG0007'),
                     style: TextStyle(
                         fontSize: 20,
                         color: Color(0xffff0474),
@@ -236,7 +243,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
       child: TextButton(
         child: Text(
-          'He olvidado mi contraseña',
+          errorHandling.getMessage('MSG0008'),
           style: TextStyle(
               fontSize: 20, color: Color(0xffff0474), fontFamily: 'Poppins'),
         ),
@@ -247,6 +254,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _login() async {
     String responseJson = '';
+    String customer_type = '';
+    String f_name = '';
+    String l_name = '';
+    String wemail = '';
 
     if (!_validate_email()) {
       return;
@@ -293,11 +304,15 @@ class _LoginScreenState extends State<LoginScreen> {
     var token = Token.fromJson(decodedJson);
     print(token.token);
 
+    customer_type = token.customerType.toString();
+    f_name = token.firstName.toString();
+    l_name = token.lastName.toString();
+    wemail = token.email.toString();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("Ingreso al sistema exitoso"),
     ));
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => DrawerPage()));
+        context, MaterialPageRoute(builder: (context) => UserInfoScreen()));
   }
 
   bool _validate_email() {
