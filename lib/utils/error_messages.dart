@@ -66,6 +66,12 @@ class ErrorMessages {
       case 'MSG0008':
         _msg = 'He olvidado mi contraseña';
         break;
+      case 'MSG0009':
+        _msg = 'Tipo de consumidor';
+        break;
+      case 'MSG0010':
+        _msg = 'Nombre';
+        break;
       default:
         _msg = 'Mensaje no definido para $_msg';
     }

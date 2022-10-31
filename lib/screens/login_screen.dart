@@ -308,11 +308,15 @@ class _LoginScreenState extends State<LoginScreen> {
     f_name = token.firstName.toString();
     l_name = token.lastName.toString();
     wemail = token.email.toString();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    /*   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("Ingreso al sistema exitoso"),
-    ));
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => UserInfoScreen()));
+    )); */
+    Navigator.push(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => new UserInfoScreen(
+                logininfo:
+                    new LoginInfo(customer_type, f_name, l_name, wemail))));
   }
 
   bool _validate_email() {
