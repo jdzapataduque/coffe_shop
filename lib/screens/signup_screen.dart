@@ -58,7 +58,7 @@ class _SignupScreen extends State<SignupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: header(context, isAppTitle: true),
+      appBar: customAppBar(),
       body: Stack(
         children: <Widget>[
           Column(

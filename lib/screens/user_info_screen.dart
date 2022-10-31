@@ -18,7 +18,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: header(context, isAppTitle: true),
+      appBar: customAppBar(),
       body: Center(
           child: SingleChildScrollView(
               child: Column(

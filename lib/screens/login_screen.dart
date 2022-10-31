@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: header(context, isAppTitle: true),
+      appBar: customAppBar(),
       body: Center(
           child: SingleChildScrollView(
               child: Column(
