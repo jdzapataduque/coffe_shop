@@ -91,8 +91,13 @@ class _SignupScreen extends State<SignupScreen> {
       child: TextField(
         autofocus: true,
         keyboardType: TextInputType.name,
-        decoration: estilizar('Ingrese el nombre...', 'Nombre',
-            _name_show_error, _name_error, Icons.badge_outlined, Icons.person),
+        decoration: estilizar(
+            errorHandling.getMessage('MSG0011'),
+            errorHandling.getMessage('MSG0010'),
+            _name_show_error,
+            _name_error,
+            Icons.badge_outlined,
+            Icons.person),
         style: TextStyle(fontSize: 15, fontFamily: 'Poppins'),
         onChanged: (value) {
           _name = value;
@@ -108,8 +113,8 @@ class _SignupScreen extends State<SignupScreen> {
         autofocus: true,
         keyboardType: TextInputType.name,
         decoration: estilizar(
-            'Ingrese el apellido...',
-            'Apellido',
+            errorHandling.getMessage('MSG0012'),
+            errorHandling.getMessage('MSG0013'),
             _lastname_show_error,
             _lastname_error,
             Icons.badge_outlined,
@@ -129,8 +134,8 @@ class _SignupScreen extends State<SignupScreen> {
         autofocus: true,
         keyboardType: TextInputType.emailAddress,
         decoration: estilizar(
-            'Ingrese el correo electrónico...',
-            'Correo electrónico',
+            errorHandling.getMessage('MSG0001'),
+            errorHandling.getMessage('MSG0002'),
             _email_show_error,
             _email_error,
             Icons.alternate_email,
@@ -154,8 +159,8 @@ class _SignupScreen extends State<SignupScreen> {
         autofocus: true,
         keyboardType: TextInputType.datetime,
         decoration: estilizar(
-            'Seleccione la fecha de nacimiento...',
-            'Fecha de nacimiento',
+            errorHandling.getMessage('MSG0014'),
+            errorHandling.getMessage('MSG0015'),
             _birthdate_show_error,
             _birthdate_error,
             Icons.date_range,
@@ -221,8 +226,13 @@ class _SignupScreen extends State<SignupScreen> {
           genero = option;
           _gender = genero ?? "";
         },
-        decoration: estilizar('Seleccione el género...', 'Género',
-            _gender_show_error, _gender_error, Icons.male, Icons.female),
+        decoration: estilizar(
+            errorHandling.getMessage('MSG0016'),
+            errorHandling.getMessage('MSG0017'),
+            _gender_show_error,
+            _gender_error,
+            Icons.male,
+            Icons.female),
         style: TextStyle(
           fontSize: 15,
           fontFamily: 'Poppins',
@@ -241,8 +251,8 @@ class _SignupScreen extends State<SignupScreen> {
         enableSuggestions: false,
         autocorrect: false,
         decoration: InputDecoration(
-            hintText: 'Ingrese la contraseña...',
-            labelText: 'Contraseña',
+            hintText: errorHandling.getMessage('MSG0003'),
+            labelText: errorHandling.getMessage('MSG0004'),
             errorText: _password_show_error ? _password_error : null,
             labelStyle: TextStyle(
                 fontSize: 15,
@@ -290,7 +300,7 @@ class _SignupScreen extends State<SignupScreen> {
                 width: 200,
                 child: ElevatedButton(
                   child: Text(
-                    'CREAR CUENTA',
+                    errorHandling.getMessage('MSG0007'),
                     style: TextStyle(
                       fontSize: 20,
                       fontFamily: 'PoppinsBold',
@@ -316,7 +326,7 @@ class _SignupScreen extends State<SignupScreen> {
     return Container(
         padding: EdgeInsets.all(10),
         child: Text(
-          '¿Ya tienes una cuenta?',
+          errorHandling.getMessage('MSG0018'),
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 20,
@@ -339,7 +349,7 @@ class _SignupScreen extends State<SignupScreen> {
                 width: 300,
                 child: ElevatedButton(
                   child: Text(
-                    'INGRESAR',
+                    errorHandling.getMessage('MSG0005'),
                     style: TextStyle(
                       fontSize: 20,
                       color: Color(0xffff0474),

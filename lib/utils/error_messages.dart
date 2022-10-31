@@ -72,6 +72,30 @@ class ErrorMessages {
       case 'MSG0010':
         _msg = 'Nombre';
         break;
+      case 'MSG0011':
+        _msg = 'Ingrese el nombre...';
+        break;
+      case 'MSG0012':
+        _msg = 'Ingrese el apellido...';
+        break;
+      case 'MSG0013':
+        _msg = 'Apellido';
+        break;
+      case 'MSG0014':
+        _msg = 'Seleccione la fecha de nacimiento...';
+        break;
+      case 'MSG0015':
+        _msg = 'Fecha de nacimiento';
+        break;
+      case 'MSG0016':
+        _msg = 'Seleccione el género...';
+        break;
+      case 'MSG0017':
+        _msg = 'Género';
+        break;
+      case 'MSG0018':
+        _msg = '¿Ya tienes una cuenta?';
+        break;
       default:
         _msg = 'Mensaje no definido para $_msg';
     }
