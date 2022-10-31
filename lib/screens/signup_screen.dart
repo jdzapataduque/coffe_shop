@@ -1,9 +1,15 @@
+import 'dart:convert';
+import 'package:coffe_shop/components/loader_component.dart';
+import 'package:coffe_shop/helpers/constants.dart';
+import 'package:coffe_shop/screens/drawer.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:coffe_shop/utils/error_messages.dart';
 import 'package:coffe_shop/screens/login_screen.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 import 'app_bar.dart';
+import 'package:coffe_shop/models/signup.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -44,17 +50,18 @@ class _SignupScreen extends State<SignupScreen> {
   String _password_error = '';
   bool _password_show_error = false;
   bool _isObscure = true;
+  bool _showLoader = false;
 
   ErrorMessages errorHandling = ErrorMessages();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: customAppBar(),
-      body: Center(
-        child: Center(
-          child: SingleChildScrollView(
-              child: Column(
+      body: Stack(
+        children: <Widget>[
+          Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               _showname(),
@@ -67,20 +74,30 @@ class _SignupScreen extends State<SignupScreen> {
               _show_account_login_message(),
               _showButtonLogin(),
             ],
-          )),
-        ),
+          ),
+          _showLoader
+              ? LoaderComponent(
+                  text: 'Procesando registro...',
+                )
+              : Container(),
+        ],
       ),
     );
   }
 
   Widget _showname() {
     return Container(
-      padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
+      padding: EdgeInsets.only(left: 25, right: 25, bottom: 10, top: 10),
       child: TextField(
         autofocus: true,
         keyboardType: TextInputType.name,
-        decoration: estilizar('Ingrese el nombre...', 'Nombre',
-            _name_show_error, _name_error, Icons.badge_outlined, Icons.person),
+        decoration: estilizar(
+            errorHandling.getMessage('MSG0011'),
+            errorHandling.getMessage('MSG0010'),
+            _name_show_error,
+            _name_error,
+            Icons.badge_outlined,
+            Icons.person),
         style: TextStyle(fontSize: 15, fontFamily: 'Poppins'),
         onChanged: (value) {
           _name = value;
@@ -91,13 +108,13 @@ class _SignupScreen extends State<SignupScreen> {
 
   Widget _showlastname() {
     return Container(
-      padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
+      padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
       child: TextField(
         autofocus: true,
         keyboardType: TextInputType.name,
         decoration: estilizar(
-            'Ingrese el apellido...',
-            'Apellido',
+            errorHandling.getMessage('MSG0012'),
+            errorHandling.getMessage('MSG0013'),
             _lastname_show_error,
             _lastname_error,
             Icons.badge_outlined,
@@ -112,13 +129,13 @@ class _SignupScreen extends State<SignupScreen> {
 
   Widget _showemail() {
     return Container(
-      padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
+      padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
       child: TextField(
         autofocus: true,
         keyboardType: TextInputType.emailAddress,
         decoration: estilizar(
-            'Ingrese el correo electrónico...',
-            'Correo electrónico',
+            errorHandling.getMessage('MSG0001'),
+            errorHandling.getMessage('MSG0002'),
             _email_show_error,
             _email_error,
             Icons.alternate_email,
@@ -136,14 +153,14 @@ class _SignupScreen extends State<SignupScreen> {
 
   Widget _showBirthDate() {
     return Container(
-      padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
+      padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
       child: TextField(
         controller: _controller,
         autofocus: true,
         keyboardType: TextInputType.datetime,
         decoration: estilizar(
-            'Seleccione la fecha de nacimiento...',
-            'Fecha de nacimiento',
+            errorHandling.getMessage('MSG0014'),
+            errorHandling.getMessage('MSG0015'),
             _birthdate_show_error,
             _birthdate_error,
             Icons.date_range,
@@ -194,7 +211,7 @@ class _SignupScreen extends State<SignupScreen> {
   Widget _showGender() {
     String? genero;
     return Container(
-      padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
+      padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
       child: DropdownButtonFormField(
         items: const [
           DropdownMenuItem(value: 'Masculino', child: Text('Masculino')),
@@ -209,11 +226,17 @@ class _SignupScreen extends State<SignupScreen> {
           genero = option;
           _gender = genero ?? "";
         },
-        decoration: estilizar('Seleccione el género...', 'Género',
-            _gender_show_error, _gender_error, Icons.male, Icons.female),
+        decoration: estilizar(
+            errorHandling.getMessage('MSG0016'),
+            errorHandling.getMessage('MSG0017'),
+            _gender_show_error,
+            _gender_error,
+            Icons.male,
+            Icons.female),
         style: TextStyle(
           fontSize: 15,
           fontFamily: 'Poppins',
+          color: Colors.black,
         ),
       ),
     );
@@ -221,15 +244,15 @@ class _SignupScreen extends State<SignupScreen> {
 
   Widget _showPassword() {
     return Container(
-      padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
+      padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
       child: TextField(
         keyboardType: TextInputType.text,
         obscureText: _isObscure,
         enableSuggestions: false,
         autocorrect: false,
         decoration: InputDecoration(
-            hintText: 'Ingrese la contraseña...',
-            labelText: 'Contraseña',
+            hintText: errorHandling.getMessage('MSG0003'),
+            labelText: errorHandling.getMessage('MSG0004'),
             errorText: _password_show_error ? _password_error : null,
             labelStyle: TextStyle(
                 fontSize: 15,
@@ -241,7 +264,7 @@ class _SignupScreen extends State<SignupScreen> {
             ),
             suffixIcon: IconButton(
                 icon:
-                    Icon(_isObscure ? Icons.visibility : Icons.visibility_off),
+                    Icon(_isObscure ? Icons.visibility_off : Icons.visibility),
                 color: Color(0xffff0474),
                 onPressed: () {
                   setState(() {
@@ -273,11 +296,11 @@ class _SignupScreen extends State<SignupScreen> {
           SizedBox(
             child: Expanded(
               child: SizedBox(
-                height: 45,
+                height: 40,
                 width: 200,
                 child: ElevatedButton(
                   child: Text(
-                    'CREAR CUENTA',
+                    errorHandling.getMessage('MSG0007'),
                     style: TextStyle(
                       fontSize: 20,
                       fontFamily: 'PoppinsBold',
@@ -303,7 +326,7 @@ class _SignupScreen extends State<SignupScreen> {
     return Container(
         padding: EdgeInsets.all(10),
         child: Text(
-          '¿Ya tienes una cuenta?',
+          errorHandling.getMessage('MSG0018'),
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 20,
@@ -314,7 +337,6 @@ class _SignupScreen extends State<SignupScreen> {
 
   Widget _showButtonLogin() {
     return Container(
-      padding: EdgeInsets.only(top: 10),
       width: 300,
       margin: EdgeInsets.only(left: 50, right: 50),
       child: Row(
@@ -323,11 +345,11 @@ class _SignupScreen extends State<SignupScreen> {
           SizedBox(
             child: Expanded(
               child: SizedBox(
-                height: 45,
+                height: 40,
                 width: 300,
                 child: ElevatedButton(
                   child: Text(
-                    'INGRESAR',
+                    errorHandling.getMessage('MSG0005'),
                     style: TextStyle(
                       fontSize: 20,
                       color: Color(0xffff0474),
@@ -351,7 +373,10 @@ class _SignupScreen extends State<SignupScreen> {
     );
   }
 
-  void _signup() {
+  void _signup() async {
+    setState(() {
+      _isObscure = true;
+    });
     if (!_validate_name()) {
       return;
     }
@@ -374,6 +399,57 @@ class _SignupScreen extends State<SignupScreen> {
 
     if (!_validate_password()) {
       return;
+    }
+
+    setState(() {
+      _showLoader = true;
+    });
+
+    Map<String, dynamic> request = {
+      "first_name": _name,
+      "last_name": _lastname,
+      "useremail": _email,
+      "birthdate": _birthdate,
+      "usertype": "coffeelover",
+      "gender": _gender,
+      "password": _password
+    };
+
+    var url = Uri.parse('${Constants.apiUrlSignup}');
+    var response = await http.post(
+      url,
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json',
+      },
+      body: jsonEncode(request),
+    );
+
+    setState(() {
+      _showLoader = false;
+    });
+
+    if (response.statusCode >= 400) {
+      setState(() {});
+      return;
+    }
+    var body = response.body;
+    var decodedJson = jsonDecode(body);
+    var code = Signup.fromJson(decodedJson).code;
+    var verbose = Signup.fromJson(decodedJson).verbose;
+
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(verbose ?? 'Registro procesado...'),
+    ));
+
+    if (code == 'OK11') {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => DrawerPage()));
+    } else {
+      if (code == 'TAKEN') {
+        _email = '';
+        _validate_email();
+      }
     }
   }
 

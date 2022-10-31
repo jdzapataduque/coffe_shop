@@ -1,8 +1,8 @@
 import 'dart:convert';
-
 import 'package:coffe_shop/helpers/constants.dart';
 import 'package:coffe_shop/models/token.dart';
 import 'package:coffe_shop/screens/recovey_screen.dart';
+import 'package:coffe_shop/screens/user_info_screen.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -15,6 +15,15 @@ class LoginScreen extends StatefulWidget {
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class LoginInfo {
+  final String f_customer_type;
+  final String f_name;
+  final String l_name;
+  final String f_email;
+
+  LoginInfo(this.f_customer_type, this.f_name, this.l_name, this.f_email);
 }
 
 class _LoginScreenState extends State<LoginScreen> {
@@ -51,16 +60,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _showemail() {
     return Container(
-      padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+      padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
       child: TextField(
         autofocus: true,
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
-            hintText: 'Ingrese el correo electrónico...',
-            labelText: 'Correo electrónico',
+            hintText: errorHandling.getMessage('MSG0001'),
+            labelText: errorHandling.getMessage('MSG0002'),
             errorText: _email_show_error ? _email_error : null,
             labelStyle: TextStyle(
-              fontSize: 22,
+              fontSize: 15,
               color: Color(0xffff0474),
               fontFamily: 'PoppinsBold',
             ),
@@ -77,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Color(0xffff0474)))),
-        style: TextStyle(fontSize: 23, fontFamily: 'Poppins'),
+        style: TextStyle(fontSize: 15, fontFamily: 'Poppins'),
         onChanged: (value) {
           _email = value;
         },
@@ -87,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _showPassword() {
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
       //margin: EdgeInsets.only(top: 50),
       child: TextField(
         keyboardType: TextInputType.text,
@@ -95,11 +104,11 @@ class _LoginScreenState extends State<LoginScreen> {
         enableSuggestions: false,
         autocorrect: false,
         decoration: InputDecoration(
-            hintText: 'Ingrese la contraseña...',
-            labelText: 'Contraseña',
+            hintText: errorHandling.getMessage('MSG0003'),
+            labelText: errorHandling.getMessage('MSG0004'),
             errorText: _password_show_error ? _password_error : null,
             labelStyle: TextStyle(
-                fontSize: 22,
+                fontSize: 15,
                 color: Color(0xffff0474),
                 fontFamily: 'PoppinsBold'),
             prefixIcon: Icon(
@@ -108,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             suffixIcon: IconButton(
                 icon:
-                    Icon(_isObscure ? Icons.visibility : Icons.visibility_off),
+                    Icon(_isObscure ? Icons.visibility_off : Icons.visibility),
                 color: Color(0xffff0474),
                 onPressed: () {
                   setState(() {
@@ -118,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Color(0xffff0474)))),
-        style: TextStyle(fontSize: 23, fontFamily: 'Poppins'),
+        style: TextStyle(fontSize: 15, fontFamily: 'Poppins'),
         onChanged: (value) {
           _password = value;
         },
@@ -163,8 +172,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: 200,
                 child: ElevatedButton(
                   child: Text(
-                    'INGRESAR',
-                    style: TextStyle(fontSize: 22, fontFamily: 'PoppinsBold'),
+                    errorHandling.getMessage('MSG0005'),
+                    style: TextStyle(fontSize: 20, fontFamily: 'PoppinsBold'),
                   ),
                   style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -186,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
         padding: EdgeInsets.all(5),
         child: Text(
-          '¿No tienes una cuenta aún?',
+          errorHandling.getMessage('MSG0006'),
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 20, fontFamily: 'Poppins'),
         ));
@@ -207,9 +216,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: 300,
                 child: ElevatedButton(
                   child: Text(
-                    'CREAR CUENTA',
+                    errorHandling.getMessage('MSG0007'),
                     style: TextStyle(
-                        fontSize: 22,
+                        fontSize: 20,
                         color: Color(0xffff0474),
                         fontFamily: 'PoppinsBold'),
                   ),
@@ -234,7 +243,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
       child: TextButton(
         child: Text(
-          'He olvidado mi contraseña',
+          errorHandling.getMessage('MSG0008'),
           style: TextStyle(
               fontSize: 20, color: Color(0xffff0474), fontFamily: 'Poppins'),
         ),
@@ -245,6 +254,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _login() async {
     String responseJson = '';
+    String customer_type = '';
+    String f_name = '';
+    String l_name = '';
+    String wemail = '';
 
     if (!_validate_email()) {
       return;
@@ -279,7 +292,7 @@ class _LoginScreenState extends State<LoginScreen> {
     // y el "authenticated" de la respuesta en el body
     if ((response.statusCode >= 400) || (!rest)) {
       setState(() {
-        _isObscure = false;
+        _isObscure = true;
         _password_show_error = true;
         _password_error = errorHandling.getError('TCF0006');
       });
@@ -291,11 +304,19 @@ class _LoginScreenState extends State<LoginScreen> {
     var token = Token.fromJson(decodedJson);
     print(token.token);
 
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    customer_type = token.customerType.toString();
+    f_name = token.firstName.toString();
+    l_name = token.lastName.toString();
+    wemail = token.email.toString();
+    /*   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("Ingreso al sistema exitoso"),
-    ));
-    //Navigator.pushReplacement(
-       // context, MaterialPageRoute(builder: (context) => DrawerPage()));
+    )); */
+    Navigator.push(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => new UserInfoScreen(
+                logininfo:
+                    new LoginInfo(customer_type, f_name, l_name, wemail))));
   }
 
   bool _validate_email() {
