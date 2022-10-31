@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'app_bar.dart';
 class DrawerPage extends StatefulWidget {
@@ -6,6 +7,15 @@ class DrawerPage extends StatefulWidget {
   _HomePageState createState()=>_HomePageState();
 }
 class _HomePageState extends State<DrawerPage>{
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _firebaseMessaging.getToken().then((token) => print(token));
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
