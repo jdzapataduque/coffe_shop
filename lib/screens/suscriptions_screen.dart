@@ -17,7 +17,8 @@ class SuscriptionsScreen extends StatefulWidget {
 }
 
 class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
-  List<Suscriptions> _suscriptions = [];
+  List<Suscriptions> _currentsuscriptions = [];
+  List<Suscriptions> _suscriptionsAvailable = [];
 
   @override
   void initState() {
@@ -29,7 +30,7 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
     return Scaffold(
       appBar: customAppBar(),
       body: Center(
-        child: Text('Suscripciones'),
+        child: _getContent(),
       ),
     );
   }
@@ -45,17 +46,28 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
 
     //Obtener respuesta del body , debido a que el status code,
     //está devolviendo exitoso si el logueo es fallido
-    Map<String, dynamic> currentSuscriptions = jsonDecode(response.body);
-    var currentSusc = currentSuscriptions["subscriptions_available"];
+    Map<String, dynamic> arraySuscriptions = jsonDecode(response.body);
+    var currentSusc = arraySuscriptions["current_subscriptions"];
+    var suscriptionAvail = arraySuscriptions["subscriptions_available"];
 
-    if ((currentSusc == null) || (currentSusc.toString().isEmpty)) {
+    if (((currentSusc == null) || (currentSusc.toString().isEmpty)) &&
+        ((suscriptionAvail == null) || (suscriptionAvail.toString().isEmpty))) {
       return;
     }
 
     for (var item in currentSusc) {
-      _suscriptions.add(Suscriptions.fromJson(item));
+      _currentsuscriptions.add(Suscriptions.fromJson(item));
     }
 
-    print(_suscriptions);
+    for (var item in suscriptionAvail) {
+      _suscriptionsAvailable.add(Suscriptions.fromJson(item));
+    }
+
+    print(_currentsuscriptions);
+    print(_suscriptionsAvailable);
+  }
+
+  Widget _getContent() {
+    return Container();
   }
 }
