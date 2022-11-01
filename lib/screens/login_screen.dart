@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:coffe_shop/helpers/constants.dart';
 import 'package:coffe_shop/models/token.dart';
 import 'package:coffe_shop/screens/recovey_screen.dart';
+import 'package:coffe_shop/screens/suscriptions_screen.dart';
 import 'package:coffe_shop/screens/user_info_screen.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:http/http.dart' as http;
@@ -61,11 +62,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _showTitle() {
     return Container(
-      padding: EdgeInsets.only(left: 25, right: 25,top: 10,bottom: 45),
-      child:
-        Text("Iniciar sesión",style: TextStyle(fontSize: 20,fontFamily:'PoppinsBold',color: Colors.pinkAccent ))
-      );
+        padding: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 45),
+        child: Text("Iniciar sesión",
+            style: TextStyle(
+                fontSize: 20,
+                fontFamily: 'PoppinsBold',
+                color: Colors.pinkAccent)));
   }
+
   Widget _showemail() {
     return Container(
       padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
@@ -143,7 +147,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-
   Widget _showButtonLogin() {
     return Container(
       padding: EdgeInsets.only(top: 35),
@@ -180,12 +183,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _show_account_register_message() {
     return Container(
-       // padding: EdgeInsets.all(30),
+        // padding: EdgeInsets.all(30),
         child: Text(
-          errorHandling.getMessage('MSG0006'),
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 20, fontFamily: 'Poppins'),
-        ));
+      errorHandling.getMessage('MSG0006'),
+      textAlign: TextAlign.center,
+      style: TextStyle(fontSize: 20, fontFamily: 'Poppins'),
+    ));
   }
 
   Widget _showButton_create_account() {
@@ -286,8 +289,6 @@ class _LoginScreenState extends State<LoginScreen> {
     var body = response.body;
     var decodedJson = jsonDecode(body);
     var token = Token.fromJson(decodedJson);
-    print(token.token);
-
     customer_type = token.customerType.toString();
     f_name = token.firstName.toString();
     l_name = token.lastName.toString();
@@ -298,9 +299,7 @@ class _LoginScreenState extends State<LoginScreen> {
     Navigator.push(
         context,
         new MaterialPageRoute(
-            builder: (context) => new UserInfoScreen(
-                logininfo:
-                    new LoginInfo(customer_type, f_name, l_name, wemail))));
+            builder: (context) => SuscriptionsScreen(token: token)));
   }
 
   bool _validate_email() {

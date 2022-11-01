@@ -5,4 +5,6 @@ class Constants {
       'https://latiendadelcafe.co/account/login#recover';
   static String get apiUrlSignup =>
       'https://latiendadelcafe.com.co/mobileapp/createaccount/';
+  static String get apiUrlSuscriptions =>
+      'https://latiendadelcafe.com.co/mobileapp/get_subscriptions/';
 }
