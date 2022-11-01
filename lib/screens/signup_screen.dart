@@ -346,7 +346,7 @@ class _SignupScreen extends State<SignupScreen> {
             child: Expanded(
               child: SizedBox(
                 height: 40,
-                width: 300,
+                width: 250,
                 child: ElevatedButton(
                   child: Text(
                     errorHandling.getMessage('MSG0005'),

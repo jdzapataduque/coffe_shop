@@ -28,7 +28,7 @@ class _HomePageState extends State<DrawerPage>{
               ),
               child: Text('MENÚ',  textAlign: TextAlign.center,
                 style: TextStyle(  fontFamily: 'PoppinsBold',
-                    fontSize: 16.0,color: Colors.white),
+                    fontSize: 18.0,color: Colors.white,height: 3.3),
               ),
             ),
             ListTile(

@@ -3,7 +3,8 @@
    <application
         android:label="coffe_shop"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/icon">
+       <meta-data android:name="com.google.android.geo.API_KEY"  android:value="AIzaSyCBRtQo7DBU3dH-acB528zr-x_IiAOMt7c"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
