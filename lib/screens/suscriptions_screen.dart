@@ -43,14 +43,16 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
       body: jsonEncode(request),
     );
 
-    var body = response.body;
-    var decodedJson = jsonDecode(body);
+    //Obtener respuesta del body , debido a que el status code,
+    //está devolviendo exitoso si el logueo es fallido
+    Map<String, dynamic> currentSuscriptions = jsonDecode(response.body);
+    var currentSusc = currentSuscriptions["subscriptions_available"];
 
-    if ((decodedJson == null) || (decodedJson.toString().isEmpty)) {
+    if ((currentSusc == null) || (currentSusc.toString().isEmpty)) {
       return;
     }
 
-    for (var item in decodedJson) {
+    for (var item in currentSusc) {
       _suscriptions.add(Suscriptions.fromJson(item));
     }
 
