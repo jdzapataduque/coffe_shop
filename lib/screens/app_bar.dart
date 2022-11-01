@@ -8,19 +8,19 @@ class customAppBar extends StatelessWidget  implements PreferredSizeWidget{
     return AppBar(
       centerTitle: true,
       title: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Image.asset(
             'assets/img/logo.PNG',
-            scale: 2.631,
+            scale: 2.5,
           ),
           const SizedBox(
-            width: 20,
+            width: 10,
           ),
         ],
       ),
       actions: <Widget>[
-        IconButton(
+       IconButton(
           icon: const Icon(Icons.search_rounded),
           tooltip: 'Buscar',
           onPressed: () {
@@ -33,27 +33,6 @@ class customAppBar extends StatelessWidget  implements PreferredSizeWidget{
           onPressed: () {
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => LoginScreen()));
-          },
-        ),
-        IconButton(
-          icon: const Icon(Icons.shopping_cart),
-          tooltip: 'Carrito de compras',
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute<void>(
-              builder: (BuildContext context) {
-                return Scaffold(
-                  appBar: AppBar(
-                    title: const Text('Next page'),
-                  ),
-                  body: const Center(
-                    child: Text(
-                      'This is the next page',
-                      style: TextStyle(fontSize: 24),
-                    ),
-                  ),
-                );
-              },
-            ));
           },
         ),
       ],

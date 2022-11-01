@@ -1,12 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
-final List<String> imgList = ['assets/img/inicio1.png', 'assets/img/inicio2.jpg'];
+final List<String> imgList = ['https://cdn.shopify.com/s/files/1/0272/2873/3504/files/banner_37ed9e51-4840-4b8a-9d79-3345de06a3f9_360x.jpg',
+  'https://cdn.shopify.com/s/files/1/0272/2873/3504/files/diagonal-opt_360x.jpg',
+  'https://cdn.shopify.com/s/files/1/0272/2873/3504/files/alejawebp_2fa43961-5429-4649-8584-09cff4e10f88_360x.webp'];
 
 final List<Widget> imageSliders = imgList
     .map((item) => Container(
   child: Container(
-    margin: EdgeInsets.all(5.0),
+    margin: EdgeInsets.all(10.0),
     child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(5.0)),
         child: Stack(
@@ -31,7 +33,6 @@ final List<Widget> imageSliders = imgList
                     vertical: 10.0, horizontal: 20.0),
                 child: Text(
                   'Tienda del café',
-                 // 'No. ${imgList.indexOf(item)} image',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20.0,

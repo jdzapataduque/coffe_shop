@@ -46,6 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+          _showTitle(),
           _showemail(),
           //_showPasswordText(),
           _showPassword(),
@@ -58,6 +59,13 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  Widget _showTitle() {
+    return Container(
+      padding: EdgeInsets.only(left: 25, right: 25,top: 10,bottom: 45),
+      child:
+        Text("Iniciar sesión",style: TextStyle(fontSize: 20,fontFamily:'PoppinsBold',color: Colors.pinkAccent ))
+      );
+  }
   Widget _showemail() {
     return Container(
       padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
@@ -135,27 +143,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _showemailText() {
-    return Container(
-        padding: EdgeInsets.all(10),
-        child: Text(
-          'Correo electrónico',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              fontWeight: FontWeight.bold, fontSize: 20, fontFamily: "Poppins"),
-        ));
-  }
-
-  Widget _showPasswordText() {
-    return Container(
-        padding: EdgeInsets.all(10),
-        child: Text(
-          'Contraseña',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              fontWeight: FontWeight.bold, fontSize: 20, fontFamily: "Poppins"),
-        ));
-  }
 
   Widget _showButtonLogin() {
     return Container(
@@ -193,7 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _show_account_register_message() {
     return Container(
-        padding: EdgeInsets.all(5),
+       // padding: EdgeInsets.all(30),
         child: Text(
           errorHandling.getMessage('MSG0006'),
           textAlign: TextAlign.center,
@@ -212,8 +199,8 @@ class _LoginScreenState extends State<LoginScreen> {
           SizedBox(
             child: Expanded(
               child: SizedBox(
-                height: 45,
-                width: 300,
+                height: 40,
+                width: 250,
                 child: ElevatedButton(
                   child: Text(
                     errorHandling.getMessage('MSG0007'),
@@ -266,12 +253,10 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!_validate_password()) {
       return;
     }
-
     //Ocultar la contraseña
     setState(() {
       _isObscure = true;
     });
-
     //Armar JSON para el API de login de la tienda del café
     Map<String, dynamic> request = {'user': _email, 'password': _password};
     var url = Uri.parse('${Constants.apiUrlLogin}');
@@ -280,7 +265,6 @@ class _LoginScreenState extends State<LoginScreen> {
       url,
       body: jsonEncode(request),
     );
-
     //Respuesta del body de JSON
     responseJson = response.body;
     //Obtener respuesta del body , debido a que el status code,
