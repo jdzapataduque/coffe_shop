@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:coffe_shop/models/suscriptions.dart';
 import 'package:coffe_shop/screens/app_bar.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +18,7 @@ class SuscriptionsScreen extends StatefulWidget {
 class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
   List<Suscriptions> _currentsuscriptions = [];
   List<Suscriptions> _suscriptionsAvailable = [];
+  List<dynamic> listajuan = [];
 
   @override
   void initState() {
@@ -46,28 +46,54 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
 
     //Obtener respuesta del body , debido a que el status code,
     //está devolviendo exitoso si el logueo es fallido
-    Map<String, dynamic> arraySuscriptions = jsonDecode(response.body);
-    var currentSusc = arraySuscriptions["current_subscriptions"];
-    var suscriptionAvail = arraySuscriptions["subscriptions_available"];
+    Map<String, dynamic> map = json.decode(response.body);
+    var body = response.body;
+    var jsonjuan = jsonDecode(body);
+    var currentSusc = jsonDecode(response.body)["current_subscriptions"];
+    var suscriptionAvail = jsonDecode(response.body)["subscriptions_available"];
+
+    //listajuan = jsonjuan;
 
     if (((currentSusc == null) || (currentSusc.toString().isEmpty)) &&
         ((suscriptionAvail == null) || (suscriptionAvail.toString().isEmpty))) {
       return;
     }
 
-    for (var item in currentSusc) {
+    for (var item in jsonjuan) {
       _currentsuscriptions.add(Suscriptions.fromJson(item));
     }
 
-    for (var item in suscriptionAvail) {
-      _suscriptionsAvailable.add(Suscriptions.fromJson(item));
-    }
+    // for (var item in suscriptionAvail) {
+    //   _suscriptionsAvailable.add(Suscriptions.fromJson(item));
+    // }
 
-    print(_currentsuscriptions);
-    print(_suscriptionsAvailable);
+    setState(() {});
   }
 
   Widget _getContent() {
-    return Container();
+    return _getListView();
+  }
+
+  Widget _getListView() {
+    return ListView(
+      children: listajuan.map((listajdz) {
+        return Container(
+            child: Text('JUANn'),
+            margin: EdgeInsets.all(5),
+            padding: EdgeInsets.all(15));
+      }).toList(),
+    );
+  }
+
+  Widget _noContent() {
+    return Center(
+      child: Container(
+        margin: EdgeInsets.all(20),
+        child: Text(
+          'No hay suscripciones disponibles',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
   }
 }
