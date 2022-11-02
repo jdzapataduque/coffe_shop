@@ -78,8 +78,9 @@ class _HomeScreen extends State<HomeScreen> {
                     backgroundColor: MaterialStateProperty.resolveWith(
                         (states) => const Color(0xffff0474)),
                   ),
-                  onPressed: () => Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => MyApp())),
+                  //onPressed: () => Navigator.pushReplacement(context,
+                  //    MaterialPageRoute(builder: (context) => MyApp())),
+                  onPressed: () => _coffeeLover(),
                 ),
               ),
             ),
@@ -114,5 +115,9 @@ class _HomeScreen extends State<HomeScreen> {
     var articles = Coffeelover.fromJson(decodedJson).articles;
     var books = Coffeelover.fromJson(decodedJson).books;
     var events = Coffeelover.fromJson(decodedJson).books;
+
+    for (var i = 0; i < articles!.length; i++) {
+      print(articles[i].title);
+    }
   }
 }
