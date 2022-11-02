@@ -47,10 +47,10 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
     //Obtener respuesta del body , debido a que el status code,
     //está devolviendo exitoso si el logueo es fallido
     var jsonjuan = jsonDecode(response.body);
-    Map<String, dynamic> arraySuscriptions = jsonDecode(response.body);
-    var currentSusc = arraySuscriptions["current_subscriptions"];
-    var suscriptionAvail = arraySuscriptions["subscriptions_available"];
-    var suscriptionAvail2 = arraySuscriptions["subscriptions_available"];
+    var currentSusc = jsonDecode(response.body)["current_subscriptions"];
+    var suscriptionAvail = jsonDecode(response.body)["subscriptions_available"];
+    var suscriptionAvail2 =
+        jsonDecode(response.body)["subscriptions_available"];
     List<dynamic> listajuan = suscriptionAvail2;
 
     if (((currentSusc == null) || (currentSusc.toString().isEmpty)) &&
@@ -58,11 +58,11 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
       return;
     }
 
-    for (var item in currentSusc) {
+    for (var item in jsonjuan) {
       _currentsuscriptions.add(Suscriptions.fromJson(item));
     }
 
-    for (var item in listajuan) {
+    for (var item in suscriptionAvail) {
       _suscriptionsAvailable.add(Suscriptions.fromJson(item));
     }
 
