@@ -7,4 +7,6 @@ class Constants {
       'https://latiendadelcafe.com.co/mobileapp/createaccount/';
   static String get apiUrlSuscriptions =>
       'https://latiendadelcafe.com.co/mobileapp/get_subscriptions/';
+  static String get apiUrlCoffeeLover =>
+      'https://latiendadelcafe.com.co/mobileapp/coffeelover/';
 }
