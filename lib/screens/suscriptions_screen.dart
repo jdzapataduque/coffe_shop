@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:coffe_shop/models/suscriptions.dart';
 import 'package:coffe_shop/screens/app_bar.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +18,7 @@ class SuscriptionsScreen extends StatefulWidget {
 class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
   List<Suscriptions> _currentsuscriptions = [];
   List<Suscriptions> _suscriptionsAvailable = [];
+  List<dynamic> listajuan = [];
 
   @override
   void initState() {
@@ -46,12 +46,13 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
 
     //Obtener respuesta del body , debido a que el status code,
     //está devolviendo exitoso si el logueo es fallido
-    var jsonjuan = jsonDecode(response.body);
+    Map<String, dynamic> map = json.decode(response.body);
+    var body = response.body;
+    var jsonjuan = jsonDecode(body);
     var currentSusc = jsonDecode(response.body)["current_subscriptions"];
     var suscriptionAvail = jsonDecode(response.body)["subscriptions_available"];
-    var suscriptionAvail2 =
-        jsonDecode(response.body)["subscriptions_available"];
-    List<dynamic> listajuan = suscriptionAvail2;
+
+    //listajuan = jsonjuan;
 
     if (((currentSusc == null) || (currentSusc.toString().isEmpty)) &&
         ((suscriptionAvail == null) || (suscriptionAvail.toString().isEmpty))) {
@@ -62,24 +63,24 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
       _currentsuscriptions.add(Suscriptions.fromJson(item));
     }
 
-    for (var item in suscriptionAvail) {
-      _suscriptionsAvailable.add(Suscriptions.fromJson(item));
-    }
+    // for (var item in suscriptionAvail) {
+    //   _suscriptionsAvailable.add(Suscriptions.fromJson(item));
+    // }
 
-    print(_currentsuscriptions);
-    print(_suscriptionsAvailable);
+    setState(() {});
   }
 
   Widget _getContent() {
-    return _suscriptionsAvailable.length == 0 ? _noContent() : _getListView();
+    return _getListView();
   }
 
   Widget _getListView() {
     return ListView(
-      children: _suscriptionsAvailable.map((e) {
-        return InkWell(
-          child: Container(child: Text('JUAN DIEGO')),
-        );
+      children: listajuan.map((listajdz) {
+        return Container(
+            child: Text('JUANn'),
+            margin: EdgeInsets.all(5),
+            padding: EdgeInsets.all(15));
       }).toList(),
     );
   }
@@ -90,7 +91,7 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
         margin: EdgeInsets.all(20),
         child: Text(
           'No hay suscripciones disponibles',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
       ),
     );
