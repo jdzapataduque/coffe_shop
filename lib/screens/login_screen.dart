@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:coffe_shop/utils/error_messages.dart';
 import 'package:coffe_shop/screens/signup_screen.dart';
 import 'app_bar.dart';
+import 'package:coffe_shop/helpers/globals.dart' as globals;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -293,6 +294,8 @@ class _LoginScreenState extends State<LoginScreen> {
     f_name = token.firstName.toString();
     l_name = token.lastName.toString();
     wemail = token.email.toString();
+    globals.token=token;
+
     /*   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("Ingreso al sistema exitoso"),
     )); */

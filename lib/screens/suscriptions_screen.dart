@@ -1,10 +1,14 @@
 import 'dart:convert';
 import 'package:coffe_shop/models/suscriptions.dart';
 import 'package:coffe_shop/screens/app_bar.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import '../helpers/constants.dart';
 import '../models/token.dart';
 import 'package:http/http.dart' as http;
+import 'package:coffe_shop/helpers/globals.dart' as globals;
+
+
 
 class SuscriptionsScreen extends StatefulWidget {
   final Token token;
@@ -19,6 +23,7 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
   List<Suscriptions> _currentsuscriptions = [];
   List<Suscriptions> _suscriptionsAvailable = [];
   List<dynamic> listajuan = [];
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
   @override
   void initState() {
@@ -59,8 +64,31 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
       return;
     }
 
+    /*
     for (var item in jsonjuan) {
       _currentsuscriptions.add(Suscriptions.fromJson(item));
+    }
+*/
+
+
+    if(globals.token!=null) {
+      _firebaseMessaging.getToken().then((token){
+        globals.tokenMobile=token;
+        print (token);
+      });
+
+      Map<String, dynamic> request = {'token': globals.tokenMobile,'user': globals.token?.email.toString(),'arn':'${Constants.Arn}'};
+      var url = Uri.parse('${Constants.EndPointRegisterMobile}');
+      var response = await http.post(
+        url,
+        body: jsonEncode(request),
+      );
+
+      //Obtener respuesta del body , debido a que el status code,
+      //está devolviendo exitoso si el logueo es fallido
+      var responseser = jsonDecode(response.body)["Respose"];
+
+
     }
 
     // for (var item in suscriptionAvail) {
