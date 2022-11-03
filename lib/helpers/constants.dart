@@ -13,4 +13,6 @@ class Constants {
       'arn:aws:sns:us-east-1:951069153692:app/GCM/CoffeShop';
   static String get EndPointRegisterMobile =>
       'https://gsfwdxkzqa.execute-api.us-east-1.amazonaws.com/CoffeShop';
+  static String get ArnTopic=>
+      'arn:aws:sns:us-east-1:951069153692:CoffeShop';
 }
