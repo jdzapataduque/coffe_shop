@@ -89,7 +89,8 @@ class _HomeScreen extends State<HomeScreen> {
                   onPressed: () => Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => MyApp())), //apunta al mapa
+                          builder: (context) =>
+                              StoreMap(token: widget.token))), //apunta al mapa
                 ),
               ),
             ),
