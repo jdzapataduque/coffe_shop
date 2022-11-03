@@ -8,6 +8,8 @@ import 'package:http/http.dart' as http;
 import '../helpers/constants.dart';
 import '../models/coffeelover.dart';
 import '../models/token.dart';
+import 'app_bar.dart';
+import 'drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   final Token token;
@@ -22,6 +24,8 @@ class _HomeScreen extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: DrawerPage(token: widget.token),
+      appBar: customAppBar(),
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Column(

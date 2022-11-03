@@ -1,17 +1,17 @@
 import 'dart:convert';
 import 'package:coffe_shop/helpers/constants.dart';
 import 'package:coffe_shop/models/token.dart';
+import 'package:coffe_shop/screens/home_screen.dart';
 import 'package:coffe_shop/screens/recovey_screen.dart';
-import 'package:coffe_shop/screens/suscriptions_screen.dart';
-import 'package:coffe_shop/screens/user_info_screen.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:coffe_shop/utils/error_messages.dart';
 import 'package:coffe_shop/screens/signup_screen.dart';
-import 'app_bar.dart';
 import 'package:coffe_shop/helpers/globals.dart' as globals;
+
+import 'app_bar.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -348,10 +348,9 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       _lock_button = false;
     });
-    Navigator.push(
-        context,
-        new MaterialPageRoute(
-            builder: (context) => SuscriptionsScreen(token: token)));
+
+    Navigator.push(context,
+        new MaterialPageRoute(builder: (context) => HomeScreen(token: token)));
   }
 
   bool _validate_email() {

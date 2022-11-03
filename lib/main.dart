@@ -1,8 +1,7 @@
+import 'package:coffe_shop/screens/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'screens/drawer.dart';
-import 'screens/app_bar.dart';
-import 'screens/home_screen.dart';
+
 //void main() =>   runApp(MyApp());
 
 void main() async {
@@ -17,9 +16,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        drawer: DrawerPage(),
-        appBar: customAppBar(),
-        body: const HomeScreen(),
+        // drawer: DrawerPage(),
+        //appBar: customAppBar(),
+        body: const LoginScreen(),
       ),
       debugShowCheckedModeBanner: false,
     );
