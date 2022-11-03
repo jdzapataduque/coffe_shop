@@ -5,12 +5,15 @@ import 'package:coffe_shop/screens/recovey_screen.dart';
 import 'package:coffe_shop/screens/suscriptions_screen.dart';
 import 'package:coffe_shop/screens/user_info_screen.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:coffe_shop/utils/error_messages.dart';
 import 'package:coffe_shop/screens/signup_screen.dart';
 import 'app_bar.dart';
 import 'package:coffe_shop/helpers/globals.dart' as globals;
+
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -29,6 +32,8 @@ class LoginInfo {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   String _email = '';
   String _password = '';
   String _email_error = '';
@@ -38,6 +43,12 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isObscure = true;
 
   ErrorMessages errorHandling = ErrorMessages();
+
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -295,6 +306,27 @@ class _LoginScreenState extends State<LoginScreen> {
     l_name = token.lastName.toString();
     wemail = token.email.toString();
     globals.token=token;
+
+
+    if(globals.token!=null) {
+
+      globals.tokenMobile = await _firebaseMessaging.getToken();
+
+      Map<String, dynamic> requestEndPointRegisterMobile = {'token': globals.tokenMobile,'user': globals.token?.email.toString(),'arn':'${Constants.Arn}'};
+      var urlEndPointRegisterMobile = Uri.parse('${Constants.EndPointRegisterMobile}');
+      var responseEndPointRegisterMobile = await http.post(
+        urlEndPointRegisterMobile,
+        body: jsonEncode(requestEndPointRegisterMobile),
+      );
+
+      //Obtener respuesta del body , debido a que el status code,
+      //está devolviendo exitoso si el logueo es fallido
+
+      var decoderesponseendpoint = jsonDecode(responseEndPointRegisterMobile.body);
+      var responseendpoint=jsonDecode(decoderesponseendpoint)["response"];
+
+    }
+
 
     /*   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("Ingreso al sistema exitoso"),
