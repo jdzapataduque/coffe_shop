@@ -39,20 +39,41 @@ class _ArticlesScreen extends State<ArticlesScreen> {
   }
 
   Widget _showarticles() {
-    return Container(
-      padding: EdgeInsets.only(left: 25, right: 25, bottom: 10, top: 10),
-      child: TextField(
-        autofocus: true,
-        keyboardType: TextInputType.name,
-        /*decoration: estilizar(
-            errorHandling.getMessage('MSG0011'),
-            errorHandling.getMessage('MSG0010'),
-            _name_show_error,
-            _name_error,
-            Icons.badge_outlined,
-            Icons.person),*/
-        style: TextStyle(fontSize: 15, fontFamily: 'Poppins'),
-      ),
+    return ListView(
+      children: widget.articles.map((e) {
+        return Card(
+          child: InkWell(
+            borderRadius: BorderRadius.circular(50),
+            onTap: () {},
+            child: Container(
+              margin: EdgeInsets.all(5),
+              padding: EdgeInsets.all(10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        e.title.toString(),
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        e.title.toString(),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      }).toList(),
     );
   }
 }
