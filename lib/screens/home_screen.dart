@@ -141,7 +141,7 @@ class _HomeScreen extends State<HomeScreen> {
 
   void _coffeeLover() async {
     Map<String, dynamic> request = {
-      "user": "mamesa@bancolombia.com.co",
+      "user": widget.token.email.toString(),
     };
 
     var url = Uri.parse('${Constants.apiUrlCoffeeLover}');
@@ -150,7 +150,7 @@ class _HomeScreen extends State<HomeScreen> {
       headers: {
         'content-type': 'application/json',
         'accept': 'application/json',
-        'authorization': 'Token afc3b43cf132376a84fa8e445255f6565e1eea78'
+        'authorization': widget.token.token.toString(),
       },
     );
 
