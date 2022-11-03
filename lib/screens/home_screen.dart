@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:coffe_shop/screens/slider.dart';
 import 'package:coffe_shop/screens/mapa.dart';
+import 'package:coffe_shop/screens/articles_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:http/http.dart' as http;
 import '../helpers/constants.dart';
@@ -19,15 +20,15 @@ class _HomeScreen extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            //mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              _showSlider(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            _showSlider(),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+              _showArticles(),
               _showStores(),
-            ],
-          ),
+            ])
+          ],
         ),
       ),
     );
@@ -49,19 +50,64 @@ class _HomeScreen extends State<HomeScreen> {
   Widget _showStores() {
     return Container(
       padding: EdgeInsets.only(top: 20),
-      width: 200,
-      margin: EdgeInsets.only(left: 50, right: 50),
+      width: 150,
+      //margin: EdgeInsets.only(right: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           SizedBox(
             child: Expanded(
               child: SizedBox(
-                height: 300,
-                width: 200,
+                height: 200,
+                width: 150,
                 child: ElevatedButton(
                   child: Text(
                     'Tiendas',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'PoppinsBold',
+                    ),
+                  ),
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(0),
+                                topRight: Radius.circular(0),
+                                bottomLeft: Radius.circular(20),
+                                bottomRight: Radius.circular(20)))),
+                    backgroundColor: MaterialStateProperty.resolveWith(
+                        (states) => const Color(0xffff0474)),
+                  ),
+                  onPressed: () => Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MyApp())), //apunta al mapa
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _showArticles() {
+    return Container(
+      padding: EdgeInsets.only(top: 20),
+      width: 150,
+      //margin: EdgeInsets.only(left: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          SizedBox(
+            child: Expanded(
+              child: SizedBox(
+                height: 200,
+                width: 150,
+                child: ElevatedButton(
+                  child: Text(
+                    'Artículos',
                     style: TextStyle(
                       fontSize: 20,
                       fontFamily: 'PoppinsBold',
@@ -103,7 +149,6 @@ class _HomeScreen extends State<HomeScreen> {
         'accept': 'application/json',
         'authorization': 'Token afc3b43cf132376a84fa8e445255f6565e1eea78'
       },
-      //body: jsonEncode(request),
     );
 
     if (response.statusCode >= 400) {
@@ -119,5 +164,9 @@ class _HomeScreen extends State<HomeScreen> {
     for (var i = 0; i < articles!.length; i++) {
       print(articles[i].title);
     }
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ArticlesScreen(articles: articles)));
   }
 }
