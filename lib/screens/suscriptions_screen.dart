@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:adaptive_dialog/adaptive_dialog.dart';
+import 'package:coffe_shop/components/loader_component.dart';
 import 'package:coffe_shop/models/suscriptions.dart';
 import 'package:coffe_shop/screens/app_bar.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +18,9 @@ class SuscriptionsScreen extends StatefulWidget {
 }
 
 class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
-  List<Suscriptions> _currentsuscriptions = [];
-  List<Suscriptions> _suscriptionsAvailable = [];
-  List<dynamic> listajuan = [];
+  final List<CurrentSubscriptions> _currentsuscriptions2 = [];
+  final List<SubscriptionsAvailable> _suscriptionsAvailable2 = [];
+  bool _showloader = false;
 
   @override
   void initState() {
@@ -30,12 +32,19 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
     return Scaffold(
       appBar: customAppBar(),
       body: Center(
-        child: _getContent(),
+        child: _showloader
+            ? LoaderComponent(
+                text: 'Por favor espere...',
+              )
+            : _getContent(),
       ),
     );
   }
 
   void _getSuscriptions() async {
+    setState(() {
+      _showloader = true;
+    });
     Map<String, dynamic> request = {'user': widget.token.email};
     var url = Uri.parse('${Constants.apiUrlSuscriptions}');
     var response = await http.post(
@@ -44,43 +53,96 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
       body: jsonEncode(request),
     );
 
-    //Obtener respuesta del body , debido a que el status code,
-    //está devolviendo exitoso si el logueo es fallido
-    Map<String, dynamic> map = json.decode(response.body);
-    var body = response.body;
-    var jsonjuan = jsonDecode(body);
-    var currentSusc = jsonDecode(response.body)["current_subscriptions"];
-    var suscriptionAvail = jsonDecode(response.body)["subscriptions_available"];
-
-    //listajuan = jsonjuan;
-
-    if (((currentSusc == null) || (currentSusc.toString().isEmpty)) &&
-        ((suscriptionAvail == null) || (suscriptionAvail.toString().isEmpty))) {
+    if (response.statusCode >= 400) {
+      await showAlertDialog(
+          context: context,
+          title: 'Error cargando suscripciones',
+          message:
+              'Hubo un error buscando tus suscripciones , te ofrecemos disculpas',
+          actions: <AlertDialogAction>[
+            AlertDialogAction(key: null, label: 'Aceptar'),
+          ]);
       return;
     }
 
-    for (var item in jsonjuan) {
-      _currentsuscriptions.add(Suscriptions.fromJson(item));
+    //Obtener respuesta del body , debido a que el status code,
+    //está devolviendo exitoso si el logueo es fallido
+    Map<String, dynamic> map = json.decode(response.body);
+    var currentSusc =
+        json.decode(utf8.decode(response.bodyBytes))["current_subscriptions"];
+    var suscriptionAvail =
+        json.decode(utf8.decode(response.bodyBytes))["subscriptions_available"];
+
+    if ((suscriptionAvail != null) && !(suscriptionAvail.isEmpty)) {
+      for (var item in suscriptionAvail) {
+        _suscriptionsAvailable2.add(SubscriptionsAvailable.fromJson(item));
+      }
     }
 
-    // for (var item in suscriptionAvail) {
-    //   _suscriptionsAvailable.add(Suscriptions.fromJson(item));
-    // }
-
-    setState(() {});
+    if ((currentSusc != null) && !(currentSusc.isEmpty)) {
+      for (var item in currentSusc) {
+        _currentsuscriptions2.add(CurrentSubscriptions.fromJson(item));
+      }
+    }
+    setState(() {
+      _showloader = false;
+    });
   }
 
   Widget _getContent() {
-    return _getListView();
+    return _suscriptionsAvailable2.length == 0 ? _noContent() : _getListViewA();
+    // return _currentsuscriptions2.length == 0
+    //     ? _noContentCurrent()
+    //     : _getListViewC();
   }
 
-  Widget _getListView() {
+  Widget _getListViewA() {
     return ListView(
-      children: listajuan.map((listajdz) {
-        return Container(
-            child: Text('JUANn'),
-            margin: EdgeInsets.all(5),
-            padding: EdgeInsets.all(15));
+      children: _suscriptionsAvailable2.map((e) {
+        return Card(
+          child: InkWell(
+            borderRadius: BorderRadius.circular(50),
+            onTap: () {},
+            child: Container(
+              margin: EdgeInsets.all(5),
+              padding: EdgeInsets.all(10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        e.productTitle.toString(),
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        e.variantTitle.toString(),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      }).toList(),
+    );
+  }
+
+  Widget _getListViewC() {
+    return ListView(
+      children: _currentsuscriptions2.map((e) {
+        return InkWell(
+          child: Container(
+            child: Text(e.title.toString()),
+          ),
+        );
       }).toList(),
     );
   }
@@ -91,6 +153,18 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
         margin: EdgeInsets.all(20),
         child: Text(
           'No hay suscripciones disponibles',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+
+  Widget _noContentCurrent() {
+    return Center(
+      child: Container(
+        margin: EdgeInsets.all(20),
+        child: Text(
+          'No hay suscripciones actuales disponibles',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
       ),

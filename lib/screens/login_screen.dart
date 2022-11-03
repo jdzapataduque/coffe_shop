@@ -5,11 +5,13 @@ import 'package:coffe_shop/screens/recovey_screen.dart';
 import 'package:coffe_shop/screens/suscriptions_screen.dart';
 import 'package:coffe_shop/screens/user_info_screen.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:coffe_shop/utils/error_messages.dart';
 import 'package:coffe_shop/screens/signup_screen.dart';
 import 'app_bar.dart';
+import 'package:coffe_shop/helpers/globals.dart' as globals;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -28,6 +30,7 @@ class LoginInfo {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   String _email = '';
   String _password = '';
   String _email_error = '';
@@ -35,8 +38,14 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _email_show_error = false;
   bool _password_show_error = false;
   bool _isObscure = true;
+  bool _lock_button = false;
 
   ErrorMessages errorHandling = ErrorMessages();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -171,7 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderRadius: BorderRadius.circular(100))),
                       backgroundColor: MaterialStateProperty.resolveWith(
                           (states) => const Color(0xffff0474))),
-                  onPressed: () => _login(),
+                  onPressed: () => _lock_button ? null : _login(),
                 ),
               ),
             ),
@@ -218,8 +227,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderRadius: BorderRadius.circular(100))),
                       backgroundColor: MaterialStateProperty.resolveWith(
                           (states) => Colors.transparent)),
-                  onPressed: () => Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => SignupScreen())),
+                  onPressed: () => _lock_button
+                      ? null
+                      : Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignupScreen())),
                 ),
               ),
             ),
@@ -237,7 +250,7 @@ class _LoginScreenState extends State<LoginScreen> {
           style: TextStyle(
               fontSize: 20, color: Color(0xffff0474), fontFamily: 'Poppins'),
         ),
-        onPressed: () => _go_to_recovery_passsword_page(),
+        onPressed: () => _lock_button ? null : _go_to_recovery_passsword_page(),
       ),
     );
   }
@@ -249,11 +262,21 @@ class _LoginScreenState extends State<LoginScreen> {
     String l_name = '';
     String wemail = '';
 
+    setState(() {
+      _lock_button = true;
+    });
+
     if (!_validate_email()) {
+      setState(() {
+        _lock_button = false;
+      });
       return;
     }
 
     if (!_validate_password()) {
+      setState(() {
+        _lock_button = false;
+      });
       return;
     }
     //Ocultar la contraseña
@@ -281,6 +304,7 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         _isObscure = true;
         _password_show_error = true;
+        _lock_button = false;
         _password_error = errorHandling.getError('TCF0006');
       });
       return;
@@ -293,9 +317,37 @@ class _LoginScreenState extends State<LoginScreen> {
     f_name = token.firstName.toString();
     l_name = token.lastName.toString();
     wemail = token.email.toString();
+    globals.token = token;
+
+    if (globals.token != null) {
+      globals.tokenMobile = await _firebaseMessaging.getToken();
+
+      Map<String, dynamic> requestEndPointRegisterMobile = {
+        'token': globals.tokenMobile,
+        'user': globals.token?.email.toString(),
+        'arn': '${Constants.Arn}'
+      };
+      var urlEndPointRegisterMobile =
+          Uri.parse('${Constants.EndPointRegisterMobile}');
+      var responseEndPointRegisterMobile = await http.post(
+        urlEndPointRegisterMobile,
+        body: jsonEncode(requestEndPointRegisterMobile),
+      );
+
+      //Obtener respuesta del body , debido a que el status code,
+      //está devolviendo exitoso si el logueo es fallido
+
+      var decoderesponseendpoint =
+          jsonDecode(responseEndPointRegisterMobile.body);
+      var responseendpoint = jsonDecode(decoderesponseendpoint)["response"];
+    }
+
     /*   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("Ingreso al sistema exitoso"),
     )); */
+    setState(() {
+      _lock_button = false;
+    });
     Navigator.push(
         context,
         new MaterialPageRoute(
