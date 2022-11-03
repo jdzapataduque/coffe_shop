@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:coffe_shop/components/loader_component.dart';
 import 'package:coffe_shop/models/suscriptions.dart';
 import 'package:coffe_shop/screens/app_bar.dart';
@@ -17,11 +18,8 @@ class SuscriptionsScreen extends StatefulWidget {
 }
 
 class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
-  List<Suscriptions> _currentsuscriptions = [];
-  List<Suscriptions> _suscriptionsAvailable = [];
-  List<CurrentSubscriptions> _currentsuscriptions2 = [];
-  List<SubscriptionsAvailable> _suscriptionsAvailable2 = [];
-  List<dynamic> listajuan = [];
+  final List<CurrentSubscriptions> _currentsuscriptions2 = [];
+  final List<SubscriptionsAvailable> _suscriptionsAvailable2 = [];
   bool _showloader = false;
 
   @override
@@ -55,13 +53,25 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
       body: jsonEncode(request),
     );
 
+    if (response.statusCode >= 400) {
+      await showAlertDialog(
+          context: context,
+          title: 'Error cargando suscripciones',
+          message:
+              'Hubo un error buscando tus suscripciones , te ofrecemos disculpas',
+          actions: <AlertDialogAction>[
+            AlertDialogAction(key: null, label: 'Aceptar'),
+          ]);
+      return;
+    }
+
     //Obtener respuesta del body , debido a que el status code,
     //está devolviendo exitoso si el logueo es fallido
     Map<String, dynamic> map = json.decode(response.body);
-    var body = response.body;
-    var jsonjuan = jsonDecode(body);
-    var currentSusc = jsonDecode(response.body)["current_subscriptions"];
-    var suscriptionAvail = jsonDecode(response.body)["subscriptions_available"];
+    var currentSusc =
+        json.decode(utf8.decode(response.bodyBytes))["current_subscriptions"];
+    var suscriptionAvail =
+        json.decode(utf8.decode(response.bodyBytes))["subscriptions_available"];
 
     if ((suscriptionAvail != null) && !(suscriptionAvail.isEmpty)) {
       for (var item in suscriptionAvail) {
@@ -112,7 +122,7 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
                       Text(
                         e.variantTitle.toString(),
                         style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.bold),
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
