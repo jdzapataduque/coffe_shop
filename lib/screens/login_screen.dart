@@ -325,7 +325,8 @@ class _LoginScreenState extends State<LoginScreen> {
       Map<String, dynamic> requestEndPointRegisterMobile = {
         'token': globals.tokenMobile,
         'user': globals.token?.email.toString(),
-        'arn': '${Constants.Arn}'
+        'arn': '${Constants.Arn}',
+        'arntopic':'${Constants.ArnTopic}'
       };
       var urlEndPointRegisterMobile =
           Uri.parse('${Constants.EndPointRegisterMobile}');
