@@ -21,24 +21,12 @@ class _ArticlesScreen extends State<ArticlesScreen> {
       resizeToAvoidBottomInset: false,
       appBar: customAppBar(),
       body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  _showarticles(),
-                ],
-              ),
-            ],
-          ),
-        ),
+        child: _showArticles(),
       ),
     );
   }
 
-  Widget _showarticles() {
+  Widget _showArticles() {
     return ListView(
       children: widget.articles.map((e) {
         return Card(
@@ -61,8 +49,8 @@ class _ArticlesScreen extends State<ArticlesScreen> {
                   ),
                   Row(
                     children: [
-                      Image.network(e.image!.src.toString(),
-                          fit: BoxFit.cover, width: 1000.0),
+                      //Image.network(e.image!.src.toString(),
+                      //    fit: BoxFit.cover, width: 1000.0),
                       Text(
                         e.title.toString(),
                         style: TextStyle(

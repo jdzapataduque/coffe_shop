@@ -7,9 +7,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:http/http.dart' as http;
 import '../helpers/constants.dart';
 import '../models/coffeelover.dart';
+import '../models/token.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final Token token;
+
+  HomeScreen({required this.token});
 
   @override
   State<HomeScreen> createState() => _HomeScreen();
