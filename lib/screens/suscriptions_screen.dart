@@ -102,7 +102,6 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
         return Card(
           child: InkWell(
             borderRadius: BorderRadius.circular(50),
-            onTap: () {},
             child: Container(
               margin: EdgeInsets.all(5),
               padding: EdgeInsets.all(10),
