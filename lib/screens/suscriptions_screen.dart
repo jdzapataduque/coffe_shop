@@ -80,16 +80,59 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
   }
 
   Widget _getContent() {
-    return _getListView();
+    return _suscriptionsAvailable2.length == 0 ? _noContent() : _getListViewA();
+    // return _currentsuscriptions2.length == 0
+    //     ? _noContentCurrent()
+    //     : _getListViewC();
   }
 
-  Widget _getListView() {
+  Widget _getListViewA() {
     return ListView(
-      children: listajuan.map((listajdz) {
-        return Container(
-            child: Text('JUAN DIEGO'),
-            margin: EdgeInsets.all(5),
-            padding: EdgeInsets.all(15));
+      children: _suscriptionsAvailable2.map((e) {
+        return Card(
+          child: InkWell(
+            borderRadius: BorderRadius.circular(50),
+            onTap: () {},
+            child: Container(
+              margin: EdgeInsets.all(5),
+              padding: EdgeInsets.all(10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        e.productTitle.toString(),
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        e.variantTitle.toString(),
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      }).toList(),
+    );
+  }
+
+  Widget _getListViewC() {
+    return ListView(
+      children: _currentsuscriptions2.map((e) {
+        return InkWell(
+          child: Container(
+            child: Text(e.title.toString()),
+          ),
+        );
       }).toList(),
     );
   }
@@ -100,6 +143,18 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
         margin: EdgeInsets.all(20),
         child: Text(
           'No hay suscripciones disponibles',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+
+  Widget _noContentCurrent() {
+    return Center(
+      child: Container(
+        margin: EdgeInsets.all(20),
+        child: Text(
+          'No hay suscripciones actuales disponibles',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
       ),
