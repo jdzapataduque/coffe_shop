@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:coffe_shop/utils/error_messages.dart';
 import 'package:coffe_shop/screens/signup_screen.dart';
 import 'package:coffe_shop/helpers/globals.dart' as globals;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components/loader_component.dart';
 import 'app_bar.dart';
@@ -336,7 +337,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     var body = response.body;
-    _storeUser(body);
     var decodedJson = jsonDecode(body);
     var token = Token.fromJson(decodedJson);
     customer_type = token.customerType.toString();
@@ -422,6 +422,4 @@ class _LoginScreenState extends State<LoginScreen> {
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => RecoveryScreen()));
   }
-
-  void _storeUser(String body) {}
 }
