@@ -1,39 +1,32 @@
-import 'coords.dart';
+import 'package:coffe_shop/models/shop.dart';
 
 class CoffeeShop {
-  String? name = '';
-  String? address1 = '';
-  String? address2 = '';
-  Coords? coords = Coords(lat: 0, lng: 0);
-  String? placeid = '';
-  String? category = '';
+  List<Shop>? shop = [
+    Shop(
+        name: '',
+        address1: '',
+        address2: '',
+        coords: null,
+        placeid: '',
+        category: '')
+  ];
 
-  CoffeeShop(
-      {required this.name,
-      required this.address1,
-      required this.address2,
-      required this.coords,
-      required this.placeid,
-      required this.category});
+  CoffeeShop({required this.shop});
 
   CoffeeShop.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    address1 = json['address1'];
-    address2 = json['address2'];
-    coords =
-        json['coords'] != null ? new Coords.fromJson(json['coords']) : null;
-    placeid = json['placeid'];
-    category = json['category'];
+    if (json['shop'] != null) {
+      shop = <Shop>[];
+      json['shop'].forEach((v) {
+        shop!.add(new Shop.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['address1'] = this.address1;
-    data['address2'] = this.address2;
-    data['coords'] = this.coords!.toJson();
-    data['placeid'] = this.placeid;
-    data['category'] = this.category;
+    if (this.shop != null) {
+      data['shop'] = this.shop!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }

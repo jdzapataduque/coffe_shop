@@ -167,7 +167,7 @@ class _HomeScreen extends State<HomeScreen> {
     var decodedJson = jsonDecode(body);
     var articles = Coffeelover.fromJson(decodedJson).articles;
     var books = Coffeelover.fromJson(decodedJson).books;
-    var events = Coffeelover.fromJson(decodedJson).books;
+    var events = Coffeelover.fromJson(decodedJson).events;
 
     for (var i = 0; i < articles!.length; i++) {
       print(articles[i].title);
