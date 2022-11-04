@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        // drawer: DrawerPage(),
+        drawer: Container(),
         //appBar: customAppBar(),
         body: const LoginScreen(),
       ),

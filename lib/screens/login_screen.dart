@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:coffe_shop/helpers/constants.dart';
 import 'package:coffe_shop/models/token.dart';
 import 'package:coffe_shop/screens/home_screen.dart';
 import 'package:coffe_shop/screens/recovey_screen.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
@@ -11,6 +13,7 @@ import 'package:coffe_shop/utils/error_messages.dart';
 import 'package:coffe_shop/screens/signup_screen.dart';
 import 'package:coffe_shop/helpers/globals.dart' as globals;
 
+import '../components/loader_component.dart';
 import 'app_bar.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -39,6 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _password_show_error = false;
   bool _isObscure = true;
   bool _lock_button = false;
+  bool _showloader = false;
 
   ErrorMessages errorHandling = ErrorMessages();
 
@@ -63,7 +67,10 @@ class _LoginScreenState extends State<LoginScreen> {
           _showButtonLogin(),
           _show_account_register_message(),
           _showButton_create_account(),
-          _show_password_recovery()
+          _show_password_recovery(),
+          _showloader
+              ? LoaderComponent(text: 'Por favor espere...')
+              : Container(),
         ],
       ))),
     );
@@ -262,10 +269,6 @@ class _LoginScreenState extends State<LoginScreen> {
     String l_name = '';
     String wemail = '';
 
-    setState(() {
-      _lock_button = true;
-    });
-
     if (!_validate_email()) {
       setState(() {
         _lock_button = false;
@@ -279,10 +282,31 @@ class _LoginScreenState extends State<LoginScreen> {
       });
       return;
     }
-    //Ocultar la contraseña
+
     setState(() {
+      _lock_button = true;
       _isObscure = true;
+      _showloader = true;
     });
+
+    var conex = await Connectivity().checkConnectivity();
+    if (conex == ConnectivityResult.none) {
+      setState(() {
+        _isObscure = false;
+        _showloader = false;
+        _lock_button = false;
+      });
+
+      await showAlertDialog(
+          context: context,
+          title: 'Error',
+          message: 'Por favor verifica tu conexión a internet',
+          actions: <AlertDialogAction>[
+            AlertDialogAction(key: null, label: 'Aceptar')
+          ]);
+      return;
+    }
+
     //Armar JSON para el API de login de la tienda del café
     Map<String, dynamic> request = {'user': _email, 'password': _password};
     var url = Uri.parse('${Constants.apiUrlLogin}');
@@ -305,12 +329,14 @@ class _LoginScreenState extends State<LoginScreen> {
         _isObscure = true;
         _password_show_error = true;
         _lock_button = false;
+        _showloader = false;
         _password_error = errorHandling.getError('TCF0006');
       });
       return;
     }
 
     var body = response.body;
+    _storeUser(body);
     var decodedJson = jsonDecode(body);
     var token = Token.fromJson(decodedJson);
     customer_type = token.customerType.toString();
@@ -326,7 +352,7 @@ class _LoginScreenState extends State<LoginScreen> {
         'token': globals.tokenMobile,
         'user': globals.token?.email.toString(),
         'arn': '${Constants.Arn}',
-        'arntopic':'${Constants.ArnTopic}'
+        'arntopic': '${Constants.ArnTopic}'
       };
       var urlEndPointRegisterMobile =
           Uri.parse('${Constants.EndPointRegisterMobile}');
@@ -348,6 +374,7 @@ class _LoginScreenState extends State<LoginScreen> {
     )); */
     setState(() {
       _lock_button = false;
+      _showloader = false;
     });
 
     Navigator.push(context,
@@ -395,4 +422,6 @@ class _LoginScreenState extends State<LoginScreen> {
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => RecoveryScreen()));
   }
+
+  void _storeUser(String body) {}
 }
