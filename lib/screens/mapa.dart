@@ -25,14 +25,12 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Maps Sample App'),
-          backgroundColor: Colors.green[700],
-        ),
+          backgroundColor: Colors.green[700]),
         body: GoogleMap(
           onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(
             target: _center,
-            zoom: 11.0,
-          ),
+            zoom: 11.0,),
         ),
       ),
     );
