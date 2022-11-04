@@ -54,6 +54,9 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
     );
 
     if (response.statusCode >= 400) {
+      setState(() {
+        _showloader = false;
+      });
       await showAlertDialog(
           context: context,
           title: 'Error cargando suscripciones',

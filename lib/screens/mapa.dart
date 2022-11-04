@@ -27,11 +27,6 @@ class _StoreMap extends State<StoreMap> {
   @override
   void initState() {
     super.initState();
-    _getStores();
-  }
-
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
   }
 
   @override
@@ -54,6 +49,7 @@ class _StoreMap extends State<StoreMap> {
 
   Set<Marker> _stores(List<Shop> _coffeeShop) {
     final Set<Marker> markers = new Set();
+    _getStores();
     for (var i = 0; i < _coffeeShop.length; i++) {
       markers.add(Marker(
         markerId: MarkerId(_coffeeShop[i].placeid!),
@@ -67,6 +63,10 @@ class _StoreMap extends State<StoreMap> {
       ));
     }
     return markers;
+  }
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
   }
 
   _getStores() async {
@@ -90,9 +90,11 @@ class _StoreMap extends State<StoreMap> {
     }
     var body = response.body;
     var decodedJson = jsonDecode('{"shop":$body}');
-    var shop = CoffeeShop.fromJson(decodedJson).shop!;
+    var decoded = utf8.decode(decodedJson) as dynamic;
+    var shop = CoffeeShop.fromJson(decoded).shop!;
     for (var item in shop) {
       _shop.add(item);
     }
+    setState(() {});
   }
 }
