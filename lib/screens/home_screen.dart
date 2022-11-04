@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:coffe_shop/screens/slider.dart';
-import 'package:coffe_shop/screens/mapa.dart';
+import 'package:coffe_shop/screens/shopmap_screen.dart';
 import 'package:coffe_shop/screens/articles_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:http/http.dart' as http;
@@ -90,7 +90,7 @@ class _HomeScreen extends State<HomeScreen> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              StoreMap(token: widget.token))), //apunta al mapa
+                              ShopMap(token: widget.token))), //apunta al mapa
                 ),
               ),
             ),

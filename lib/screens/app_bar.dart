@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../utils/color_utils.dart';
 import 'search.dart';
 import 'package:coffe_shop/screens/login_screen.dart';
-class customAppBar extends StatelessWidget  implements PreferredSizeWidget{
+
+class customAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -20,7 +21,7 @@ class customAppBar extends StatelessWidget  implements PreferredSizeWidget{
         ],
       ),
       actions: <Widget>[
-       IconButton(
+        IconButton(
           icon: const Icon(Icons.search_rounded),
           tooltip: 'Buscar',
           onPressed: () {
@@ -31,8 +32,8 @@ class customAppBar extends StatelessWidget  implements PreferredSizeWidget{
           icon: const Icon(Icons.account_circle_outlined),
           tooltip: 'Login',
           onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => LoginScreen()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => LoginScreen()));
           },
         ),
       ],
@@ -42,7 +43,5 @@ class customAppBar extends StatelessWidget  implements PreferredSizeWidget{
 
   @override
   // TODO: implement preferredSize
-  Size get preferredSize =>Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }
-
-
