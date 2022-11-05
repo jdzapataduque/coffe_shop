@@ -438,6 +438,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     var token2;
     globals.token != null ? token2 = globals.token : token2 = null;
+    WidgetsFlutterBinding.ensureInitialized();
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var emailKeep = preferences.getString('email');
     emailKeep == null

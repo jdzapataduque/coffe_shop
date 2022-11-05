@@ -43,7 +43,7 @@ class _ArticlesScreen extends State<ArticlesScreen> {
                     children: [
                       Text(
                         e.title.toString(),
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 16, fontFamily: "Poppins"),
                       ),
                     ],
                   ),
@@ -54,7 +54,9 @@ class _ArticlesScreen extends State<ArticlesScreen> {
                       Text(
                         e.title.toString(),
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Poppins"),
                       ),
                     ],
                   ),

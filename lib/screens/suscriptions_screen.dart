@@ -26,6 +26,7 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
   bool _showloader = false;
 
   Future _LoginKeep() async {
+    WidgetsFlutterBinding.ensureInitialized();
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var emailKeep = preferences.getString('email');
     emailKeep == null
@@ -128,7 +129,7 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
                     children: [
                       Text(
                         e.productTitle.toString(),
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 16, fontFamily: "Poppins"),
                       ),
                     ],
                   ),
@@ -137,7 +138,9 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
                       Text(
                         e.variantTitle.toString(),
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Poppins"),
                       ),
                     ],
                   ),
