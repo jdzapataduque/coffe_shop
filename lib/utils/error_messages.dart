@@ -96,6 +96,12 @@ class ErrorMessages {
       case 'MSG0018':
         _msg = '¿Ya tienes una cuenta?';
         break;
+      case 'MSG0019':
+        _msg = 'Cerrar sesión';
+        break;
+      case 'MSG0020':
+        _msg = 'Iniciar sesión';
+        break;
       default:
         _msg = 'Mensaje no definido para $_msg';
     }

@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:coffe_shop/components/loader_component.dart';
+import 'package:coffe_shop/main.dart';
 import 'package:coffe_shop/models/suscriptions.dart';
 import 'package:coffe_shop/screens/app_bar.dart';
+import 'package:coffe_shop/screens/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../helpers/constants.dart';
 import '../models/token.dart';
 import 'package:http/http.dart' as http;
@@ -22,9 +25,19 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
   final List<SubscriptionsAvailable> _suscriptionsAvailable2 = [];
   bool _showloader = false;
 
+  Future _LoginKeep() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var emailKeep = preferences.getString('email');
+    emailKeep == null
+        ? Navigator.pushReplacement(
+            context, new MaterialPageRoute(builder: (context) => MyApp()))
+        : emailKeep = null;
+  }
+
   @override
   void initState() {
     super.initState();
+    _LoginKeep();
     _getSuscriptions();
   }
 
@@ -172,4 +185,18 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
       ),
     );
   }
+
+  // void _LoginKeep() async {
+  //   if (globals.token == null) {
+  //     return;
+  //   }
+  //   var token2;
+  //   globals.token != null ? token2 = globals.token : token2 = null;
+  //   SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   var emailKeep = preferences.getString('email');
+  //   emailKeep == null
+  //       ? Navigator.pushReplacement(
+  //           context, new MaterialPageRoute(builder: (context) => LoginScreen()))
+  //       : emailKeep = null;
+  // }
 }
