@@ -447,6 +447,5 @@ class _LoginScreenState extends State<LoginScreen> {
             context,
             new MaterialPageRoute(
                 builder: (context) => UserInfoScreen(token: token2)));
-    ;
   }
 }

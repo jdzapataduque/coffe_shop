@@ -86,7 +86,7 @@ class _HomeScreen extends State<HomeScreen> {
                     backgroundColor: MaterialStateProperty.resolveWith(
                         (states) => const Color(0xffff0474)),
                   ),
-                  onPressed: () => Navigator.pushReplacement(
+                  onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) =>

@@ -1,4 +1,5 @@
 import 'package:coffe_shop/helpers/globals.dart';
+import 'package:coffe_shop/main.dart';
 import 'package:coffe_shop/models/token.dart';
 import 'package:coffe_shop/screens/drawer.dart';
 import 'package:coffe_shop/screens/login_screen.dart';
@@ -35,7 +36,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => LoginScreen(),
+        builder: (context) => MyApp(),
       ),
     );
   }
