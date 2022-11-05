@@ -1,11 +1,5 @@
 import 'package:coffe_shop/screens/home_screen.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:coffe_shop/helpers/globals.dart' as globals;
-import '../helpers/constants.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
 import '../models/token.dart';
 import 'suscriptions_screen.dart';
 
