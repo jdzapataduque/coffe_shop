@@ -32,13 +32,10 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   Future logOut(BuildContext context) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.remove('email');
-
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => MyApp(),
-      ),
-    );
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => MyApp()),
+        ModalRoute.withName("/Home"));
   }
 
   @override

@@ -383,8 +383,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString('email', token.email.toString());
-
-    Navigator.push(context,
+    Navigator.pushReplacement(context,
         new MaterialPageRoute(builder: (context) => HomeScreen(token: token)));
   }
 
