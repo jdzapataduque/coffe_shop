@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:coffe_shop/components/loader_component.dart';
 import 'package:coffe_shop/helpers/constants.dart';
-import 'package:coffe_shop/screens/drawer.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:coffe_shop/utils/error_messages.dart';
@@ -59,11 +58,13 @@ class _SignupScreen extends State<SignupScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: customAppBar(),
-      body: Stack(
+      body: SingleChildScrollView(
+        child: Stack(
         children: <Widget>[
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              _showTitle(),
               _showname(),
               _showlastname(),
               _showemail(),
@@ -82,9 +83,18 @@ class _SignupScreen extends State<SignupScreen> {
               : Container(),
         ],
       ),
+    ),
     );
   }
-
+  Widget _showTitle() {
+    return Container(
+        padding: EdgeInsets.only(left: 25, right: 25, top:10, bottom: 5),
+        child: Text("Registro usuario",
+            style: TextStyle(
+                fontSize: 20,
+                fontFamily: 'PoppinsBold',
+                color: Colors.pinkAccent)));
+  }
   Widget _showname() {
     return Container(
       padding: EdgeInsets.only(left: 25, right: 25, bottom: 10, top: 10),
@@ -444,7 +454,7 @@ class _SignupScreen extends State<SignupScreen> {
 
     if (code == 'OK11') {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => DrawerPage()));
+          context, MaterialPageRoute(builder: (context) => LoginScreen()));
     } else {
       if (code == 'TAKEN') {
         _email = '';

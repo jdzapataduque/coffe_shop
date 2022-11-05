@@ -1,13 +1,20 @@
 import 'dart:convert';
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:coffe_shop/helpers/constants.dart';
 import 'package:coffe_shop/models/token.dart';
+import 'package:coffe_shop/screens/home_screen.dart';
 import 'package:coffe_shop/screens/recovey_screen.dart';
-import 'package:coffe_shop/screens/user_info_screen.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:coffe_shop/utils/error_messages.dart';
 import 'package:coffe_shop/screens/signup_screen.dart';
+import 'package:coffe_shop/helpers/globals.dart' as globals;
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../components/loader_component.dart';
 import 'app_bar.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -27,6 +34,7 @@ class LoginInfo {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   String _email = '';
   String _password = '';
   String _email_error = '';
@@ -34,8 +42,15 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _email_show_error = false;
   bool _password_show_error = false;
   bool _isObscure = true;
+  bool _lock_button = false;
+  bool _showloader = false;
 
   ErrorMessages errorHandling = ErrorMessages();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +68,10 @@ class _LoginScreenState extends State<LoginScreen> {
           _showButtonLogin(),
           _show_account_register_message(),
           _showButton_create_account(),
-          _show_password_recovery()
+          _show_password_recovery(),
+          _showloader
+              ? LoaderComponent(text: 'Por favor espere...')
+              : Container(),
         ],
       ))),
     );
@@ -61,11 +79,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _showTitle() {
     return Container(
-      padding: EdgeInsets.only(left: 25, right: 25,top: 10,bottom: 45),
-      child:
-        Text("Iniciar sesión",style: TextStyle(fontSize: 20,fontFamily:'PoppinsBold',color: Colors.pinkAccent ))
-      );
+        padding: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 45),
+        child: Text("Iniciar sesión",
+            style: TextStyle(
+                fontSize: 20,
+                fontFamily: 'PoppinsBold',
+                color: Colors.pinkAccent)));
   }
+
   Widget _showemail() {
     return Container(
       padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
@@ -143,7 +164,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-
   Widget _showButtonLogin() {
     return Container(
       padding: EdgeInsets.only(top: 35),
@@ -168,7 +188,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderRadius: BorderRadius.circular(100))),
                       backgroundColor: MaterialStateProperty.resolveWith(
                           (states) => const Color(0xffff0474))),
-                  onPressed: () => _login(),
+                  onPressed: () => _lock_button ? null : _login(),
                 ),
               ),
             ),
@@ -180,12 +200,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _show_account_register_message() {
     return Container(
-       // padding: EdgeInsets.all(30),
+        // padding: EdgeInsets.all(30),
         child: Text(
-          errorHandling.getMessage('MSG0006'),
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 20, fontFamily: 'Poppins'),
-        ));
+      errorHandling.getMessage('MSG0006'),
+      textAlign: TextAlign.center,
+      style: TextStyle(fontSize: 20, fontFamily: 'Poppins'),
+    ));
   }
 
   Widget _showButton_create_account() {
@@ -215,8 +235,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderRadius: BorderRadius.circular(100))),
                       backgroundColor: MaterialStateProperty.resolveWith(
                           (states) => Colors.transparent)),
-                  onPressed: () => Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => SignupScreen())),
+                  onPressed: () => _lock_button
+                      ? null
+                      : Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignupScreen())),
                 ),
               ),
             ),
@@ -234,7 +258,7 @@ class _LoginScreenState extends State<LoginScreen> {
           style: TextStyle(
               fontSize: 20, color: Color(0xffff0474), fontFamily: 'Poppins'),
         ),
-        onPressed: () => _go_to_recovery_passsword_page(),
+        onPressed: () => _lock_button ? null : _go_to_recovery_passsword_page(),
       ),
     );
   }
@@ -247,16 +271,43 @@ class _LoginScreenState extends State<LoginScreen> {
     String wemail = '';
 
     if (!_validate_email()) {
+      setState(() {
+        _lock_button = false;
+      });
       return;
     }
 
     if (!_validate_password()) {
+      setState(() {
+        _lock_button = false;
+      });
       return;
     }
-    //Ocultar la contraseña
+
     setState(() {
+      _lock_button = true;
       _isObscure = true;
+      _showloader = true;
     });
+
+    var conex = await Connectivity().checkConnectivity();
+    if (conex == ConnectivityResult.none) {
+      setState(() {
+        _isObscure = false;
+        _showloader = false;
+        _lock_button = false;
+      });
+
+      await showAlertDialog(
+          context: context,
+          title: 'Error',
+          message: 'Por favor verifica tu conexión a internet',
+          actions: <AlertDialogAction>[
+            AlertDialogAction(key: null, label: 'Aceptar')
+          ]);
+      return;
+    }
+
     //Armar JSON para el API de login de la tienda del café
     Map<String, dynamic> request = {'user': _email, 'password': _password};
     var url = Uri.parse('${Constants.apiUrlLogin}');
@@ -278,6 +329,8 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         _isObscure = true;
         _password_show_error = true;
+        _lock_button = false;
+        _showloader = false;
         _password_error = errorHandling.getError('TCF0006');
       });
       return;
@@ -286,21 +339,46 @@ class _LoginScreenState extends State<LoginScreen> {
     var body = response.body;
     var decodedJson = jsonDecode(body);
     var token = Token.fromJson(decodedJson);
-    print(token.token);
-
     customer_type = token.customerType.toString();
     f_name = token.firstName.toString();
     l_name = token.lastName.toString();
     wemail = token.email.toString();
+    globals.token = token;
+
+    if (globals.token != null) {
+      globals.tokenMobile = await _firebaseMessaging.getToken();
+
+      Map<String, dynamic> requestEndPointRegisterMobile = {
+        'token': globals.tokenMobile,
+        'user': globals.token?.email.toString(),
+        'arn': '${Constants.Arn}',
+        'arntopic': '${Constants.ArnTopic}'
+      };
+      var urlEndPointRegisterMobile =
+          Uri.parse('${Constants.EndPointRegisterMobile}');
+      var responseEndPointRegisterMobile = await http.post(
+        urlEndPointRegisterMobile,
+        body: jsonEncode(requestEndPointRegisterMobile),
+      );
+
+      //Obtener respuesta del body , debido a que el status code,
+      //está devolviendo exitoso si el logueo es fallido
+
+      var decoderesponseendpoint =
+          jsonDecode(responseEndPointRegisterMobile.body);
+      var responseendpoint = jsonDecode(decoderesponseendpoint)["response"];
+    }
+
     /*   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("Ingreso al sistema exitoso"),
     )); */
-    Navigator.push(
-        context,
-        new MaterialPageRoute(
-            builder: (context) => new UserInfoScreen(
-                logininfo:
-                    new LoginInfo(customer_type, f_name, l_name, wemail))));
+    setState(() {
+      _lock_button = false;
+      _showloader = false;
+    });
+
+    Navigator.push(context,
+        new MaterialPageRoute(builder: (context) => HomeScreen(token: token)));
   }
 
   bool _validate_email() {

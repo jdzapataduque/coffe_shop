@@ -35,6 +35,22 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     );
   }
 
+// Widget _showImageUser() {
+//     return Container(
+//        margin: EdgeInsets.all(30),
+//        child: Column(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: [
+//           ClipRect(
+
+//           ),
+//           FadeInImage(placeholder: AssetImage('assets\img\user.png'), image:
+//           Image.network(widget.logininfo.))
+//         ],
+
+//        ),);
+//   }
+
   Widget _showCustomerTypeTitle() {
     return Container(
         padding: EdgeInsets.all(10),

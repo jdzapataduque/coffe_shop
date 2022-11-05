@@ -1,20 +1,24 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-class DrawerPage extends StatefulWidget  {
+import 'package:coffe_shop/helpers/globals.dart' as globals;
+import '../helpers/constants.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+import '../models/token.dart';
+import 'suscriptions_screen.dart';
+
+class DrawerPage extends StatefulWidget {
   static const appTitle = 'Tienda del café';
+  final Token token;
+
+  DrawerPage({required this.token});
+
   @override
-  _HomePageState createState()=>_HomePageState();
+  _HomePageState createState() => _HomePageState();
 }
-class _HomePageState extends State<DrawerPage>{
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
-  @override
-  void initState() {
-    super.initState();
-    _firebaseMessaging.getToken().then((token) => print(token));
-  }
-
-
+class _HomePageState extends State<DrawerPage> {
   @override
   Widget build(BuildContext context) => Drawer(
         backgroundColor: Colors.transparent,
@@ -26,14 +30,23 @@ class _HomePageState extends State<DrawerPage>{
               decoration: BoxDecoration(
                 color: Colors.pink,
               ),
-              child: Text('MENÚ',  textAlign: TextAlign.center,
-                style: TextStyle(  fontFamily: 'PoppinsBold',
-                    fontSize: 18.0,color: Colors.white,height: 3.3),
+              child: Text(
+                'MENÚ',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontFamily: 'PoppinsBold',
+                    fontSize: 18.0,
+                    color: Colors.white,
+                    height: 3.3),
               ),
             ),
             ListTile(
               selectedTileColor: Colors.blue,
-              title: const Text('CAFÉS', style: TextStyle(fontSize: 16,fontFamily:'PoppinsBold',color: Colors.white )),
+              title: const Text('CAFÉS',
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'PoppinsBold',
+                      color: Colors.white)),
               /*   shape:RoundedRectangleBorder(
                   side: BorderSide(color: Colors.pink, width: 2),
                   borderRadius: BorderRadius.circular(26),
@@ -45,25 +58,36 @@ class _HomePageState extends State<DrawerPage>{
             SizedBox(
               height: 3,
             ),
-
-
             ListTile(
               //  contentPadding: EdgeInsets.only(left: 10.0, right: 10.0),
               //   tileColor:  Colors.pink,
-              title: const Text('SUSCRIPCIONES', style: TextStyle(fontSize: 16,fontFamily:'PoppinsBold' ,color: Colors.white )),
+              title: const Text('SUSCRIPCIONES',
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'PoppinsBold',
+                      color: Colors.white)),
               onTap: () {
                 // Update the state of the app
                 // ...
                 // Then close the drawer
-                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                        builder: (context) =>
+                            SuscriptionsScreen(token: widget.token)));
               },
-            ), SizedBox(
+            ),
+            SizedBox(
               height: 3,
             ),
             ListTile(
               //   contentPadding: EdgeInsets.only(left: 10.0, right: 10.0),
               //  tileColor:  Colors.pink,
-              title: const Text('MÉTODOS', style: TextStyle(fontSize: 16,fontFamily:'PoppinsBold' ,color: Colors.white )),
+              title: const Text('MÉTODOS',
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'PoppinsBold',
+                      color: Colors.white)),
 
               onTap: () {
                 // Update the state of the app
@@ -78,7 +102,11 @@ class _HomePageState extends State<DrawerPage>{
             ListTile(
               //   minLeadingWidth: 12,
               //   tileColor:  Colors.pink,
-              title: const Text('KITS & REGALOS', style: TextStyle(fontSize: 16,fontFamily:'PoppinsBold' ,color: Colors.white )),
+              title: const Text('KITS & REGALOS',
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'PoppinsBold',
+                      color: Colors.white)),
 
               onTap: () {
                 // Update the state of the app
@@ -93,7 +121,11 @@ class _HomePageState extends State<DrawerPage>{
             ListTile(
               //  contentPadding: EdgeInsets.only(left: 10.0, right: 10.0),
               //  tileColor:  Colors.pink,
-              title: const Text('DULCES', style: TextStyle(fontSize: 16,fontFamily:'PoppinsBold' ,color: Colors.white )),
+              title: const Text('DULCES',
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'PoppinsBold',
+                      color: Colors.white)),
 
               onTap: () {
                 // Update the state of the app
@@ -109,7 +141,11 @@ class _HomePageState extends State<DrawerPage>{
               //   dense:true,
               //  contentPadding: EdgeInsets.only(left: 10.0, right: 10.0),
               // tileColor:  Colors.pink,
-              title: const Text('OTROS', style: TextStyle(fontSize: 16,fontFamily:'PoppinsBold' ,color: Colors.white )),
+              title: const Text('OTROS',
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'PoppinsBold',
+                      color: Colors.white)),
 
               onTap: () {
                 // Update the state of the app
@@ -122,11 +158,15 @@ class _HomePageState extends State<DrawerPage>{
               height: 3,
             ),
             ListTile(
-              leading: Icon(Icons.card_giftcard,color: Colors.white),
-              dense:true,
-              contentPadding: EdgeInsets.only(left:5.0, right: 5.0),
+              leading: Icon(Icons.card_giftcard, color: Colors.white),
+              dense: true,
+              contentPadding: EdgeInsets.only(left: 5.0, right: 5.0),
               //tileColor:  Colors.pink,
-              title: const Text('PUNTOS', style: TextStyle(fontSize: 16,fontFamily:'PoppinsBold' ,color: Colors.white )),
+              title: const Text('PUNTOS',
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'PoppinsBold',
+                      color: Colors.white)),
               onTap: () {
                 Navigator.pop(context);
               },
@@ -136,10 +176,5 @@ class _HomePageState extends State<DrawerPage>{
             ),
           ],
         ),
-    );
-  }
-
-
-
-
-
+      );
+}
