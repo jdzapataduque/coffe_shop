@@ -4,6 +4,7 @@ import 'package:coffe_shop/helpers/constants.dart';
 import 'package:coffe_shop/models/token.dart';
 import 'package:coffe_shop/screens/home_screen.dart';
 import 'package:coffe_shop/screens/recovey_screen.dart';
+import 'package:coffe_shop/screens/user_info_screen.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -44,11 +45,18 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isObscure = true;
   bool _lock_button = false;
   bool _showloader = false;
+  //UserInfo
+  String customer_type = '';
+  String f_name = '';
+  String l_name = '';
+  String wemail = '';
 
   ErrorMessages errorHandling = ErrorMessages();
 
   @override
   void initState() {
+    WidgetsFlutterBinding.ensureInitialized();
+    _LoginKeep();
     super.initState();
   }
 
@@ -61,6 +69,9 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+          _showloader
+              ? LoaderComponent(text: 'Por favor espere...')
+              : Container(),
           _showTitle(),
           _showemail(),
           //_showPasswordText(),
@@ -68,10 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
           _showButtonLogin(),
           _show_account_register_message(),
           _showButton_create_account(),
-          _show_password_recovery(),
-          _showloader
-              ? LoaderComponent(text: 'Por favor espere...')
-              : Container(),
+          _show_password_recovery()
         ],
       ))),
     );
@@ -80,11 +88,11 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _showTitle() {
     return Container(
         padding: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 45),
-        child: Text("Iniciar sesión",
+        child: Text(errorHandling.getMessage('MSG0020'),
             style: TextStyle(
                 fontSize: 20,
                 fontFamily: 'PoppinsBold',
-                color: Colors.pinkAccent)));
+                color: Color(0xffff0474))));
   }
 
   Widget _showemail() {
@@ -265,10 +273,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _login() async {
     String responseJson = '';
-    String customer_type = '';
-    String f_name = '';
-    String l_name = '';
-    String wemail = '';
 
     if (!_validate_email()) {
       setState(() {
@@ -377,6 +381,9 @@ class _LoginScreenState extends State<LoginScreen> {
       _showloader = false;
     });
 
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString('email', token.email.toString());
+
     Navigator.push(context,
         new MaterialPageRoute(builder: (context) => HomeScreen(token: token)));
   }
@@ -419,7 +426,27 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _go_to_recovery_passsword_page() {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => RecoveryScreen()));
+    Navigator.push(
+        context,
+        new MaterialPageRoute(
+          builder: (context) => RecoveryScreen(),
+        ));
+  }
+
+  void _LoginKeep() async {
+    if (globals.token == null) {
+      return;
+    }
+    var token2;
+    globals.token != null ? token2 = globals.token : token2 = null;
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var emailKeep = preferences.getString('email');
+    emailKeep == null
+        ? emailKeep = null
+        : Navigator.push(
+            context,
+            new MaterialPageRoute(
+                builder: (context) => UserInfoScreen(token: token2)));
+    ;
   }
 }

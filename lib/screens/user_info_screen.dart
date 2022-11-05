@@ -1,11 +1,16 @@
+import 'package:coffe_shop/helpers/globals.dart';
+import 'package:coffe_shop/models/token.dart';
+import 'package:coffe_shop/screens/drawer.dart';
 import 'package:coffe_shop/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:coffe_shop/utils/error_messages.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'app_bar.dart';
 
 class UserInfoScreen extends StatefulWidget {
-  final LoginInfo logininfo;
-  UserInfoScreen({Key? key, required this.logininfo}) : super(key: key);
+  final Token token;
+
+  UserInfoScreen({required this.token});
   //const UserInfoScreen({super.key});
 
   @override
@@ -13,12 +18,39 @@ class UserInfoScreen extends StatefulWidget {
 }
 
 class _UserInfoScreenState extends State<UserInfoScreen> {
+  String email = "";
   ErrorMessages getMessage = ErrorMessages();
+
+  Future getEmail() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      email = preferences.getString('email').toString();
+    });
+  }
+
+  Future logOut(BuildContext context) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.remove('email');
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LoginScreen(),
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getEmail();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(),
+      drawer: DrawerPage(token: token!),
       body: Center(
           child: SingleChildScrollView(
               child: Column(
@@ -29,7 +61,8 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
           _showNameTitle(),
           _showName(),
           _showemailTitle(),
-          _showemail()
+          _showemail(),
+          _showButtonLogout()
         ],
       ))),
     );
@@ -69,7 +102,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     return Container(
         padding: EdgeInsets.all(10),
         child: Text(
-          widget.logininfo.f_customer_type,
+          widget.token.customerType.toString(),
           textAlign: TextAlign.center,
           style: TextStyle(
               fontWeight: FontWeight.bold, fontSize: 20, fontFamily: "Poppins"),
@@ -94,7 +127,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     return Container(
         padding: EdgeInsets.all(10),
         child: Text(
-          '${widget.logininfo.f_name} ${widget.logininfo.l_name}',
+          '${widget.token.firstName} ${widget.token.lastName}',
           textAlign: TextAlign.center,
           style: TextStyle(
               fontWeight: FontWeight.bold, fontSize: 20, fontFamily: "Poppins"),
@@ -119,10 +152,49 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     return Container(
         padding: EdgeInsets.all(10),
         child: Text(
-          widget.logininfo.f_email,
+          widget.token.email.toString(),
           textAlign: TextAlign.center,
           style: TextStyle(
               fontWeight: FontWeight.bold, fontSize: 20, fontFamily: "Poppins"),
         ));
+  }
+
+  Widget _showButtonLogout() {
+    return Container(
+      padding: EdgeInsets.only(top: 35),
+      width: 200,
+      margin: EdgeInsets.only(left: 50, right: 50),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          SizedBox(
+            child: Expanded(
+              child: SizedBox(
+                height: 45,
+                width: 200,
+                child: ElevatedButton(
+                  child: Text(
+                    getMessage.getMessage('MSG0019'),
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'PoppinsBold',
+                        color: Colors.white),
+                  ),
+                  style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(100))),
+                      backgroundColor: MaterialStateProperty.resolveWith(
+                          (states) => const Color(0xffff0474))),
+                  onPressed: () {
+                    logOut(context);
+                  },
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
