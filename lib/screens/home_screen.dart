@@ -10,7 +10,7 @@ import '../models/coffeelover.dart';
 import '../models/token.dart';
 import 'app_bar.dart';
 import 'drawer.dart';
-
+import 'review_list.dart';
 class HomeScreen extends StatefulWidget {
   final Token token;
 
@@ -34,8 +34,10 @@ class _HomeScreen extends State<HomeScreen> {
             Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
               _showArticles(),
               _showStores(),
-            ])
+            ]),
+            new ReviewList(),
           ],
+
         ),
       ),
     );
@@ -56,7 +58,7 @@ class _HomeScreen extends State<HomeScreen> {
 
   Widget _showStores() {
     return Container(
-      padding: EdgeInsets.only(top: 20),
+      padding: EdgeInsets.only(top:1),
       width: 150,
       //margin: EdgeInsets.only(right: 20),
       child: Row(
@@ -65,36 +67,43 @@ class _HomeScreen extends State<HomeScreen> {
           SizedBox(
             child: Expanded(
               child: SizedBox(
-                height: 200,
-                width: 150,
-                child: ElevatedButton(
-                  child: Text(
-                    'Tiendas',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'PoppinsBold',
-                    ),
+                height: 100,
+                width: 140,
+                child:
+                ElevatedButton(
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ShopMap(token: widget.token))),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                     Text('Tiendas',  style: TextStyle(
+                       fontSize: 20,
+                       fontFamily: 'PoppinsBold',
+                     ), ),
+                      SizedBox(
+                        width: 2,
+                      ),
+                      Icon( // <-- Icon
+                        Icons.add_location_alt,
+                        size: 30.0,
+                      ),
+                    ],
                   ),
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(0),
-                                topRight: Radius.circular(0),
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20),
                                 bottomLeft: Radius.circular(20),
                                 bottomRight: Radius.circular(20)))),
                     backgroundColor: MaterialStateProperty.resolveWith(
-                        (states) => const Color(0xffff0474)),
+                            (states) => const Color(0xffff0474)),
                   ),
-                  onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              ShopMap(token: widget.token))), //apunta al mapa
+
+                ),
                 ),
               ),
             ),
-          )
         ],
       ),
     );
@@ -102,7 +111,7 @@ class _HomeScreen extends State<HomeScreen> {
 
   Widget _showArticles() {
     return Container(
-      padding: EdgeInsets.only(top: 20),
+      padding: EdgeInsets.only(top: 2),
       width: 150,
       //margin: EdgeInsets.only(left: 20),
       child: Row(
@@ -111,8 +120,8 @@ class _HomeScreen extends State<HomeScreen> {
           SizedBox(
             child: Expanded(
               child: SizedBox(
-                height: 200,
-                width: 150,
+                height: 100,
+                width: 140,
                 child: ElevatedButton(
                   child: Text(
                     'Artículos',
@@ -125,10 +134,11 @@ class _HomeScreen extends State<HomeScreen> {
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(0),
-                                topRight: Radius.circular(0),
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20),
                                 bottomLeft: Radius.circular(20),
                                 bottomRight: Radius.circular(20)))),
+
                     backgroundColor: MaterialStateProperty.resolveWith(
                         (states) => const Color(0xffff0474)),
                   ),
