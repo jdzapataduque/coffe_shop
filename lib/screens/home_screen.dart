@@ -48,7 +48,7 @@ class _HomeScreen extends State<HomeScreen> {
         child: CarouselSlider(
       options: CarouselOptions(
         autoPlay: true,
-        aspectRatio: 2.0,
+        aspectRatio: 1.7,
         enlargeCenterPage: true,
         enlargeStrategy: CenterPageEnlargeStrategy.height,
       ),
@@ -67,24 +67,21 @@ class _HomeScreen extends State<HomeScreen> {
           SizedBox(
             child: Expanded(
               child: SizedBox(
-                height: 100,
-                width: 140,
+                height: 80,
+                width: 145,
                 child:
                 ElevatedButton(
                   onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ShopMap(token: widget.token))),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                     Text('Tiendas',  style: TextStyle(
-                       fontSize: 20,
-                       fontFamily: 'PoppinsBold',
-                     ), ),
+                    Text('Tiendas',  style: TextStyle(fontSize: 15, fontFamily: 'PoppinsBold',), ),
                       SizedBox(
                         width: 2,
                       ),
                       Icon( // <-- Icon
-                        Icons.add_location_alt,
-                        size: 30.0,
+                        Icons.store,
+                        size: 40.0,
                       ),
                     ],
                   ),
@@ -99,7 +96,6 @@ class _HomeScreen extends State<HomeScreen> {
                     backgroundColor: MaterialStateProperty.resolveWith(
                             (states) => const Color(0xffff0474)),
                   ),
-
                 ),
                 ),
               ),
@@ -120,15 +116,21 @@ class _HomeScreen extends State<HomeScreen> {
           SizedBox(
             child: Expanded(
               child: SizedBox(
-                height: 100,
-                width: 140,
+                height: 80,
+                width: 145,
                 child: ElevatedButton(
-                  child: Text(
-                    'Artículos',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'PoppinsBold',
-                    ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                     Text('#CoffeLovers',  style: TextStyle(fontSize: 15, fontFamily: 'PoppinsBold',), ),
+                      SizedBox(
+                        width: 2,
+                      ),
+                      Icon( // <-- Icon
+                        Icons.favorite_rounded,
+                        size: 40.0,
+                      ),
+                    ],
                   ),
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -142,8 +144,6 @@ class _HomeScreen extends State<HomeScreen> {
                     backgroundColor: MaterialStateProperty.resolveWith(
                         (states) => const Color(0xffff0474)),
                   ),
-                  //onPressed: () => Navigator.pushReplacement(context,
-                  //    MaterialPageRoute(builder: (context) => MyApp())),
                   onPressed: () => _coffeeLover(),
                 ),
               ),

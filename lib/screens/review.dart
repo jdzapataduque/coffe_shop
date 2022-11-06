@@ -6,10 +6,10 @@ class Review extends StatelessWidget{
   String detailsCurtomer;
   String reviewCustomer;
   String commentCustomer;
-
+  double strar;
 
   Review(this.pathImage, this.nameCustomer, this.detailsCurtomer,
-      this.reviewCustomer, this.commentCustomer);
+      this.reviewCustomer, this.commentCustomer,this.strar);
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class Review extends StatelessWidget{
                 color: Color(0xFFa3a5a7),
               )),
         ),
-        Rating(stars: 2,marginLeft: 15,marginRight: 5,fontSize: 12,marginTop: 5)
+        Rating(stars: strar,marginLeft: 15,marginRight: 5,fontSize: 12,marginTop: 5)
       ],
     );
     final userComment=Container(
