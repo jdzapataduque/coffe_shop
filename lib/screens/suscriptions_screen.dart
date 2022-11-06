@@ -26,13 +26,12 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
   bool _showloader = false;
 
   Future _LoginKeep() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    var emailKeep = preferences.getString('email');
-    emailKeep == null
-        ? Navigator.pushReplacement(
-            context, new MaterialPageRoute(builder: (context) => MyApp()))
-        : emailKeep = null;
+    // SharedPreferences preferences = await SharedPreferences.getInstance();
+    // var emailKeep = preferences.getString('userBody');
+    // emailKeep == null
+    //     ? Navigator.pushReplacement(
+    //         context, new MaterialPageRoute(builder: (context) => MyApp()))
+    //     : emailKeep = null;
   }
 
   @override
