@@ -441,7 +441,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     var decodedJson = jsonDecode(userBody);
     _token = Token.fromJson(decodedJson);
-    Navigator.push(
+    Navigator.pushReplacement(
         context,
         new MaterialPageRoute(
             builder: (context) => UserInfoScreen(token: _token)));
