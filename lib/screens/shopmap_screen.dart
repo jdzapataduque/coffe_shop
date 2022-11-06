@@ -35,7 +35,8 @@ class _ShopMap extends State<ShopMap> {
     return MaterialApp(
       home: Scaffold(
         appBar: customAppBar(),
-        body: GoogleMap(
+        body:Center
+          (child:  GoogleMap(
           markers: _stores(_shop),
           onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(
@@ -43,6 +44,7 @@ class _ShopMap extends State<ShopMap> {
             zoom: 15.0,
           ),
         ),
+        )
       ),
       debugShowCheckedModeBanner: false,
     );
