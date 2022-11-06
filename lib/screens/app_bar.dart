@@ -25,17 +25,14 @@ class customAppBar extends StatelessWidget implements PreferredSizeWidget {
           icon: const Icon(Icons.search_rounded),
           tooltip: 'Buscar',
           onPressed: () {
-            showSearch(context: context, delegate: MySearch());
-          },
+            showSearch(context: context, delegate: MySearch());},
         ),
         IconButton(
           icon: const Icon(Icons.account_circle_outlined),
           tooltip: 'Login',
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => LoginScreen()));
-          },
-        ),
+                MaterialPageRoute(builder: (context) => LoginScreen()));},),
       ],
       backgroundColor: ("#FF0474").toColor(), //<-- SEE HERE
     );

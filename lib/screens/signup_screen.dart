@@ -58,11 +58,13 @@ class _SignupScreen extends State<SignupScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: customAppBar(),
-      body: Stack(
+      body: SingleChildScrollView(
+        child: Stack(
         children: <Widget>[
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              _showTitle(),
               _showname(),
               _showlastname(),
               _showemail(),
@@ -81,9 +83,18 @@ class _SignupScreen extends State<SignupScreen> {
               : Container(),
         ],
       ),
+    ),
     );
   }
-
+  Widget _showTitle() {
+    return Container(
+        padding: EdgeInsets.only(left: 25, right: 25, top:10, bottom: 5),
+        child: Text("Registro usuario",
+            style: TextStyle(
+                fontSize: 20,
+                fontFamily: 'PoppinsBold',
+                color: Colors.pinkAccent)));
+  }
   Widget _showname() {
     return Container(
       padding: EdgeInsets.only(left: 25, right: 25, bottom: 10, top: 10),
