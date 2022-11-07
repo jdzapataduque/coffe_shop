@@ -20,6 +20,7 @@ class CurrentSuscriptionsScreen extends StatefulWidget {
 
 class _CurrentSuscriptionsScreenState extends State<CurrentSuscriptionsScreen> {
   final List<CurrentSubscriptions> _currentsuscriptions = [];
+  final List<Upcomingcoffees> _upcomingcoffees = [];
   bool _showloader = false;
 
   @override
@@ -73,7 +74,6 @@ class _CurrentSuscriptionsScreenState extends State<CurrentSuscriptionsScreen> {
     Map<String, dynamic> map = json.decode(response.body);
     var currentSusc =
         json.decode(utf8.decode(response.bodyBytes))["current_subscriptions"];
-
     if ((currentSusc != null) && !(currentSusc.isEmpty)) {
       for (var item in currentSusc) {
         _currentsuscriptions.add(CurrentSubscriptions.fromJson(item));
@@ -86,9 +86,6 @@ class _CurrentSuscriptionsScreenState extends State<CurrentSuscriptionsScreen> {
 
   Widget _getContent() {
     return _currentsuscriptions.length == 0 ? _noContent() : _getListView();
-    // return _currentsuscriptions2.length == 0
-    //     ? _noContentCurrent()
-    //     : _getListViewC();
   }
 
   Widget _noContent() {
@@ -108,6 +105,7 @@ class _CurrentSuscriptionsScreenState extends State<CurrentSuscriptionsScreen> {
       children: _currentsuscriptions.map((e) {
         return Card(
           child: InkWell(
+            onTap: () => null,
             borderRadius: BorderRadius.circular(50),
             child: Container(
               margin: EdgeInsets.all(5),
