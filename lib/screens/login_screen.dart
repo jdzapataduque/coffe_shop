@@ -50,6 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String f_name = '';
   String l_name = '';
   String wemail = '';
+  late Token _token;
 
   ErrorMessages errorHandling = ErrorMessages();
 
@@ -382,7 +383,7 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setString('email', token.email.toString());
+    preferences.setString('userBody', body);
     Navigator.pushReplacement(context,
         new MaterialPageRoute(builder: (context) => HomeScreen(token: token)));
   }
@@ -433,18 +434,16 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _LoginKeep() async {
-    if (globals.token == null) {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? userBody = preferences.getString('userBody');
+    if (userBody == null) {
       return;
     }
-    var token2;
-    globals.token != null ? token2 = globals.token : token2 = null;
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    var emailKeep = preferences.getString('email');
-    emailKeep == null
-        ? emailKeep = null
-        : Navigator.push(
-            context,
-            new MaterialPageRoute(
-                builder: (context) => UserInfoScreen(token: token2)));
+    var decodedJson = jsonDecode(userBody);
+    _token = Token.fromJson(decodedJson);
+    Navigator.pushReplacement(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => UserInfoScreen(token: _token)));
   }
 }

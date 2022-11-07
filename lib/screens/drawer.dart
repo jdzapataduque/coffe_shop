@@ -1,7 +1,7 @@
 import 'package:coffe_shop/screens/home_screen.dart';
+import 'package:coffe_shop/screens/suscriptions_type_screen.dart';
 import 'package:flutter/material.dart';
 import '../models/token.dart';
-import 'suscriptions_screen.dart';
 
 class DrawerPage extends StatefulWidget {
   static const appTitle = 'Tienda del café';
@@ -87,7 +87,7 @@ class _HomePageState extends State<DrawerPage> {
                     context,
                     new MaterialPageRoute(
                         builder: (context) =>
-                            SuscriptionsScreen(token: widget.token)));
+                            SuscriptionsTypeScreen(token: widget.token)));
               },
             ),
             SizedBox(

@@ -185,7 +185,7 @@ class _HomeScreen extends State<HomeScreen> {
     for (var i = 0; i < articles!.length; i++) {
       print(articles[i].title);
     }
-    Navigator.pushReplacement(
+    Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => ArticlesScreen(articles: articles)));

@@ -1,8 +1,6 @@
-import 'package:coffe_shop/helpers/globals.dart';
 import 'package:coffe_shop/main.dart';
 import 'package:coffe_shop/models/token.dart';
 import 'package:coffe_shop/screens/drawer.dart';
-import 'package:coffe_shop/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:coffe_shop/utils/error_messages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,13 +23,13 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   Future getEmail() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
-      email = preferences.getString('email').toString();
+      email = preferences.getString('userBody').toString();
     });
   }
 
   Future logOut(BuildContext context) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.remove('email');
+    preferences.remove('userBody');
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => MyApp()),
@@ -41,6 +39,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsFlutterBinding.ensureInitialized();
     getEmail();
   }
 
@@ -48,7 +47,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(),
-      drawer: DrawerPage(token: token!),
+      drawer: DrawerPage(token: widget.token),
       body: Center(
           child: SingleChildScrollView(
               child: Column(

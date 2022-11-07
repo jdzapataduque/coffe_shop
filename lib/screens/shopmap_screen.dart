@@ -1,7 +1,6 @@
 import 'package:coffe_shop/models/coffeeshop.dart';
 import 'package:coffe_shop/models/coords.dart';
 import 'package:coffe_shop/screens/app_bar.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -34,18 +33,17 @@ class _ShopMap extends State<ShopMap> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: customAppBar(),
-        body:Center
-          (child:  GoogleMap(
-          markers: _stores(_shop),
-          onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(
-            target: _center,
-            zoom: 15.0,
-          ),
-        ),
-        )
-      ),
+          appBar: customAppBar(),
+          body: Center(
+            child: GoogleMap(
+              markers: _stores(_shop),
+              onMapCreated: _onMapCreated,
+              initialCameraPosition: CameraPosition(
+                target: _center,
+                zoom: 15.0,
+              ),
+            ),
+          )),
       debugShowCheckedModeBanner: false,
     );
   }
