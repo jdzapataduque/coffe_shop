@@ -1,4 +1,3 @@
-import 'package:coffe_shop/models/suscriptions.dart';
 import 'package:coffe_shop/screens/current_suscriptions_screen.dart';
 import 'package:coffe_shop/screens/suscriptions_screen.dart';
 import 'package:coffe_shop/models/token.dart';
