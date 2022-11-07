@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:coffe_shop/screens/slider.dart';
 import 'package:coffe_shop/screens/shopmap_screen.dart';
+import 'package:coffe_shop/screens/cards_list.dart';
 import 'package:coffe_shop/screens/articles_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:http/http.dart' as http;
@@ -144,11 +145,13 @@ class _HomeScreen extends State<HomeScreen> {
                     backgroundColor: MaterialStateProperty.resolveWith(
                         (states) => const Color(0xffff0474)),
                   ),
-                  onPressed: () => _coffeeLover(),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => CardList()));},),
+                  //onPressed: () => _coffeeLover(),
                 ),
               ),
             ),
-          )
         ],
       ),
     );

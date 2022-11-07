@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'raiting.dart';
 class Review extends StatelessWidget{
-  String pathImage="assets/img/persona.jpeg";
+  String pathImage="";
   String nameCustomer;
   String detailsCurtomer;
   String reviewCustomer;
