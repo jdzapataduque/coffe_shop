@@ -1,5 +1,6 @@
 class Token {
   String? customerType;
+  String? qr;
   bool? authenticated;
   String? firstName;
   String? lastName;
@@ -8,6 +9,7 @@ class Token {
 
   Token(
       {this.customerType,
+      this.qr,
       this.authenticated,
       this.firstName,
       this.lastName,
@@ -16,6 +18,7 @@ class Token {
 
   Token.fromJson(Map<String, dynamic> json) {
     customerType = json['customer_type'];
+    qr = json['qr'];
     authenticated = json['authenticated'];
     firstName = json['first_name'];
     lastName = json['last_name'];
@@ -26,6 +29,7 @@ class Token {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['customer_type'] = this.customerType;
+    data['qr'] = this.qr;
     data['authenticated'] = this.authenticated;
     data['first_name'] = this.firstName;
     data['last_name'] = this.lastName;
