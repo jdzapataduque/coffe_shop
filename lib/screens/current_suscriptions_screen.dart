@@ -1,24 +1,25 @@
 import 'dart:convert';
-import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:coffe_shop/components/loader_component.dart';
-import 'package:coffe_shop/models/suscriptions.dart';
 import 'package:coffe_shop/screens/app_bar.dart';
-import 'package:flutter/material.dart';
-import '../helpers/constants.dart';
-import '../models/token.dart';
 import 'package:http/http.dart' as http;
+import 'package:adaptive_dialog/adaptive_dialog.dart';
+import 'package:coffe_shop/helpers/constants.dart';
+import 'package:coffe_shop/models/suscriptions.dart';
+import 'package:coffe_shop/models/token.dart';
+import 'package:flutter/material.dart';
 
-class SuscriptionsScreen extends StatefulWidget {
+class CurrentSuscriptionsScreen extends StatefulWidget {
   final Token token;
 
-  SuscriptionsScreen({required this.token});
+  CurrentSuscriptionsScreen({required this.token});
 
   @override
-  State<SuscriptionsScreen> createState() => _SuscriptionsScreenState();
+  State<CurrentSuscriptionsScreen> createState() =>
+      _CurrentSuscriptionsScreenState();
 }
 
-class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
-  final List<SubscriptionsAvailable> _suscriptionsAvailable = [];
+class _CurrentSuscriptionsScreenState extends State<CurrentSuscriptionsScreen> {
+  final List<CurrentSubscriptions> _currentsuscriptions = [];
   bool _showloader = false;
 
   @override
@@ -58,9 +59,9 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
       });
       await showAlertDialog(
           context: context,
-          title: 'Error cargando suscripciones disponibles',
+          title: 'Error cargando suscripciones actuales',
           message:
-              'Hubo un error buscando tus suscripciones disponibles, te ofrecemos disculpas',
+              'Hubo un error buscando tus suscripciones actuales, te ofrecemos disculpas',
           actions: <AlertDialogAction>[
             AlertDialogAction(key: null, label: 'Aceptar'),
           ]);
@@ -70,12 +71,12 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
     //Obtener respuesta del body , debido a que el status code,
     //está devolviendo exitoso si el logueo es fallido
     Map<String, dynamic> map = json.decode(response.body);
-    var suscriptionAvail =
-        json.decode(utf8.decode(response.bodyBytes))["subscriptions_available"];
+    var currentSusc =
+        json.decode(utf8.decode(response.bodyBytes))["current_subscriptions"];
 
-    if ((suscriptionAvail != null) && !(suscriptionAvail.isEmpty)) {
-      for (var item in suscriptionAvail) {
-        _suscriptionsAvailable.add(SubscriptionsAvailable.fromJson(item));
+    if ((currentSusc != null) && !(currentSusc.isEmpty)) {
+      for (var item in currentSusc) {
+        _currentsuscriptions.add(CurrentSubscriptions.fromJson(item));
       }
     }
     setState(() {
@@ -84,15 +85,27 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
   }
 
   Widget _getContent() {
-    return _suscriptionsAvailable.length == 0 ? _noContent() : _getListView();
+    return _currentsuscriptions.length == 0 ? _noContent() : _getListView();
     // return _currentsuscriptions2.length == 0
     //     ? _noContentCurrent()
     //     : _getListViewC();
   }
 
+  Widget _noContent() {
+    return Center(
+      child: Container(
+        margin: EdgeInsets.all(20),
+        child: Text(
+          'No tienes suscripciones actuales',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+
   Widget _getListView() {
     return ListView(
-      children: _suscriptionsAvailable.map((e) {
+      children: _currentsuscriptions.map((e) {
         return Card(
           child: InkWell(
             borderRadius: BorderRadius.circular(50),
@@ -100,12 +113,23 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
               margin: EdgeInsets.all(5),
               padding: EdgeInsets.all(10),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
+                      FadeInImage(
+                        placeholder: AssetImage('assets/img/logo.PNG'),
+                        image: NetworkImage(e.image.toString()),
+                        height: 100,
+                        width: 100,
+                        fit: BoxFit.cover,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
                       Text(
-                        e.productTitle.toString(),
+                        e.title.toString(),
                         style: TextStyle(fontSize: 16, fontFamily: "Poppins"),
                       ),
                     ],
@@ -113,9 +137,15 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
                   Row(
                     children: [
                       Text(
-                        e.variantTitle.toString(),
+                        e.subscriptionCountry.toString() +
+                            ', ' +
+                            e.subscriptionProvince.toString() +
+                            ', ' +
+                            e.subscriptionCity.toString() +
+                            ', ' +
+                            e.subscriptionAddress1.toString(),
                         style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold,
                             fontFamily: "Poppins"),
                       ),
@@ -127,18 +157,6 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
           ),
         );
       }).toList(),
-    );
-  }
-
-  Widget _noContent() {
-    return Center(
-      child: Container(
-        margin: EdgeInsets.all(20),
-        child: Text(
-          'No hay suscripciones disponibles',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-      ),
     );
   }
 }
