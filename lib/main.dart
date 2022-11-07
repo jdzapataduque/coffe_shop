@@ -6,7 +6,6 @@ import 'package:coffe_shop/screens/wait_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:coffe_shop/helpers/globals.dart' as globals;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

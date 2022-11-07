@@ -1,4 +1,3 @@
-import 'package:coffe_shop/helpers/globals.dart';
 import 'package:coffe_shop/main.dart';
 import 'package:coffe_shop/models/token.dart';
 import 'package:coffe_shop/screens/drawer.dart';
