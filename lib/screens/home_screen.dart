@@ -1,9 +1,9 @@
 import 'dart:convert';
+import 'package:coffe_shop/models/books.dart';
 import 'package:flutter/material.dart';
 import 'package:coffe_shop/screens/slider.dart';
 import 'package:coffe_shop/screens/shopmap_screen.dart';
 import 'package:coffe_shop/screens/cards_list.dart';
-import 'package:coffe_shop/screens/articles_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:http/http.dart' as http;
 import '../helpers/constants.dart';
@@ -12,6 +12,7 @@ import '../models/token.dart';
 import 'app_bar.dart';
 import 'drawer.dart';
 import 'review_list.dart';
+
 class HomeScreen extends StatefulWidget {
   final Token token;
 
@@ -22,7 +23,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreen extends State<HomeScreen> {
+  var _articles;
+  var _events;
+  var _books;
+
   @override
+  void initState() {
+    super.initState();
+    _coffeeLover();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: DrawerPage(token: widget.token),
@@ -38,7 +48,6 @@ class _HomeScreen extends State<HomeScreen> {
             ]),
             new ReviewList(),
           ],
-
         ),
       ),
     );
@@ -59,7 +68,7 @@ class _HomeScreen extends State<HomeScreen> {
 
   Widget _showStores() {
     return Container(
-      padding: EdgeInsets.only(top:1),
+      padding: EdgeInsets.only(top: 1),
       width: 150,
       //margin: EdgeInsets.only(right: 20),
       child: Row(
@@ -70,17 +79,26 @@ class _HomeScreen extends State<HomeScreen> {
               child: SizedBox(
                 height: 80,
                 width: 145,
-                child:
-                ElevatedButton(
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ShopMap(token: widget.token))),
+                child: ElevatedButton(
+                  onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ShopMap(token: widget.token))),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                    Text('Tiendas',  style: TextStyle(fontSize: 15, fontFamily: 'PoppinsBold',), ),
+                      Text(
+                        'Tiendas',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontFamily: 'PoppinsBold',
+                        ),
+                      ),
                       SizedBox(
                         width: 2,
                       ),
-                      Icon( // <-- Icon
+                      Icon(
+                        // <-- Icon
                         Icons.store,
                         size: 40.0,
                       ),
@@ -95,12 +113,12 @@ class _HomeScreen extends State<HomeScreen> {
                                 bottomLeft: Radius.circular(20),
                                 bottomRight: Radius.circular(20)))),
                     backgroundColor: MaterialStateProperty.resolveWith(
-                            (states) => const Color(0xffff0474)),
+                        (states) => const Color(0xffff0474)),
                   ),
-                ),
                 ),
               ),
             ),
+          ),
         ],
       ),
     );
@@ -123,11 +141,18 @@ class _HomeScreen extends State<HomeScreen> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                     Text('#CoffeLovers',  style: TextStyle(fontSize: 15, fontFamily: 'PoppinsBold',), ),
+                      Text(
+                        '#CoffeLovers',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontFamily: 'PoppinsBold',
+                        ),
+                      ),
                       SizedBox(
                         width: 2,
                       ),
-                      Icon( // <-- Icon
+                      Icon(
+                        // <-- Icon
                         Icons.favorite_rounded,
                         size: 40.0,
                       ),
@@ -141,17 +166,24 @@ class _HomeScreen extends State<HomeScreen> {
                                 topRight: Radius.circular(20),
                                 bottomLeft: Radius.circular(20),
                                 bottomRight: Radius.circular(20)))),
-
                     backgroundColor: MaterialStateProperty.resolveWith(
                         (states) => const Color(0xffff0474)),
                   ),
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => CardList()));},),
-                  //onPressed: () => _coffeeLover(),
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CardList(
+                                  articles: _articles,
+                                  events: _events,
+                                  books: _books,
+                                )));
+                  },
                 ),
+                //onPressed: () => _coffeeLover(),
               ),
             ),
+          ),
         ],
       ),
     );
@@ -181,13 +213,16 @@ class _HomeScreen extends State<HomeScreen> {
     var articles = Coffeelover.fromJson(decodedJson).articles;
     var books = Coffeelover.fromJson(decodedJson).books;
     var events = Coffeelover.fromJson(decodedJson).events;
+    _articles = articles;
+    _events = events;
+    _books = books;
 
-    for (var i = 0; i < articles!.length; i++) {
-      print(articles[i].title);
-    }
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => ArticlesScreen(articles: articles)));
+    // if ((books != null) && !(books.isEmpty)) {
+    //   for (var item in books) {
+    //     books.add(Books.fromJson(item));
+    //   }
+    // }
+
+    setState(() {});
   }
 }

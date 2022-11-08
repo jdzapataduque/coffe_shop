@@ -20,7 +20,6 @@ class CurrentSuscriptionsScreen extends StatefulWidget {
 
 class _CurrentSuscriptionsScreenState extends State<CurrentSuscriptionsScreen> {
   final List<CurrentSubscriptions> _currentsuscriptions = [];
-  final List<Upcomingcoffees> _upcomingcoffees = [];
   bool _showloader = false;
 
   @override

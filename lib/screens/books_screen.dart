@@ -1,18 +1,18 @@
-import 'package:flutter/material.dart';
+import 'package:coffe_shop/models/books.dart';
+import 'package:coffe_shop/screens/app_bar.dart';
 import 'package:coffe_shop/utils/error_messages.dart';
-import 'app_bar.dart';
-import 'package:coffe_shop/models/articles.dart';
+import 'package:flutter/material.dart';
 
-class ArticlesScreen extends StatefulWidget {
-  final List<Articles> articles;
+class BooksScreen extends StatefulWidget {
+  final List<Books> books;
 
-  ArticlesScreen({required this.articles});
+  BooksScreen({required this.books});
 
   @override
-  State<ArticlesScreen> createState() => _ArticlesScreen();
+  State<BooksScreen> createState() => _BooksScreenState();
 }
 
-class _ArticlesScreen extends State<ArticlesScreen> {
+class _BooksScreenState extends State<BooksScreen> {
   ErrorMessages errorHandling = ErrorMessages();
 
   @override
@@ -21,35 +21,34 @@ class _ArticlesScreen extends State<ArticlesScreen> {
       resizeToAvoidBottomInset: false,
       appBar: customAppBar(),
       body: Center(
-        child: _showArticles(),
+        child: _showBooks(),
       ),
     );
   }
 
-  Widget _showArticles() {
+  Widget _showBooks() {
     return ListView(
-      children: widget.articles.map((e) {
+      children: widget.books.map((e) {
         return Card(
           child: InkWell(
             borderRadius: BorderRadius.circular(50),
-            onTap: () {},
             child: Container(
               margin: EdgeInsets.all(5),
               padding: EdgeInsets.all(10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      FadeInImage(
-                        placeholder: AssetImage('assets/img/logo.PNG'),
-                        image: NetworkImage(e.image!.src.toString()),
-                        height: 100,
-                        width: 100,
-                        fit: BoxFit.cover,
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     FadeInImage(
+                  //       placeholder: AssetImage('assets/img/logo.PNG'),
+                  //       image: NetworkImage(e.images()),
+                  //       height: 100,
+                  //       width: 100,
+                  //       fit: BoxFit.cover,
+                  //     ),
+                  //   ],
+                  // ),
                   Row(
                     children: [
                       Text(
