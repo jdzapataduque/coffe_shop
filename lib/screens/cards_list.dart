@@ -35,6 +35,7 @@ class CardList extends StatelessWidget {
               articles,
               events,
               books,
+              token,
               context),
           carsProductos(
               "Eventos",
@@ -43,6 +44,7 @@ class CardList extends StatelessWidget {
               articles,
               events,
               books,
+              token,
               context),
           carsProductos(
               "Artículos",
@@ -51,6 +53,7 @@ class CardList extends StatelessWidget {
               articles,
               events,
               books,
+              token,
               context),
         ])),
       ),
