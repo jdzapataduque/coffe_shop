@@ -371,8 +371,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString('userBody', body);
-    Navigator.pushReplacement(context,
-        new MaterialPageRoute(builder: (context) => HomeScreen(token: token)));
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen(token: token)),
+        ModalRoute.withName("/Home"));
   }
 
   bool _validate_email() {
