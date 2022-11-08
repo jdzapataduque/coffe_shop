@@ -1,5 +1,5 @@
+import 'package:coffe_shop/screens/card_susc_list_screen.dart';
 import 'package:coffe_shop/screens/home_screen.dart';
-import 'package:coffe_shop/screens/suscriptions_type_screen.dart';
 import 'package:flutter/material.dart';
 import '../models/token.dart';
 
@@ -80,14 +80,11 @@ class _HomePageState extends State<DrawerPage> {
                       fontFamily: 'PoppinsBold',
                       color: Colors.white)),
               onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
                 Navigator.push(
                     context,
-                    new MaterialPageRoute(
+                    MaterialPageRoute(
                         builder: (context) =>
-                            SuscriptionsTypeScreen(token: widget.token)));
+                            CardListSuscriptions(token: widget.token)));
               },
             ),
             SizedBox(
