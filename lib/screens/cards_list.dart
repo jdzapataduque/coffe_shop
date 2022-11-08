@@ -1,6 +1,8 @@
 import 'package:coffe_shop/models/articles.dart';
 import 'package:coffe_shop/models/books.dart';
 import 'package:coffe_shop/models/events.dart';
+import 'package:coffe_shop/models/token.dart';
+import 'package:coffe_shop/screens/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:coffe_shop/screens/cards.dart';
 import 'package:coffe_shop/screens/app_bar.dart';
@@ -10,14 +12,20 @@ class CardList extends StatelessWidget {
   final List<Articles> articles;
   final List<Events> events;
   final List<Books> books;
+  final Token token;
 
-  CardList({required this.articles, required this.events, required this.books});
+  CardList(
+      {required this.articles,
+      required this.events,
+      required this.books,
+      required this.token});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: customAppBar(),
+        drawer: DrawerPage(token: token),
         body: Center(
             child: Column(children: <Widget>[
           carsProductos(

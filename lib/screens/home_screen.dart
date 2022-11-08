@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:coffe_shop/models/books.dart';
 import 'package:flutter/material.dart';
 import 'package:coffe_shop/screens/slider.dart';
 import 'package:coffe_shop/screens/shopmap_screen.dart';
@@ -43,7 +42,7 @@ class _HomeScreen extends State<HomeScreen> {
           children: <Widget>[
             _showSlider(),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-              _showArticles(),
+              _showCoffeeLovers(),
               _showStores(),
             ]),
             new ReviewList(),
@@ -124,7 +123,7 @@ class _HomeScreen extends State<HomeScreen> {
     );
   }
 
-  Widget _showArticles() {
+  Widget _showCoffeeLovers() {
     return Container(
       padding: EdgeInsets.only(top: 2),
       width: 150,
@@ -177,6 +176,7 @@ class _HomeScreen extends State<HomeScreen> {
                                   articles: _articles,
                                   events: _events,
                                   books: _books,
+                                  token: widget.token,
                                 )));
                   },
                 ),

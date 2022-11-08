@@ -104,7 +104,6 @@ class _CurrentSuscriptionsScreenState extends State<CurrentSuscriptionsScreen> {
       children: _currentsuscriptions.map((e) {
         return Card(
           child: InkWell(
-            onTap: () => null,
             borderRadius: BorderRadius.circular(50),
             child: Container(
               margin: EdgeInsets.all(5),
