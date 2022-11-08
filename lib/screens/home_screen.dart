@@ -180,7 +180,6 @@ class _HomeScreen extends State<HomeScreen> {
                                 )));
                   },
                 ),
-                //onPressed: () => _coffeeLover(),
               ),
             ),
           ),
@@ -216,13 +215,6 @@ class _HomeScreen extends State<HomeScreen> {
     _articles = articles;
     _events = events;
     _books = books;
-
-    // if ((books != null) && !(books.isEmpty)) {
-    //   for (var item in books) {
-    //     books.add(Books.fromJson(item));
-    //   }
-    // }
-
     setState(() {});
   }
 }
