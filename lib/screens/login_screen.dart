@@ -313,7 +313,6 @@ class _LoginScreenState extends State<LoginScreen> {
     if (response.statusCode >= 400) {
       setState(() {
         _isObscure = true;
-        _password_show_error = true;
         _lock_button = false;
         _showloader = false;
         chkinternet.ShowMsg(context, 'Error',
