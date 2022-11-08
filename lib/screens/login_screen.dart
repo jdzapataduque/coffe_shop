@@ -308,6 +308,20 @@ class _LoginScreenState extends State<LoginScreen> {
       url,
       body: jsonEncode(request),
     );
+    //Validar respuesta del API del login con el status code
+    // y el "authenticated" de la respuesta en el body
+    if (response.statusCode >= 400) {
+      setState(() {
+        _isObscure = true;
+        _password_show_error = true;
+        _lock_button = false;
+        _showloader = false;
+        chkinternet.ShowMsg(context, 'Error',
+            'Estamos presentando algunos problemas en nuestro sistema, pronto lo reseolveremos');
+        //_password_error = errorHandling.getError('TCF0006');
+      });
+      return;
+    }
     //Respuesta del body de JSON
     responseJson = response.body;
     //Obtener respuesta del body , debido a que el status code,
@@ -315,9 +329,7 @@ class _LoginScreenState extends State<LoginScreen> {
     Map<String, dynamic> userLogin = jsonDecode(responseJson);
     var rest = userLogin["authenticated"] as bool;
 
-    //Validar respuesta del API del login con el status code
-    // y el "authenticated" de la respuesta en el body
-    if ((response.statusCode >= 400) || (!rest)) {
+    if (!rest) {
       setState(() {
         _isObscure = true;
         _password_show_error = true;
@@ -327,7 +339,6 @@ class _LoginScreenState extends State<LoginScreen> {
       });
       return;
     }
-
     var body = response.body;
     var decodedJson = jsonDecode(body);
     var token = Token.fromJson(decodedJson);

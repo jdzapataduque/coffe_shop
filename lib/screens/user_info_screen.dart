@@ -33,7 +33,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => MyApp()),
-        ModalRoute.withName("/Home"));
+        (Route<dynamic> route) => false);
   }
 
   @override
