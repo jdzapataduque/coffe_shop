@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:coffe_shop/utils/check_internet.dart';
 import 'package:flutter/material.dart';
 import 'package:coffe_shop/screens/slider.dart';
 import 'package:coffe_shop/screens/shopmap_screen.dart';
@@ -22,6 +23,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreen extends State<HomeScreen> {
+  CheckInternet chkinternet = CheckInternet();
+
   var _articles;
   var _events;
   var _books;
@@ -79,10 +82,7 @@ class _HomeScreen extends State<HomeScreen> {
                 height: 80,
                 width: 145,
                 child: ElevatedButton(
-                  onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ShopMap(token: widget.token))),
+                  onPressed: () => _go_store_map(),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -168,17 +168,7 @@ class _HomeScreen extends State<HomeScreen> {
                     backgroundColor: MaterialStateProperty.resolveWith(
                         (states) => const Color(0xffff0474)),
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CardList(
-                                  articles: _articles,
-                                  events: _events,
-                                  books: _books,
-                                  token: widget.token,
-                                )));
-                  },
+                  onPressed: () => _go_coffee_lovers(),
                 ),
               ),
             ),
@@ -189,6 +179,9 @@ class _HomeScreen extends State<HomeScreen> {
   }
 
   void _coffeeLover() async {
+    if (await check_internet()) {
+      return;
+    }
     Map<String, dynamic> request = {
       "user": widget.token.email.toString(),
     };
@@ -216,5 +209,38 @@ class _HomeScreen extends State<HomeScreen> {
     _events = events;
     _books = books;
     setState(() {});
+  }
+
+  void _go_coffee_lovers() async {
+    if (await check_internet()) {
+      return;
+    }
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => CardList(
+                  articles: _articles,
+                  events: _events,
+                  books: _books,
+                  token: widget.token,
+                )));
+  }
+
+  Future<bool> check_internet() async {
+    if (await chkinternet.valInternet(context)) {
+      chkinternet.ShowMsg(
+          context, 'Error', 'Por favor verifica tu conexión a internet');
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void _go_store_map() async {
+    if (await check_internet()) {
+      return;
+    }
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => ShopMap(token: widget.token)));
   }
 }

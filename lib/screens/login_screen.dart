@@ -1,11 +1,10 @@
 import 'dart:convert';
-import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:coffe_shop/helpers/constants.dart';
 import 'package:coffe_shop/models/token.dart';
 import 'package:coffe_shop/screens/home_screen.dart';
 import 'package:coffe_shop/screens/recovey_screen.dart';
 import 'package:coffe_shop/screens/user_info_screen.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:coffe_shop/utils/check_internet.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
@@ -53,6 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late Token _token;
 
   ErrorMessages errorHandling = ErrorMessages();
+  CheckInternet chkinternet = CheckInternet();
 
   @override
   void initState() {
@@ -295,21 +295,8 @@ class _LoginScreenState extends State<LoginScreen> {
       _showloader = true;
     });
 
-    var conex = await Connectivity().checkConnectivity();
-    if (conex == ConnectivityResult.none) {
-      setState(() {
-        _isObscure = false;
-        _showloader = false;
-        _lock_button = false;
-      });
-
-      await showAlertDialog(
-          context: context,
-          title: 'Error',
-          message: 'Por favor verifica tu conexión a internet',
-          actions: <AlertDialogAction>[
-            AlertDialogAction(key: null, label: 'Aceptar')
-          ]);
+    //Revisar si hay conexión a internet
+    if (await _check_internet()) {
       return;
     }
 
@@ -445,5 +432,20 @@ class _LoginScreenState extends State<LoginScreen> {
         context,
         new MaterialPageRoute(
             builder: (context) => UserInfoScreen(token: _token)));
+  }
+
+  Future<bool> _check_internet() async {
+    if (await chkinternet.valInternet(context)) {
+      setState(() {
+        _isObscure = false;
+        _showloader = false;
+        _lock_button = false;
+      });
+      chkinternet.ShowMsg(
+          context, 'Error', 'Por favor verifica tu conexión a internet');
+      return true;
+    } else {
+      return false;
+    }
   }
 }

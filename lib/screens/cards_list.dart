@@ -45,7 +45,7 @@ class CardList extends StatelessWidget {
               books,
               context),
           carsProductos(
-              "Articulos",
+              "Artículos",
               Icons.article_outlined,
               "Encuentra pines, mugs, velas  y muchos regalitos más.",
               articles,

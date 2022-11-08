@@ -52,7 +52,7 @@ Card carsProductos(String titulo, IconData icono, String descripcion,
 void _showLover(
     String titulo, articles, events, books, BuildContext context) async {
   switch (titulo) {
-    case 'Articulos':
+    case 'Artículos':
       Navigator.push(
           context,
           MaterialPageRoute(

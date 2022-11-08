@@ -3,6 +3,7 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:coffe_shop/components/loader_component.dart';
 import 'package:coffe_shop/models/suscriptions.dart';
 import 'package:coffe_shop/screens/app_bar.dart';
+import 'package:coffe_shop/utils/check_internet.dart';
 import 'package:flutter/material.dart';
 import '../helpers/constants.dart';
 import '../models/token.dart';
@@ -19,6 +20,8 @@ class SuscriptionsScreen extends StatefulWidget {
 
 class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
   final List<SubscriptionsAvailable> _suscriptionsAvailable = [];
+  CheckInternet chkinternet = CheckInternet();
+
   bool _showloader = false;
 
   @override
@@ -44,6 +47,9 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
     setState(() {
       _showloader = true;
     });
+    if (await _check_intenet()) {
+      return;
+    }
     Map<String, dynamic> request = {'user': widget.token.email};
     var url = Uri.parse('${Constants.apiUrlSuscriptions}');
     var response = await http.post(
@@ -140,5 +146,18 @@ class _SuscriptionsScreenState extends State<SuscriptionsScreen> {
         ),
       ),
     );
+  }
+
+  Future<bool> _check_intenet() async {
+    if (await chkinternet.valInternet(context)) {
+      setState(() {
+        _showloader = false;
+      });
+      chkinternet.ShowMsg(
+          context, 'Error', 'Por favor verifica tu conexión a internet');
+      return true;
+    } else {
+      return false;
+    }
   }
 }
