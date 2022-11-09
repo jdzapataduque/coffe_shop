@@ -193,7 +193,7 @@ class ErrorMessages {
         break;
       case 'MSG0048':
         _msg =
-            'Estamos presentando algunos problemas en nuestro sistema, pronto lo reseolveremos';
+            'Estamos presentando algunos problemas en nuestro sistema, pronto lo resolveremos';
         break;
       case 'MSG0049':
         _msg = 'Error cargando suscripciones disponibles';
