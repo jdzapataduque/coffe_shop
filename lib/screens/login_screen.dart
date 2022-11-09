@@ -7,6 +7,7 @@ import 'package:coffe_shop/screens/user_info_screen.dart';
 import 'package:coffe_shop/utils/check_internet.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:coffe_shop/utils/error_messages.dart';
@@ -35,6 +36,7 @@ class LoginInfo {
 
 class _LoginScreenState extends State<LoginScreen> {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   String _email = '';
   String _password = '';
   String _email_error = '';
@@ -349,6 +351,80 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (globals.token != null) {
       globals.tokenMobile = await _firebaseMessaging.getToken();
+
+      NotificationSettings settings = await _firebaseMessaging.requestPermission(
+        alert: true,
+        announcement: false,
+        badge: true,
+        carPlay: false,
+        criticalAlert: false,
+        provisional: false,
+        sound: true,
+      );
+
+      print('User granted permission: ${settings.authorizationStatus}');
+
+
+      RemoteMessage? initialMessage =
+      await FirebaseMessaging.instance.getInitialMessage();
+
+      FirebaseMessaging.instance.getInitialMessage().then((message) {
+        if (message != null) {
+          print('Message data: ${message}');
+        }
+      });
+
+
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+        print('Got a message whilst in the foreground!');
+        print('Message data: ${message.data}');
+
+        if (message.notification != null) {
+          print('Message also contained a notification: ${message.notification
+              ?.title}');
+
+
+          const AndroidInitializationSettings initializationSettingsAndroid =
+          AndroidInitializationSettings('@mipmap/ic_launcher');
+
+
+          const DarwinInitializationSettings initializationSettingsIOS =
+          DarwinInitializationSettings(
+            requestSoundPermission: false,
+            requestBadgePermission: false,
+            requestAlertPermission: false,
+          );
+
+          const InitializationSettings initializationSettings =
+          InitializationSettings(
+            android: initializationSettingsAndroid,
+            iOS: initializationSettingsIOS,
+          );
+
+          await flutterLocalNotificationsPlugin.initialize(
+            initializationSettings,
+          );
+
+
+          AndroidNotificationChannel channel = const AndroidNotificationChannel(
+            'high channel',
+            'Very important notification!!',
+            description: 'the first notification',
+            importance: Importance.max,
+          );
+
+          await flutterLocalNotificationsPlugin.show(
+            1,
+            message.notification?.title,
+            message.notification?.body,
+            NotificationDetails(
+              android: AndroidNotificationDetails(channel.id, channel.name,
+                  channelDescription: channel.description),
+            ),
+          );
+
+          print(message.data);
+        }});
 
       Map<String, dynamic> requestEndPointRegisterMobile = {
         'token': globals.tokenMobile,

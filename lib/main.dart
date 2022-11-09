@@ -29,6 +29,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _getHome();
+
   }
 
   @override
