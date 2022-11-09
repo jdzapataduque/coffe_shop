@@ -69,7 +69,7 @@ class _ShopMap extends State<ShopMap> {
     Map<String, dynamic> request = {
       "user": widget.token.email.toString(),
     };
-    final Uint8List markIcons = await getImages("assets/img/shoppng", 100);
+    final Uint8List markIcons = await getImages("assets/img/shop.png", 100);
     icono=markIcons;
     var url = Uri.parse('${Constants.apiUrlGetCoffeeShops}');
     var response = await http.get(
