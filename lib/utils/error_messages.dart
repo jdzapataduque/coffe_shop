@@ -189,7 +189,7 @@ class ErrorMessages {
         _msg = 'Tiendas';
         break;
       case 'MSG0047':
-        _msg = '#CoffeLovers';
+        _msg = '#CoffeeLovers';
         break;
       case 'MSG0048':
         _msg =

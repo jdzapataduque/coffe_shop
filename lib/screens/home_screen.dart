@@ -145,7 +145,7 @@ class _HomeScreen extends State<HomeScreen> {
                       Text(
                         msgs.getMessage('MSG0047'),
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 14,
                           fontFamily: 'PoppinsBold',
                         ),
                       ),

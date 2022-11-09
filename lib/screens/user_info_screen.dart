@@ -60,7 +60,8 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
           _showemail(),
           _showButtonLogout()
         ],
-      ))),
+      )
+          )),
     );
   }
 
