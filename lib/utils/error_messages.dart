@@ -30,6 +30,13 @@ class ErrorMessages {
         _msg_error = 'Debes presionar el botón de atrás para regresar'
             'a la página principal de la app';
         break;
+      case 'TCF0010':
+        _msg_error = 'Error cargando suscripciones actuales';
+        break;
+      case 'TCF0011':
+        _msg_error =
+            'Hubo un error buscando tus suscripciones actuales, te ofrecemos disculpas';
+        break;
       default:
         _msg_error = 'Mensaje no definido para $_coderror';
     }
@@ -101,6 +108,102 @@ class ErrorMessages {
         break;
       case 'MSG0020':
         _msg = 'Iniciar sesión';
+        break;
+      case 'MSG0021':
+        _msg = 'Libros';
+        break;
+      case 'MSG0022':
+        _msg = 'Encuentra libros a buenos precios.';
+        break;
+      case 'MSG0023':
+        _msg = 'Eventos';
+        break;
+      case 'MSG0024':
+        _msg = '¿Eres un amante al café? acá encontraras todo lo necesario.';
+        break;
+      case 'MSG0025':
+        _msg = 'Artículos';
+        break;
+      case 'MSG0026':
+        _msg = 'Encuentra pines, mugs, velas y muchos regalitos más.';
+        break;
+      case 'MSG0027':
+        _msg = 'Suscripciones actuales';
+        break;
+      case 'MSG0028':
+        _msg = 'Encuentra tus suscripciones actuales';
+        break;
+      case 'MSG0029':
+        _msg = 'Suscripciones disponibles';
+        break;
+      case 'MSG0030':
+        _msg =
+            'Mira las suscripciones disponibles que tenemos para ti , seguro te gustarán';
+        break;
+      case 'MSG0031':
+        _msg = 'Ver más';
+        break;
+      case 'MSG0032':
+        _msg = 'Por favor espere...';
+        break;
+      case 'MSG0033':
+        _msg = 'Aceptar';
+        break;
+      case 'MSG0034':
+        _msg = 'No tienes suscripciones actuales';
+        break;
+      case 'MSG0035':
+        _msg = 'Error';
+        break;
+      case 'MSG0036':
+        _msg = 'Por favor verifica tu conexión a internet';
+        break;
+      case 'MSG0037':
+        _msg = 'MENÚ';
+        break;
+      case 'MSG0038':
+        _msg = 'INICIO';
+        break;
+      case 'MSG0039':
+        _msg = 'CAFÉS';
+        break;
+      case 'MSG0040':
+        _msg = 'SUSCRIPCIONES';
+        break;
+      case 'MSG0041':
+        _msg = 'MÉTODOS';
+        break;
+      case 'MSG0042':
+        _msg = 'KITS & REGALOS';
+        break;
+      case 'MSG0043':
+        _msg = 'DULCES';
+        break;
+      case 'MSG0044':
+        _msg = 'OTROS';
+        break;
+      case 'MSG0045':
+        _msg = 'PUNTOS';
+        break;
+      case 'MSG0046':
+        _msg = 'Tiendas';
+        break;
+      case 'MSG0047':
+        _msg = '#CoffeLovers';
+        break;
+      case 'MSG0048':
+        _msg =
+            'Estamos presentando algunos problemas en nuestro sistema, pronto lo reseolveremos';
+        break;
+      case 'MSG0049':
+        _msg = 'Error cargando suscripciones disponibles';
+        break;
+      case 'MSG0050':
+        _msg =
+            'Hubo un error buscando tus suscripciones disponibles, te ofrecemos disculpas';
+        break;
+      case 'MSG0051':
+        _msg = 'No hay suscripciones disponibles';
         break;
       default:
         _msg = 'Mensaje no definido para $_msg';

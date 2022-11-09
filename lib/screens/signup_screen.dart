@@ -60,41 +60,43 @@ class _SignupScreen extends State<SignupScreen> {
       appBar: customAppBar(),
       body: SingleChildScrollView(
         child: Stack(
-        children: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              _showTitle(),
-              _showname(),
-              _showlastname(),
-              _showemail(),
-              _showBirthDate(),
-              _showGender(),
-              _showPassword(),
-              _showButtonSignup(),
-              _show_account_login_message(),
-              _showButtonLogin(),
-            ],
-          ),
-          _showLoader
-              ? LoaderComponent(
-                  text: 'Procesando registro...',
-                )
-              : Container(),
-        ],
+          children: <Widget>[
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                _showTitle(),
+                _showname(),
+                _showlastname(),
+                _showemail(),
+                _showBirthDate(),
+                _showGender(),
+                _showPassword(),
+                _showButtonSignup(),
+                _show_account_login_message(),
+                _showButtonLogin(),
+              ],
+            ),
+            _showLoader
+                ? LoaderComponent(
+                    text: 'Procesando registro...',
+                  )
+                : Container(),
+          ],
+        ),
       ),
-    ),
     );
   }
+
   Widget _showTitle() {
     return Container(
-        padding: EdgeInsets.only(left: 25, right: 25, top:10, bottom: 5),
-        child: Text("Registro usuario",
+        padding: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 5),
+        child: const Text("Registro usuario",
             style: TextStyle(
                 fontSize: 20,
                 fontFamily: 'PoppinsBold',
                 color: Colors.pinkAccent)));
   }
+
   Widget _showname() {
     return Container(
       padding: EdgeInsets.only(left: 25, right: 25, bottom: 10, top: 10),

@@ -1,5 +1,6 @@
 import 'package:coffe_shop/screens/card_susc_list_screen.dart';
 import 'package:coffe_shop/screens/home_screen.dart';
+import 'package:coffe_shop/utils/error_messages.dart';
 import 'package:flutter/material.dart';
 import '../models/token.dart';
 
@@ -14,6 +15,7 @@ class DrawerPage extends StatefulWidget {
 }
 
 class _HomePageState extends State<DrawerPage> {
+  ErrorMessages msgs = ErrorMessages();
   @override
   Widget build(BuildContext context) => Drawer(
         backgroundColor: Colors.transparent,
@@ -26,7 +28,7 @@ class _HomePageState extends State<DrawerPage> {
                 color: Colors.pink,
               ),
               child: Text(
-                'MENÚ',
+                msgs.getMessage('MSG0037'),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontFamily: 'PoppinsBold',
@@ -37,7 +39,7 @@ class _HomePageState extends State<DrawerPage> {
             ),
             ListTile(
               selectedTileColor: Colors.blue,
-              title: const Text('INICIO',
+              title: Text(msgs.getMessage('MSG0038'),
                   style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'PoppinsBold',
@@ -55,7 +57,7 @@ class _HomePageState extends State<DrawerPage> {
             ),
             ListTile(
               selectedTileColor: Colors.blue,
-              title: const Text('CAFÉS',
+              title: Text(msgs.getMessage('MSG0039'),
                   style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'PoppinsBold',
@@ -74,7 +76,7 @@ class _HomePageState extends State<DrawerPage> {
             ListTile(
               //  contentPadding: EdgeInsets.only(left: 10.0, right: 10.0),
               //   tileColor:  Colors.pink,
-              title: const Text('SUSCRIPCIONES',
+              title: Text(msgs.getMessage('MSG0040'),
                   style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'PoppinsBold',
@@ -93,7 +95,7 @@ class _HomePageState extends State<DrawerPage> {
             ListTile(
               //   contentPadding: EdgeInsets.only(left: 10.0, right: 10.0),
               //  tileColor:  Colors.pink,
-              title: const Text('MÉTODOS',
+              title: Text(msgs.getMessage('MSG0041'),
                   style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'PoppinsBold',
@@ -112,7 +114,7 @@ class _HomePageState extends State<DrawerPage> {
             ListTile(
               //   minLeadingWidth: 12,
               //   tileColor:  Colors.pink,
-              title: const Text('KITS & REGALOS',
+              title: Text(msgs.getMessage('MSG0042'),
                   style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'PoppinsBold',
@@ -131,7 +133,7 @@ class _HomePageState extends State<DrawerPage> {
             ListTile(
               //  contentPadding: EdgeInsets.only(left: 10.0, right: 10.0),
               //  tileColor:  Colors.pink,
-              title: const Text('DULCES',
+              title: Text(msgs.getMessage('MSG0043'),
                   style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'PoppinsBold',
@@ -151,7 +153,7 @@ class _HomePageState extends State<DrawerPage> {
               //   dense:true,
               //  contentPadding: EdgeInsets.only(left: 10.0, right: 10.0),
               // tileColor:  Colors.pink,
-              title: const Text('OTROS',
+              title: Text(msgs.getMessage('MSG0044'),
                   style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'PoppinsBold',
@@ -172,7 +174,7 @@ class _HomePageState extends State<DrawerPage> {
               dense: true,
               contentPadding: EdgeInsets.only(left: 5.0, right: 5.0),
               //tileColor:  Colors.pink,
-              title: const Text('PUNTOS',
+              title: Text(msgs.getMessage('MSG0045'),
                   style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'PoppinsBold',

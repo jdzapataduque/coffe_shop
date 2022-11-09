@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:coffe_shop/utils/check_internet.dart';
+import 'package:coffe_shop/utils/error_messages.dart';
 import 'package:flutter/material.dart';
 import 'package:coffe_shop/screens/slider.dart';
 import 'package:coffe_shop/screens/shopmap_screen.dart';
@@ -24,6 +25,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreen extends State<HomeScreen> {
   CheckInternet chkinternet = CheckInternet();
+  ErrorMessages msgs = ErrorMessages();
 
   var _articles;
   var _events;
@@ -87,7 +89,7 @@ class _HomeScreen extends State<HomeScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Tiendas',
+                        msgs.getMessage('MSG0046'),
                         style: TextStyle(
                           fontSize: 15,
                           fontFamily: 'PoppinsBold',
@@ -141,7 +143,7 @@ class _HomeScreen extends State<HomeScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        '#CoffeLovers',
+                        msgs.getMessage('MSG0047'),
                         style: TextStyle(
                           fontSize: 15,
                           fontFamily: 'PoppinsBold',
@@ -215,6 +217,11 @@ class _HomeScreen extends State<HomeScreen> {
     if (await check_internet()) {
       return;
     }
+
+    if ((_articles == null) || (_events == null) || (_books == null)) {
+      _coffeeLover();
+    }
+
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -229,7 +236,7 @@ class _HomeScreen extends State<HomeScreen> {
   Future<bool> check_internet() async {
     if (await chkinternet.valInternet(context)) {
       chkinternet.ShowMsg(
-          context, 'Error', 'Por favor verifica tu conexión a internet');
+          context, msgs.getMessage('MSG0035'), msgs.getMessage('MSG0036'));
       return true;
     } else {
       return false;

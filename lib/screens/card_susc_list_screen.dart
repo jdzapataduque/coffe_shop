@@ -1,12 +1,14 @@
 import 'package:coffe_shop/models/token.dart';
 import 'package:coffe_shop/screens/cards_susc_screen.dart';
 import 'package:coffe_shop/screens/drawer.dart';
+import 'package:coffe_shop/utils/error_messages.dart';
 import 'package:flutter/material.dart';
 import 'package:coffe_shop/screens/app_bar.dart';
 //void main() =>   runApp(CardList());
 
 class CardListSuscriptions extends StatelessWidget {
   final Token token;
+  ErrorMessages msgs = ErrorMessages();
 
   CardListSuscriptions({required this.token});
 
@@ -19,17 +21,13 @@ class CardListSuscriptions extends StatelessWidget {
         body: Center(
             child: Column(children: <Widget>[
           cardsSuscriptions(
-              "Suscripciones actuales",
+              msgs.getMessage('MSG0027'),
               Icons.subscriptions_rounded,
-              "Encuentra tus suscripciones actuales",
+              msgs.getMessage('MSG0028'),
               token,
               context),
-          cardsSuscriptions(
-              "Suscripciones disponibles",
-              Icons.check,
-              "Mira las suscripciones disponibles que tenemos para ti , seguro te gustarán",
-              token,
-              context),
+          cardsSuscriptions(msgs.getMessage('MSG0029'), Icons.check,
+              msgs.getMessage('MSG0030'), token, context),
         ])),
       ),
       debugShowCheckedModeBanner: false,

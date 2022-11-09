@@ -27,19 +27,18 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     });
   }
 
-  Future logOut(BuildContext context) async {
+  Future logOut() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.remove('userBody');
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => MyApp()),
-        (Route<dynamic> route) => false);
+        (Route route) => false);
   }
 
   @override
   void initState() {
     super.initState();
-    WidgetsFlutterBinding.ensureInitialized();
     getEmail();
   }
 
@@ -64,22 +63,6 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
       ))),
     );
   }
-
-// Widget _showImageUser() {
-//     return Container(
-//        margin: EdgeInsets.all(30),
-//        child: Column(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         children: [
-//           ClipRect(
-
-//           ),
-//           FadeInImage(placeholder: AssetImage('assets\img\user.png'), image:
-//           Image.network(widget.logininfo.))
-//         ],
-
-//        ),);
-//   }
 
   Widget _showCustomerTypeTitle() {
     return Container(
@@ -184,7 +167,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                       backgroundColor: MaterialStateProperty.resolveWith(
                           (states) => const Color(0xffff0474))),
                   onPressed: () {
-                    logOut(context);
+                    logOut();
                   },
                 ),
               ),

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:coffe_shop/components/loader_component.dart';
 import 'package:coffe_shop/screens/app_bar.dart';
 import 'package:coffe_shop/utils/check_internet.dart';
+import 'package:coffe_shop/utils/error_messages.dart';
 import 'package:http/http.dart' as http;
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:coffe_shop/helpers/constants.dart';
@@ -22,6 +23,8 @@ class CurrentSuscriptionsScreen extends StatefulWidget {
 class _CurrentSuscriptionsScreenState extends State<CurrentSuscriptionsScreen> {
   final List<CurrentSubscriptions> _currentsuscriptions = [];
   CheckInternet chkinternet = CheckInternet();
+  ErrorMessages msgs = ErrorMessages();
+
   bool _showloader = false;
 
   @override
@@ -36,7 +39,7 @@ class _CurrentSuscriptionsScreenState extends State<CurrentSuscriptionsScreen> {
       body: Center(
         child: _showloader
             ? LoaderComponent(
-                text: 'Por favor espere...',
+                text: msgs.getMessage('MSG0032'),
               )
             : _getContent(),
       ),
@@ -64,11 +67,10 @@ class _CurrentSuscriptionsScreenState extends State<CurrentSuscriptionsScreen> {
       });
       await showAlertDialog(
           context: context,
-          title: 'Error cargando suscripciones actuales',
-          message:
-              'Hubo un error buscando tus suscripciones actuales, te ofrecemos disculpas',
+          title: msgs.getError('TCF0010'),
+          message: msgs.getError('TCF0011'),
           actions: <AlertDialogAction>[
-            AlertDialogAction(key: null, label: 'Aceptar'),
+            AlertDialogAction(key: null, label: msgs.getMessage('MSG0033')),
           ]);
       return;
     }
@@ -97,7 +99,7 @@ class _CurrentSuscriptionsScreenState extends State<CurrentSuscriptionsScreen> {
       child: Container(
         margin: EdgeInsets.all(20),
         child: Text(
-          'No tienes suscripciones actuales',
+          msgs.getMessage('MSG0034'),
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
       ),
@@ -167,7 +169,7 @@ class _CurrentSuscriptionsScreenState extends State<CurrentSuscriptionsScreen> {
         _showloader = false;
       });
       chkinternet.ShowMsg(
-          context, 'Error', 'Por favor verifica tu conexión a internet');
+          context, msgs.getMessage('MSG0035'), msgs.getMessage('MSG0036'));
       return true;
     } else {
       return false;

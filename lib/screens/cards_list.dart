@@ -3,6 +3,7 @@ import 'package:coffe_shop/models/books.dart';
 import 'package:coffe_shop/models/events.dart';
 import 'package:coffe_shop/models/token.dart';
 import 'package:coffe_shop/screens/drawer.dart';
+import 'package:coffe_shop/utils/error_messages.dart';
 import 'package:flutter/material.dart';
 import 'package:coffe_shop/screens/cards.dart';
 import 'package:coffe_shop/screens/app_bar.dart';
@@ -13,6 +14,7 @@ class CardList extends StatelessWidget {
   final List<Events> events;
   final List<Books> books;
   final Token token;
+  ErrorMessages msgs = ErrorMessages();
 
   CardList(
       {required this.articles,
@@ -29,27 +31,27 @@ class CardList extends StatelessWidget {
         body: Center(
             child: Column(children: <Widget>[
           carsProductos(
-              "Libros",
+              msgs.getMessage('MSG0021'),
               Icons.book_outlined,
-              "Encuentra libros a buenos precios.",
+              msgs.getMessage('MSG0022'),
               articles,
               events,
               books,
               token,
               context),
           carsProductos(
-              "Eventos",
+              msgs.getMessage('MSG0023'),
               Icons.event_note_rounded,
-              "¿Eres un amante al café?   acá encontraras todo lo necesario.",
+              msgs.getMessage('MSG0024'),
               articles,
               events,
               books,
               token,
               context),
           carsProductos(
-              "Artículos",
+              msgs.getMessage('MSG0025'),
               Icons.article_outlined,
-              "Encuentra pines, mugs, velas  y muchos regalitos más.",
+              msgs.getMessage('MSG0026'),
               articles,
               events,
               books,

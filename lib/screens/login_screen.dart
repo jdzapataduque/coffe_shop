@@ -71,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           _showloader
-              ? LoaderComponent(text: 'Por favor espere...')
+              ? LoaderComponent(text: errorHandling.getMessage('MSG0032'))
               : Container(),
           _showTitle(),
           _showemail(),
@@ -315,8 +315,8 @@ class _LoginScreenState extends State<LoginScreen> {
         _isObscure = true;
         _lock_button = false;
         _showloader = false;
-        chkinternet.ShowMsg(context, 'Error',
-            'Estamos presentando algunos problemas en nuestro sistema, pronto lo reseolveremos');
+        chkinternet.ShowMsg(context, errorHandling.getMessage('MSG0035'),
+            errorHandling.getMessage('MSG0048'));
         //_password_error = errorHandling.getError('TCF0006');
       });
       return;
@@ -384,7 +384,7 @@ class _LoginScreenState extends State<LoginScreen> {
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => HomeScreen(token: token)),
-        ModalRoute.withName("/Home"));
+        (Route route) => false);
   }
 
   bool _validate_email() {
@@ -453,8 +453,8 @@ class _LoginScreenState extends State<LoginScreen> {
         _showloader = false;
         _lock_button = false;
       });
-      chkinternet.ShowMsg(
-          context, 'Error', 'Por favor verifica tu conexión a internet');
+      chkinternet.ShowMsg(context, errorHandling.getMessage('MSG0035'),
+          errorHandling.getMessage('MSG0036'));
       return true;
     } else {
       return false;

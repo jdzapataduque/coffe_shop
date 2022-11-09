@@ -38,17 +38,6 @@ class _BooksScreenState extends State<BooksScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  // Row(
-                  //   children: [
-                  //     FadeInImage(
-                  //       placeholder: AssetImage('assets/img/logo.PNG'),
-                  //       image: NetworkImage(e.images()),
-                  //       height: 100,
-                  //       width: 100,
-                  //       fit: BoxFit.cover,
-                  //     ),
-                  //   ],
-                  // ),
                   Row(
                     children: [
                       Text(
