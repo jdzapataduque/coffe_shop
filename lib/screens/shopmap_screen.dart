@@ -107,7 +107,7 @@ class _ShopMap extends State<ShopMap> {
           title: _coffeeShop[i].name,
           snippet: '${_coffeeShop[i].address1!} ${_coffeeShop[i].address2!}',
         ),
-        // icon: BitmapDescriptor.defaultMarker //Icon for Marker
+        //icon: BitmapDescriptor.defaultMarker //Icon for Marker
         icon: BitmapDescriptor.fromBytes(icono),
       ));
     }
