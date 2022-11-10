@@ -194,6 +194,7 @@ class _SignupScreen extends State<SignupScreen> {
 
     DateTime? newDate = await showDatePicker(
       context: context,
+      //locale: const Locale("fr", "FR"),
       initialDate: DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
@@ -202,7 +203,7 @@ class _SignupScreen extends State<SignupScreen> {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.light(
-              primary: Color(0xffff0474),
+              primary: const Color(0xffff0474),
               onPrimary: Colors.white,
             ),
           ),
